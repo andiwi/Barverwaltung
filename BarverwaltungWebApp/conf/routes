@@ -7,3 +7,8 @@ GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET /salesOverview					controllers.Application.getSalesOverview()
+GET /accountOverview				controllers.Application.getAccountOverview()
+GET /purchaseOverview				controllers.Application.getPurchaseOverview()
+GET /stockOverview					controllers.Application.getStockOverview()
