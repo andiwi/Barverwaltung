@@ -1,11 +1,14 @@
-name := "BarverwaltungWebApp"
+name := "Barverwaltung"
 
 version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   javaJdbc,
-  javaEbean,
-  cache
-)     
+  javaCore,
+  javaJpa,
+  cache,
+  "org.hibernate" % "hibernate-entitymanager" % "4.2.12.Final"
+)
 
 play.Project.playJavaSettings
+

@@ -1,13 +1,17 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
-import views.html.*;
+import play.db.jpa.Transactional;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.accountOverview;
+import views.html.index;
+import views.html.purchaseOverview;
+import views.html.salesOverview;
+import views.html.stockOverview;
 
 public class Application extends Controller {
-
-    public static Result index() {
+	
+	public static Result index() {
         return ok(index.render());
     }
     

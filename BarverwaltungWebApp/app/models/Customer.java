@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
+
 @Entity
 public class Customer extends BaseModel
 {
@@ -21,15 +23,17 @@ public class Customer extends BaseModel
 	private String userName;
 	private String password;
 	
+	
 	@OneToOne(fetch = FetchType.LAZY,
 				mappedBy = "boughtFrom")
 	private Product boughtProduct;
 	
 	@OneToMany(mappedBy = "seller")
-	private List<Product> selledProducts; //Produkte die an der Bar verkauft wurden
+	private List<Sale> selledProducts; //Produkte die an der Bar verkauft wurden
 	
 	@OneToMany(mappedBy = "purchaser")
-	private List<Product> boughtProducts; //Produkte die an der Bar gekauft wurden
+	private List<Sale> boughtProducts; //Produkte die an der Bar gekauft wurden
+	
 	
 	public String getFirstName() {
 		return firstName;
