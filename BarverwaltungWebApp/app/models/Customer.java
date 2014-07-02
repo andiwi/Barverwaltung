@@ -3,6 +3,8 @@ package models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,6 +20,8 @@ public class Customer extends BaseModel
 		
 	private String firstName;
 	private String lastName;
+	
+	@Enumerated(value = EnumType.STRING)
 	private Gender gender;
 	
 	private String userName;
