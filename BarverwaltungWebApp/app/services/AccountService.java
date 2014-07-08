@@ -1,5 +1,6 @@
 package services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import models.Account;
@@ -17,4 +18,6 @@ public interface AccountService
 	public Account updateAccount(Account account);
 	
 	public void createAccount(Account account);
+	
+	public Account payIn(Account account, BigDecimal money);
 }

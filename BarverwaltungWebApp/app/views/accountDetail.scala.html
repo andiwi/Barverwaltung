@@ -9,4 +9,10 @@
 		<input id="accountId" name="accountId" type="hidden" value="@selectedAccount.getId()"/>
 		<input id="updateAccount" type="submit" value="Konto ändern"/>
 	}
+	
+	@helper.form(routes.AccountController.payIn()){
+		<input name="amount" type="text" />
+		<input name="accountId" type="hidden" value="@selectedAccount.getId()"/>
+		<input name="payIn" type="submit" value="Einzahlen"/>
+	}
 }

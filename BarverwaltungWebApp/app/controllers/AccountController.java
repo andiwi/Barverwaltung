@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import models.Account;
@@ -83,6 +84,30 @@ public class AccountController extends ApplicationController
 	public static Result gotoCreateAccount()
 	{
 		return ok(accountCreate.render(Form.form(Account.class)));
+	}
+	
+	@Transactional
+	public static Result payIn()
+	{
+		AccountService accountService = new AccountServiceImpl();
+		
+		DynamicForm form = Form.form().bindFromRequest();
+		
+		int sentAccountId = Integer.parseInt((form.data().get("accountId")));
+		Account selectedAccount = accountService.findAccountById(sentAccountId);
+		
+		double amountD = Double.parseDouble(form.data().get("amount"));
+		BigDecimal amount = BigDecimal.valueOf(amountD);
+		
+		if(amount.compareTo(BigDecimal.ZERO) < 0) //Wenn versucht wurde ein Negativer Betrag einzuzahlen
+		{
+			List<Account> accounts = accountService.getAllAccounts();
+			return badRequest(accountDetail.render(accounts, selectedAccount));
+		}else
+		{
+			accountService.payIn(selectedAccount, amount);
+			return getAccount(sentAccountId);
+		}
 	}
 	
 	
