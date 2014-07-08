@@ -43,6 +43,8 @@ public class Account extends BaseModel
 	@OneToMany(mappedBy = "purchaser")
 	private List<Sale> boughtProducts; //Produkte die an der Bar gekauft wurden
 	
+	@OneToOne
+	private BankAccountHistory bankAccountHistory;
 	
 	public String getFirstName() {
 		return firstName;
