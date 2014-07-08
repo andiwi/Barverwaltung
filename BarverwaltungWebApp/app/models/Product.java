@@ -49,7 +49,7 @@ public class Product extends BaseModel {
 	
 	@JoinColumn(name="boughtFrom")
 	@OneToOne
-	private Customer boughtFrom;
+	private Account boughtFrom;
 	
 	@ManyToOne
 	private Sale sale;

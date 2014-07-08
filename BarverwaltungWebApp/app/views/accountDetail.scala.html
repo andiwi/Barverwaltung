@@ -1,0 +1,7 @@
+@(accounts: List[Account], selectedAccount: Account)
+
+@accountTemplate("AccountView")(accounts){
+
+	<p>The selected Account is: @selectedAccount.getFirstName() @selectedAccount.getLastName()
+	Kontostand: @selectedAccount.getAccountBalance()</p>
+}

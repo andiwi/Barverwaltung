@@ -1,6 +1,10 @@
 package models;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+
+
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +16,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class Customer extends BaseModel
+public class Account extends BaseModel
 {
 	public enum Gender {
 		male, female
@@ -20,6 +24,7 @@ public class Customer extends BaseModel
 		
 	private String firstName;
 	private String lastName;
+	private BigDecimal accountBalance;
 	
 	@Enumerated(value = EnumType.STRING)
 	private Gender gender;
@@ -68,5 +73,11 @@ public class Customer extends BaseModel
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public BigDecimal getAccountBalance() {
+		return accountBalance;
+	}
+	public void setAccountBalance(BigDecimal accountBalance) {
+		this.accountBalance = accountBalance;
 	}
 }

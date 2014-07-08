@@ -1,15 +1,20 @@
 package controllers;
 
+import java.util.List;
+
+import models.Account;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import services.AccountService;
+import services.impl.AccountServiceImpl;
 import views.html.accountOverview;
 import views.html.index;
 import views.html.purchaseOverview;
 import views.html.salesOverview;
 import views.html.stockOverview;
 
-public class Application extends Controller {
+public class ApplicationController extends Controller {
 	
 	public static Result index() {
         return ok(index.render());
@@ -20,9 +25,14 @@ public class Application extends Controller {
     	return ok(salesOverview.render());
     }
     
+    @Transactional
     public static Result getAccountOverview()
     {
-    	return ok(accountOverview.render());
+    	AccountService accountService = new AccountServiceImpl();
+    	List<Account> accounts = accountService.getAllAccounts();
+    	
+    	
+    	return ok(accountOverview.render(accounts));
     }
     
     public static Result getPurchaseOverview()

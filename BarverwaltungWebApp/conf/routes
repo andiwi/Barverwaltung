@@ -3,12 +3,18 @@
 # ~~~~
 
 # Home page
-GET /                           	controllers.Application.index()
+GET /                           		controllers.ApplicationController.index()
+
+GET 	/salesOverview					controllers.ApplicationController.getSalesOverview()
+GET 	/accountOverview				controllers.ApplicationController.getAccountOverview()
+GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview()
+GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
+
+GET 	/accountOverview/:id			controllers.AccountController.getAccount(id: Int)
+
+GET		/createAccount					controllers.AccountController.gotoCreateAccount()
+POST	/createAccount 					controllers.AccountController.createAccount()
+POST	/accountOverview/updateAccount	controllers.AccountController.updateAccount()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-
-GET /salesOverview					controllers.Application.getSalesOverview()
-GET /accountOverview				controllers.Application.getAccountOverview()
-GET /purchaseOverview				controllers.Application.getPurchaseOverview()
-GET /stockOverview					controllers.Application.getStockOverview()
+GET     /assets/*file               	controllers.Assets.at(path="/public", file)

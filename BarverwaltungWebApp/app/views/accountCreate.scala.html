@@ -1,0 +1,33 @@
+@(form: Form[Account])
+@mainTemplate("AccountCreate"){
+
+	<p>Account Create</p>
+	
+	@helper.form(routes.AccountController.createAccount()) {
+	    	<fieldset>
+	        	<legend>LEGEND</legend>
+	        	<label for="firstName">Vorname:</label>
+	        	<input id="firstName" name="firstName" type="text" value="@form("firstName").value"/>
+	        	@for(error <- form("firstName").errors) {
+	        		<div id="error_msg_firstName" class="error" role="alert">
+	        			@Messages(error.message)
+	        		</div>
+				}
+	            <label for="lastName">Nachname:</label>    
+	        	<input id="lastName" name="lastName" type="text" value="@form("lastName").value"/>
+	        	@for(error <- form("lastName").errors) {
+	        		<div id="error_msg_lastName" class="error" role="alert">
+	        			@Messages(error.message)
+	        		</div>
+				}
+	            
+	            <label for="gender">Geschlecht:</label>    
+	        	<select id="gender" name="gender">
+	        		<option value="male">Mann</option>
+	        		<option value="female">Frau</option>
+	        	</select>
+	        	
+	        	<input id="registersubmit" type="submit" value="Konto anlegen"/>
+	       	</fieldset>
+	    }
+}

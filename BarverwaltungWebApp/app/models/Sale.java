@@ -19,10 +19,10 @@ public class Sale extends BaseModel{
 	private List<Product> products;
 	
 	@ManyToOne
-	private Customer seller;
+	private Account seller;
 	
 	@ManyToOne
-	private Customer purchaser;
+	private Account purchaser;
 	
 	private Date sellDate;
 	
