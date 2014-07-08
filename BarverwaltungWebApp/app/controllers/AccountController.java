@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Account;
 import daos.AccountDAO;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -13,6 +14,7 @@ import services.impl.AccountServiceImpl;
 import views.html.accountOverview;
 import views.html.accountDetail;
 import views.html.accountCreate;
+import views.html.accountUpdate;
 
 public class AccountController extends ApplicationController
 {
@@ -27,9 +29,40 @@ public class AccountController extends ApplicationController
 		return ok(accountDetail.render(accounts, selectedAccount));
 	}
 	
+	@Transactional
 	public static Result updateAccount()
 	{
-		return null;
+		Form<Account> form = Form.form(Account.class).bindFromRequest();
+		AccountService accountService = new AccountServiceImpl();
+		
+		if (form.hasErrors())
+		{
+			int sentAccountId = Integer.valueOf(form.data().get("accountId"));
+			Account account = accountService.findAccountById(sentAccountId);
+			
+			return badRequest(accountUpdate.render(form, account));
+		} else
+		{
+			Account account = form.get();
+			
+			accountService.updateAccount(account);
+			flash("update.successful", "account.updated-successfully");
+			return redirect(routes.ApplicationController.getAccountOverview());
+		}
+	}
+	
+	@Transactional(readOnly = true)
+	public static Result gotoUpdateAccount()
+	{
+		DynamicForm form = Form.form().bindFromRequest();
+		
+		int sentAccountId = Integer.valueOf(form.data().get("accountId"));
+		AccountService accountService = new AccountServiceImpl();
+		Account account = accountService.findAccountById(sentAccountId);
+		
+		Form<Account> accountForm = Form.form(Account.class).fill(account);
+		
+		return ok(accountUpdate.render(accountForm, account));
 	}
 	
 	@Transactional
@@ -42,7 +75,7 @@ public class AccountController extends ApplicationController
 			Account account = form.get();
 			AccountService accountService = new AccountServiceImpl();
 			accountService.createAccount(account);
-			flash("registration.successful", "user.created-successfully");
+			flash("create.successful", "account.created-successfully");
 			return redirect(routes.ApplicationController.getAccountOverview());
 		}
 	}

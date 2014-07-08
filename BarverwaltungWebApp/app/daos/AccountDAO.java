@@ -17,7 +17,7 @@ public class AccountDAO
     
     public List<Account> getAllAccounts()
     {
-    	String queryStr = "from Account where id is not 1";
+    	String queryStr = "from Account where id is not 1 order by lastName, firstName";
         TypedQuery<Account> query = em().createQuery(queryStr,
                 Account.class);
         List<Account> list = query.getResultList();

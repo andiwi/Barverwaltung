@@ -14,7 +14,8 @@ GET 	/accountOverview/:id			controllers.AccountController.getAccount(id: Int)
 
 GET		/createAccount					controllers.AccountController.gotoCreateAccount()
 POST	/createAccount 					controllers.AccountController.createAccount()
-POST	/accountOverview/updateAccount	controllers.AccountController.updateAccount()
+GET		/updateAccount					controllers.AccountController.gotoUpdateAccount()
+POST	/updateAccount					controllers.AccountController.updateAccount()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.at(path="/public", file)
