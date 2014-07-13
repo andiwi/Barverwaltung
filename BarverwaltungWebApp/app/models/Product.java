@@ -57,6 +57,54 @@ public class Product extends BaseModel {
 	private Date purchaseDate;
 	
 	private String note;
+
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public ProductName getProductName() {
+		return productName;
+	}
+
+	public void setProductName(ProductName productName) {
+		this.productName = productName;
+	}
+
+	public BigDecimal getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(BigDecimal purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public Account getBoughtFrom() {
+		return boughtFrom;
+	}
+
+	public void setBoughtFrom(Account boughtFrom) {
+		this.boughtFrom = boughtFrom;
+	}
+
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
 	
 	
 	

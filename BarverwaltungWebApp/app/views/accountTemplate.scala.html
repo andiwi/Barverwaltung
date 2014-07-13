@@ -1,18 +1,13 @@
-@(title: String)(accounts: List[Account])(content: Html)
+@(title: String)(accounts: List[Account])(content: Html) @main(title){
 
-@mainTemplate(title){
-	
-	@content
-	<section class="sidebar">
-		<ul class="accounts">
-			@for(a <- accounts){
-			<li>
-				<a href="@routes.AccountController.getAccount(a.getId())">@a.getLastName() @a.getFirstName()</a>
-	       	</li>
-	       	}
-	       	<li>
-	       		<a href="@routes.AccountController.gotoCreateAccount()">Neues Konto anlegen</a>
-	       	</li>
-		</ul>
-	</section>
+@content
+<section class="sidebar">
+	<ul class="accounts">
+		@for(a <- accounts){
+		<li><a href="@routes.AccountController.getAccount(a.getId())">@a.getLastName()
+				@a.getFirstName()</a></li> }
+		<li><a href="@routes.AccountController.gotoCreateAccount()">Neues
+				Konto anlegen</a></li>
+	</ul>
+</section>
 }

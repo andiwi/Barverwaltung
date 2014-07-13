@@ -1,24 +1,19 @@
 @(form: Form[Account], selectedAccount: Account))
+@main("AccountUpdate"){
 
-@mainTemplate("AccountUpdate"){
+<p>Account Update @selectedAccount.getFirstName()</p>
 
-	<p>Account Update @selectedAccount.getFirstName()</p>
-	
-	@helper.form(routes.AccountController.updateAccount()) {
-	    	<fieldset>
-	    		<legend>LEGEND</legend>
-	    		
-	    		@helper.inputText(form("firstName"), '_label -> "Vorname:")
-	    		@helper.inputText(form("lastName"), '_label -> "Nachname:")
-	            
-	            <label for="gender">Geschlecht:</label>    
-	        	<select id="gender" name="gender">
-	        		<option value="male">Mann</option>
-	        		<option value="female">Frau</option>
-	        	</select>
-	        	
-	        	<input id="id" type="hidden" name="id" value="@selectedAccount.getId()" >
-	        	<input id="submit" type="submit" value="Konto ändern"/>
-	       	</fieldset>
-	    }
-}
+@helper.form(routes.AccountController.updateAccount()) {
+<fieldset>
+	<legend>LEGEND</legend>
+
+	@helper.inputText(form("firstName"), '_label -> "Vorname:")
+	@helper.inputText(form("lastName"), '_label -> "Nachname:") <label
+		for="gender">Geschlecht:</label> <select id="gender" name="gender">
+		<option value="male">Mann</option>
+		<option value="female">Frau</option>
+	</select> <input id="id" type="hidden" name="id"
+		value="@selectedAccount.getId()"> <input id="submit"
+		type="submit" value="Konto ändern" />
+</fieldset>
+} }
