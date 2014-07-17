@@ -7,7 +7,6 @@ GET /                           		controllers.ApplicationController.index()
 
 GET 	/salesOverview					controllers.ApplicationController.getSalesOverview()
 GET 	/accountOverview				controllers.ApplicationController.getAccountOverview()
-GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview()
 GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
 
 GET 	/accountOverview/:id			controllers.AccountController.getAccount(id: Int)
@@ -18,6 +17,8 @@ GET		/updateAccount					controllers.AccountController.gotoUpdateAccount()
 POST	/updateAccount					controllers.AccountController.updateAccount()
 POST	/payIn							controllers.AccountController.payIn()
 
+GET 	/purchaseOverview				controllers.PurchaseController.getPurchaseOverview()
+GET		/purchases.json					controllers.PurchaseController.getPurchasesJSON()
 POST 	/purchase						controllers.PurchaseController.purchase()
 POST	/sale							controllers.PurchaseController.sale()
 

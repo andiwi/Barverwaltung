@@ -1,209 +1,86 @@
 @extra_styles = {
-	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/editTable.css")" type="text/css"/>
-	
-	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/datepicker.css")" type="text/css"/>
-}
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/slick.grid.css")" type="text/css" />
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/smoothness/jquery-ui-1.8.16.custom.css")" type="text/css" />
 
-@extra_scripts = {
-	<script src="@routes.Assets.at("javascripts/editableTable/mindmup-editabletable.js")"></script>
-	<script src="@routes.Assets.at("javascripts/editableTable/numeric-input-example.js")"></script>
-	
-	<script src="@routes.Assets.at("javascripts/bootstrap-datepicker.js")"></script>
-	<script src="@routes.Assets.at("javascripts/jquery-dateFormat.min.js")"></script>
-}
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/datepicker.css")" type="text/css" />
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrapValidator.min.css")"/>
+} @extra_scripts = {
+<script src="@routes.Assets.at("javascripts/slickgrid/lib/firebugx.js")"></script>
+<script src="@routes.Assets.at("javascripts/slickgrid/lib/jquery-ui-1.8.16.custom.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/slickgrid/lib/jquery.event.drag-2.2.js")"></script>
 
-@content = {
+<script src="@routes.Assets.at("javascripts/slickgrid/slick.core.js")"></script>
+<script src="@routes.Assets.at("javascripts/slickgrid/slick.grid.js")"></script>
+<script src="@routes.Assets.at("javascripts/slickgrid/slick.editors.js")"></script>
+<script src="@routes.Assets.at("javascripts/slickgrid/slick.dataview.js")"></script>
+<script src="@routes.Assets.at("javascripts/slickgrid/plugins/slick.rowselectionmodel.js")"></script>
 
-	<section id="purchase" style="margin-bottom: 20px;">
-		   	
-			<form action="/purchase" method="POST" id="purchaseForm" class="form" role="form">
-			
-		  	<label for="datefield">Datum</label>
-		  	<div class="form-group">
-   					<div class="input-group">
-						<input class="form-control" id="datefield" name="datefield" size="16" type="text" value="">
-						<span class="input-group-addon" id="datepicker" data-date="" data-date-format="dd-mm-yyyy">Cal<i class="icon-calendar"></i></span>
-					 </div>
-				</div>
-				
-		  	<label for="stieglInput">Stiegl</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="stieglInput" name="stieglInput" placeholder="0 Stück">
-			    	<input id="stieglPrice" name="stieglPrice" class="input-group-addon" placeholder="0.00€">
-			    </div>
-			</div>
-		  	<label for="bergkoenigInput">Bergkönig</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="bergkoenigInput" name="bergkoenigInput" placeholder="0 Stück">
-			    	<input id="bergkoenigPrice" name="bergkoenigPrice" class="input-group-addon" placeholder="0.00€"></div>
-			     </div>
-			</div>
-		  	<label for="goesserInput">Gösser</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="goesserInput" name="goesserInput" placeholder="0 Stück">
-			    	<input id="winePrice" name="goesserPrice" class="input-group-addon" placeholder="0.00€">
-			     </div>
-			</div>
-		  	<label for="wineInput">Wein</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="wineInput" name="wineInput" placeholder="0 Stück">
-			    	<input id="winePrice" name="winePrice" class="input-group-addon" placeholder="0.00€"></div>
-			     </div>
-			</div>
-		  	<label for="colaInput">Cola</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="colaInput" name="colaInput" placeholder="0 Stück">
-			    	<input id="colaPrice" name="colaPrice" class="input-group-addon" placeholder="0.00€">
-			     </div>
-			</div>
-		  </div>
-		  <div class="col-md-1">
-		  	<label for="iceTeaPInput">Eistee P</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="iceTeaPInput" name="iceTeaPInput" placeholder="0 Stück">
-			    	<input id="iceTeaPPrice" name="iceTeaPPrice" class="input-group-addon" placeholder="0.00€">
-			     </div>
-			</div>
-		  	<label for="iceTeaZInput">Eistee Z</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="iceTeaZInput" name="iceTeaZInput" placeholder="0 Stück">
-			    	<input id="iceTeaZPrice" name="iceTeaZPrice" class="input-group-addon" placeholder="0.00€">
-			     </div>
-			</div>
-		  	<label for="waterInput">Mineral 0,5l</label>
-		  	<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" id="waterInput" name="waterInput" placeholder="0 Stück">
-			    	<input id="waterPrice" name="waterPrice" class="input-group-addon" placeholder="0.00€">
-			     </div>
-			</div>
-		  	<button id="submit" type="submit" class="btn btn-default" style="margin-top: 25px;">Einkaufen</button>
-		  </div>	
-		</form>
+<script src="@routes.Assets.at("javascripts/bootstrap-datepicker.js")"></script>
+<script src="@routes.Assets.at("javascripts/jquery-dateFormat.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrapValidator.min.js")"></script>
+} @content = {
 
-	</section>
-	
-	<div class="container">
-	  <div class="hero-unit">
-	  <div class="pull-right">
-		
-	  </div>
-	  	<table id="mainTable" class="table table-striped">
-			<thead>
-				<tr>
-					<th>Datum</th>
-					<th>Stiegl Bier</th>
-					<th>Bergkönig Bier</th>
-					<th>Gösser Radler</th>
-					<th>Coca Cola</th>
-					<th>Eistee Pfirsich</th>
-					<th>Eistee Zitrone</th>
-					<th>Weißer Spritzer</th>
-					<th>Toast</th>
-					<th>Pizza Salami</th>
-					<th>Pizza Margarita</th>
-					<th>Manner Schnitten</th>
-					<th>Pischinger Ecken</th>
-					<th>Fairtrade Schoki</th>
-				</tr>
-			</thead>
-	       	<tbody>
-	           <tr>
-		           	<td>01.01.2010</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-	           	</tr>
-	            <tr>
-		           	<td>01.01.2010</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-		           	<td>200</td>
-		           	<td>300</td>
-		           	<td>100</td>
-	           	</tr>
-	        </tbody>
-			<tfoot>
-				<tr>
-					<th><strong>TOTAL</strong></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-				</tr>
-			</tfoot>
-			
-	       </table>
+<section id="purchase" style="margin-bottom: 20px;"></section>
+
+<button id="newBtn" type="button" class="btn btn-primary">neu</button>
+<button id="editBtn" type="button" class="btn btn-default">bearbeiten</button>
+<button id="deleteBtn" type="button" class="btn btn-default">löschen</button>
+
+<div id="myGridContainer" style="width: 95%;">
+	<div id="myGrid" style="width: 100%; height: 600px;"></div>
+	<div id="myPager"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Neuer Eintrag</h4>
+			</div>
+			<div class="modal-body">
+				<form action="/purchase" method="POST" id="purchaseForm" class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="datefield" class="col-sm-2 control-label">Datum</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="datefield" name="datefield"
+								size="16" type="text" value=""> <span
+								class="input-group-addon" id="datepicker" data-date=""
+								data-date-format="dd-mm-yyyy">Cal<i class="icon-calendar"></i></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="stieglInput" class="col-sm-2 control-label">Stiegl</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="stieglInput"
+								name="stieglInput" placeholder="0">
+						</div>
+						<div class="col-sm-1">
+							<p style="padding-top: 7px;">Stück</p>
+						</div>
+						<div class="col-sm-4">
+							<input id="stieglPrice" name="stieglPrice" class="form-control"
+								placeholder="0.00">	
+						</div>
+						<div class="col-sm-1">
+							<p style="padding-top: 7px;">€</p>
+						</div>
+					</div>		
+				</form>
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<button id="dismissBtn" type="button" class="btn btn-default" data-dismiss="modal">Verwerfen</button>
+			<button id="saveBtn" type="button" class="btn btn-primary">Eintrag erstellen</button>
+		</div>
 	</div>
+</div>
 
-	<script>
-	  $('#mainTable').editableTableWidget().numericInputExample().find('td:first').focus();
-	  $('#textAreaEditor').editableTableWidget({editor: $('<textarea>')});
-	  window.prettyPrint && prettyPrint();
-	</script>
-
-	<script>
-		// Shorthand for $( document ).ready()
-		$(function() {
-			$('#datefield').val($.format.date(new Date(), 'dd-MM-yyyy'));			
-		});
-		
-		//initialisiert den Datepicker und aktualisiert das Datumsfeld wenn ein neues Datum in Datepicker ausgewählt wurde.
-		$(function (){
-			var datepicker = $('#datepicker').datepicker({weekStart: 1}).on('changeDate', function(ev){
-					$('#datefield').val($.format.date(ev.date, 'dd-MM-yyyy'));
-			});
-		})
-		
-		//aktualisiert den DatePicker wenn in Feld ein neues Datum eingegeben wurde.
-		$('#datefield').change(function() {
-			var dateddMMYYYYRegex = /(^(((0[1-9]|[12][0-8])[-](0[1-9]|1[012]))|((29|30|31)[-](0[13578]|1[02]))|((29|30)[-](0[4,6,9]|11)))[-](19|[2-9][0-9])\d\d$)|(^29[-]02[-](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
-		
-			if(dateddMMYYYYRegex.test($('#datefield').val())){
-				var dateStr = $("#datefield").val().split("-");
-				date = new Date(dateStr[2], dateStr[1] - 1, dateStr[0]);
-				$('#datepicker').datepicker('setValue', date);
-			}
-		});
-
-		
-	</script>
-
-}
-
-
-@main("PurchaseOverview", extra_styles, extra_scripts)(content)
+<script src="@routes.Assets.at("javascripts/view.purchaseOverview.js")"></script>
+} @main("PurchaseOverview", extra_styles, extra_scripts)(content)

@@ -35,11 +35,6 @@ public class ApplicationController extends Controller {
     	return ok(accountOverview.render(accounts));
     }
     
-    public static Result getPurchaseOverview()
-    {
-    	return ok(purchaseOverview.render());
-    }
-    
     public static Result getStockOverview()
     {
     	return ok(stockOverview.render());

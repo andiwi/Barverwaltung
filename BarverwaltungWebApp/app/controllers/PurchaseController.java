@@ -1,5 +1,14 @@
 package controllers;
 
+import play.*;
+import play.mvc.*;
+import play.data.*;
+import play.data.validation.Constraints.*;
+
+import java.util.*;
+import views.html.*;
+
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,21 +17,76 @@ import java.util.List;
 
 import models.Account;
 import models.Product;
-import models.Product.ProductName;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.ProductService;
 import services.impl.ProductServiceImpl;
-import views.html.purchaseOverview;
-import views.html.salesOverview;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class PurchaseController extends Controller
 {
+	 public static Result getPurchaseOverview()
+    {
+		return ok(purchaseOverview.render());
+    }
+	 
+	public static Result getPurchasesJSON()
+	{
+		Object arrayNode = populateGrid();
+		return ok(Json.toJson(arrayNode));
+	}
+	 
+	private static Map<String, List<Map<String,Object>>> populateGrid()
+	{
+		Map<String, Object> row1 = new HashMap<String, Object>();
+		row1.put("id", "1");
+		row1.put("stiegl", "5");
+		row1.put("bergkoenig", "4");
+		
+		Map<String, Object> row2 = new HashMap<String, Object>();
+		row2.put("id", "2");
+		row2.put("stiegl", "10");
+		row2.put("bergkoenig", "4");
+		
+		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
+		dataList.add(row1);
+		dataList.add(row2);
+		
+		Map<String, List<Map<String,Object>>> grid = new HashMap<String, List<Map<String,Object>>>();
+		
+		grid.put("data", dataList);
+		
+		return grid;
+		/*
+		ObjectNode gridData = Json.newObject();
+		gridData.put("id", "1");
+		gridData.put("stiegl", "5");
+		gridData.put("bergkoenig", "4");
+		
+		ObjectNode gridData2 = Json.newObject();
+		gridData.put("id", "2");
+		gridData.put("stiegl", "10");
+		gridData.put("bergkoenig", "4");
+		
+		ArrayNode arrayNode = new ArrayNode(JsonNodeFactory.instance);
+		arrayNode.add(gridData);
+		arrayNode.ada
+		arrayNode.add(gridData2);
+		
+		ObjectNode data = Json.newObject();
+		data.put("data", arrayNode);
+				
+		return data;
+		*/
+	}
+
 	@Transactional
 	public static Result purchase()
 	{
@@ -87,16 +151,9 @@ public class PurchaseController extends Controller
 		productList.addAll(createProduct(Product.ProductName.mineralWater, waterInput, waterPrice, date, null));
 		*/
 		ProductService service = new ProductServiceImpl();
-		List<Product> returnList = service.purchase(productList);
-		
-		if(returnList.size() == productList.size())
-		{
-			return ok(purchaseOverview.render());
-		}else{
-			return badRequest(purchaseOverview.render());
-		}
-		
-		
+		service.purchase(productList);
+
+    	return ok(purchaseOverview.render());		
 	}
 	
 	public static Result sale()
