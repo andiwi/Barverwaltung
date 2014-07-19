@@ -5,6 +5,8 @@
 # Home page
 GET /                           		controllers.ApplicationController.index()
 
+#Navigation
+GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview()
 GET 	/salesOverview					controllers.ApplicationController.getSalesOverview()
 GET 	/accountOverview				controllers.ApplicationController.getAccountOverview()
 GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
@@ -17,10 +19,12 @@ GET		/updateAccount					controllers.AccountController.gotoUpdateAccount()
 POST	/updateAccount					controllers.AccountController.updateAccount()
 POST	/payIn							controllers.AccountController.payIn()
 
-GET 	/purchaseOverview				controllers.PurchaseController.getPurchaseOverview()
 GET		/purchases.json					controllers.PurchaseController.getPurchasesJSON()
 POST 	/purchase						controllers.PurchaseController.purchase()
 POST	/sale							controllers.PurchaseController.sale()
+
+GET		/modal/:datefield				controllers.PurchaseController.modal(datefield: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.at(path="/public", file)

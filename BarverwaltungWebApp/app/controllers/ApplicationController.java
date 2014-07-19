@@ -25,6 +25,11 @@ public class ApplicationController extends Controller {
     	return ok(salesOverview.render());
     }
     
+    public static Result getPurchaseOverview()
+    {
+		return ok(purchaseOverview.render());
+    }
+    
     @Transactional
     public static Result getAccountOverview()
     {

@@ -6,6 +6,7 @@ import play.data.*;
 import play.data.validation.Constraints.*;
 
 import java.util.*;
+
 import views.html.*;
 
 import java.math.BigDecimal;
@@ -15,10 +16,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import models.Account;
 import models.Product;
+import models.ProductOrigin;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -30,61 +35,34 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import daos.BaseModelDAO;
+import daos.ProductDAO;
+import daos.ProductOriginDAO;
+
 public class PurchaseController extends Controller
-{
-	 public static Result getPurchaseOverview()
-    {
-		return ok(purchaseOverview.render());
-    }
-	 
+{	
+	private static ProductService service = new ProductServiceImpl();
+	
+	@Transactional
 	public static Result getPurchasesJSON()
 	{
-		Object arrayNode = populateGrid();
-		return ok(Json.toJson(arrayNode));
+		Map<String, List<Map<String,Object>>> grid = getGridJSON();
+		return ok(Json.toJson(grid));
 	}
-	 
-	private static Map<String, List<Map<String,Object>>> populateGrid()
+	
+	private static Map<String, List<Map<String,Object>>> getGridJSON()
 	{
-		Map<String, Object> row1 = new HashMap<String, Object>();
-		row1.put("id", "1");
-		row1.put("stiegl", "5");
-		row1.put("bergkoenig", "4");
-		
-		Map<String, Object> row2 = new HashMap<String, Object>();
-		row2.put("id", "2");
-		row2.put("stiegl", "10");
-		row2.put("bergkoenig", "4");
-		
-		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
-		dataList.add(row1);
-		dataList.add(row2);
-		
 		Map<String, List<Map<String,Object>>> grid = new HashMap<String, List<Map<String,Object>>>();
 		
+		List<Map<String,Object>> columnList = service.getAllColumnsForPurchaseGrid();
+		grid.put("columns", columnList);
+		
+		List<Map<String,Object>> dataList = service.getAllDataForPurchaseGrid();
 		grid.put("data", dataList);
 		
+		
+		
 		return grid;
-		/*
-		ObjectNode gridData = Json.newObject();
-		gridData.put("id", "1");
-		gridData.put("stiegl", "5");
-		gridData.put("bergkoenig", "4");
-		
-		ObjectNode gridData2 = Json.newObject();
-		gridData.put("id", "2");
-		gridData.put("stiegl", "10");
-		gridData.put("bergkoenig", "4");
-		
-		ArrayNode arrayNode = new ArrayNode(JsonNodeFactory.instance);
-		arrayNode.add(gridData);
-		arrayNode.ada
-		arrayNode.add(gridData2);
-		
-		ObjectNode data = Json.newObject();
-		data.put("data", arrayNode);
-				
-		return data;
-		*/
 	}
 
 	@Transactional
@@ -102,58 +80,23 @@ public class PurchaseController extends Controller
 			e.printStackTrace();
 		}
 		
-		//String[] dateStr = dateString.split("-");
-		//Date date = new Date(Integer.parseInt(dateStr[2]), Integer.parseInt(dateStr[1]) - 1, Integer.parseInt(dateStr[0]));
-		
-		String stieglStr = form.data().get("stieglInput");
-		int stieglInput = Integer.parseInt(stieglStr);
-		BigDecimal stieglPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("stieglPrice")));
-		
-		/*
-		String bergkoenigStr = form.data().get("bergkoenigInput");
-		int bergkoenigInput = Integer.valueOf(bergkoenigStr);
-		BigDecimal bergkoenigPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("bergkoenigPrice")));
-		
-		String goesserStr = form.data().get("goesserInput");
-		int goesserInput = Integer.valueOf(goesserStr);
-		BigDecimal goesserPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("goesserPrice")));
-		
-		String wineStr = form.data().get("wineInput");
-		int wineInput = Integer.valueOf(wineStr);
-		BigDecimal winePrice = BigDecimal.valueOf(Double.valueOf(form.data().get("winePrice")));
-		
-		String colaStr = form.data().get("colaInput");
-		int colaInput = Integer.valueOf(colaStr);
-		BigDecimal colaPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("colaPrice")));
-		
-		String iceTeaPStr = form.data().get("iceTeaPInput");
-		int iceTeaPInput = Integer.valueOf(iceTeaPStr);
-		BigDecimal iceTeaPPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("iceTeaPPrice")));
-		
-		String iceTeaZStr = form.data().get("iceTeaZInput");
-		int iceTeaZInput = Integer.valueOf(iceTeaZStr);
-		BigDecimal iceTeaZPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("iceTeaZPrice")));
-		
-		String waterStr = form.data().get("waterInput");
-		int waterInput = Integer.valueOf(waterStr);
-		BigDecimal waterPrice = BigDecimal.valueOf(Double.valueOf(form.data().get("waterPrice")));
-		*/
 		List<Product> productList = new ArrayList<Product>();
-		
-		productList.addAll(createProduct(Product.ProductName.stieglBeer, stieglInput, stieglPrice, date, null));
-		/*
-		productList.addAll(createProduct(Product.ProductName.bergkoenigBeer, bergkoenigInput, bergkoenigPrice, date, null));
-		productList.addAll(createProduct(Product.ProductName.goesserRadler, goesserInput, goesserPrice, date, null));
-		productList.addAll(createProduct(Product.ProductName.spritzer, wineInput, winePrice, date, null)); //TODO Wein in 4 Spritzer aufteilen
-		productList.addAll(createProduct(Product.ProductName.cocaCola, colaInput, colaPrice, date, null));
-		productList.addAll(createProduct(Product.ProductName.iceTeaPeach, iceTeaPInput, iceTeaPPrice, date, null));
-		productList.addAll(createProduct(Product.ProductName.iceTeaCitron, iceTeaZInput, iceTeaZPrice, date, null));
-		productList.addAll(createProduct(Product.ProductName.mineralWater, waterInput, waterPrice, date, null));
-		*/
+		List<ProductOrigin> origins = service.getAllProductOrigins();
+		for(ProductOrigin ori : origins)
+		{
+			String inputStr = form.data().get(ori.getProductName() + "Count");
+			if(!inputStr.isEmpty())
+			{
+				int input = Integer.parseInt(inputStr);
+				BigDecimal price = BigDecimal.valueOf(Double.valueOf(form.data().get(ori.getProductName() + "Price")));
+			
+				productList.addAll(createProduct(ori, input, price, date, null));
+			}
+		}
 		ProductService service = new ProductServiceImpl();
 		service.purchase(productList);
-
-    	return ok(purchaseOverview.render());		
+		
+		return ok(purchaseOverview.render());    			
 	}
 	
 	public static Result sale()
@@ -161,14 +104,14 @@ public class PurchaseController extends Controller
 		return ok(salesOverview.render());
 	}
 	
-	private static List<Product> createProduct(Product.ProductName productName, int amount, BigDecimal purchasePrice, Date purchaseDate, Account boughtFrom)
+	private static List<Product> createProduct(ProductOrigin origin, int amount, BigDecimal purchasePrice, Date purchaseDate, Account boughtFrom)
 	{
 		List<Product> productList = new ArrayList<Product>();
 		
 		for(int i = 0; i < amount; i++)
 		{
 			Product product = new Product();
-			product.setProductName(productName);
+			product.setProductOrigin(origin);
 			product.setPurchaseDate(purchaseDate);
 			product.setPurchasePrice(purchasePrice);
 			//product.setBoughtFrom("Max Mustermann"); TODO
@@ -178,4 +121,29 @@ public class PurchaseController extends Controller
 		
 		return productList;
 	}
+	
+	@Transactional
+	public static Result modal(String datefield)
+	{
+		if(datefield.equals("new"))
+		{
+			List<ProductOrigin> origins = service.getAllProductOrigins();
+			return ok(purchaseModal.render(origins));
+		}else
+		{
+			List<ProductOrigin> origins = service.getAllProductOrigins();
+			return ok(purchaseEditModal.render(origins));
+		}	
+	}
+	
+	public static Result jsRoutes() {
+
+        response().setContentType("text/javascript");
+
+        return ok(Routes.javascriptRouter("jsRoutes",
+        		controllers.routes.javascript.PurchaseController.modal())
+        );
+
+    }
+
 }

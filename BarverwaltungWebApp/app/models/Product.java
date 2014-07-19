@@ -13,36 +13,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Product extends BaseModel {
 
-	public enum ProductName {
-		stieglBeer,
-		bergkoenigBeer,
-		goesserRadler,
-		cocaCola,
-		iceTeaPeach,
-		iceTeaCitron,
-		mineralWater,
-		spritzer,
-		klopfer,
-		jaegermeister,
-		tequila,
-		
-		toast,
-		pizzaSalami,
-		pizzaMargarita,
-		mannerSchnitten,
-		pischingerEcken,
-		fairtradeSchoko,
-		popcorn,
-		
-		otherProduct
-	}
-	
-	public enum DrinkOrEat {
-		drink, eat
-	}
-	
-	@NotNull
-	private ProductName productName;
+	@ManyToOne
+	private ProductOrigin productOrigin;
 	
 	@NotNull
 	private BigDecimal purchasePrice;
@@ -74,12 +46,14 @@ public class Product extends BaseModel {
 		this.note = note;
 	}
 
-	public ProductName getProductName() {
-		return productName;
+	public ProductOrigin getProductOrigin()
+	{
+		return productOrigin;
 	}
 
-	public void setProductName(ProductName productName) {
-		this.productName = productName;
+	public void setProductOrigin(ProductOrigin productOrigin)
+	{
+		this.productOrigin = productOrigin;
 	}
 
 	public BigDecimal getPurchasePrice() {

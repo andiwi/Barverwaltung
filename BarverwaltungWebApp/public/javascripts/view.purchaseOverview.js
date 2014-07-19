@@ -1,72 +1,7 @@
 var grid;
 
-var columns = [ {
-	id : "id",
-	name : "ID",
-	field : "id"
-}, {
-	id : "date",
-	name : "Datum",
-	field : "date"
-}, {
-	id : "stiegl",
-	name : "Stiegl Bier",
-	field : "stiegl"
-}, {
-	id : "bergkoenig",
-	name : "Bergkönig Bier",
-	field : "bergkoenig"
-}, {
-	id : "radler",
-	name : "Gösser Radler",
-	field : "radler"
-}, {
-	id : "cola",
-	name : "Coca Cola",
-	field : "cola"
-}, {
-	id : "iceTeaPeach",
-	name : "Eistee Pfirsich",
-	field : "iceTeaPeach"
-}, {
-	id : "iceTeaCitron",
-	name : "Eistee Zitrone",
-	field : "iceTeaCitron"
-}, {
-	id : "water",
-	name : "Mineral 0,5l",
-	field : "water"
-}, {
-	id : "spritzer",
-	name : "Weißer Spritzer",
-	field : "spritzer"
-}, {
-	id : "toast",
-	name : "Toast",
-	field : "toast"
-}, {
-	id : "pizzaSalami",
-	name : "Pizza Salami",
-	field : "pizzaSalami"
-}, {
-	id : "pizzaMargarita",
-	name : "Pizza Margarita",
-	field : "pizzaMargarita"
-}, {
-	id : "manner",
-	name : "Manner Schnitten",
-	field : "manner"
-}, {
-	id : "pischinger",
-	name : "Pischinger Ecken",
-	field : "pischinger"
-}, {
-	id : "chocolate",
-	name : "Fairtrade Schoki",
-	field : "radlchocolateer"
-}
+var columns = [];
 
-];
 var options = {
 	editable : true,
 	enableCellNavigation : true,
@@ -91,35 +26,25 @@ dataView.onRowsChanged.subscribe(function(e, args) {
 $(function populateGrid() {
     
 	$.getJSON('/purchases.json', function(ServerResponse) {
-		dataView.setItems(ServerResponse.data);
+		grid.setColumns(ServerResponse.columns);
+		dataView.setItems(ServerResponse.data, "date");
     })
 	
-	
-
 	grid.setSelectionModel(new Slick.RowSelectionModel());
 
 	grid.onDblClick.subscribe(function(){
 		$('#myModal').modal('show');
 	});
 	
-	grid.onClick.subscribe(function(e, args) {
-		var cell = grid.getCellFromEvent(e);
-
+	grid.onClick.subscribe(function(e, args){
+		$('#editBtn').removeAttr("disabled");
+		$('#deleteBtn').removeAttr("disabled");
+		
 		var item = grid.getDataItem(args.row);
-
-		item['bergkoenig'] = item['bergkoenig'] + 1;
-		dataView.updateItem(item['id'], item);
+				//routes.controllers.PurchaseController.modal(item.date) + "");
+		$('#editBtn').attr("href", "/modal/"+item.date);
+		$('#deleteBtn').attr("href", "@routes.PurchaseController.delete("+item.date+")");
 	});
-})
-
-$('#newBtn').click(function() {
-	$('#myModal').modal('show');
-})
-
-$('#saveBtn').click(function() {
-	alert("save");
-	$('#purchaseForm').submit();
-	alert("saved");
 })
 
 // Shorthand for $( document ).ready()
@@ -188,3 +113,4 @@ $('.form').bootstrapValidator({
 $(".input-group").change(function() {
 	$('.form').data('bootstrapValidator').validate();
 });
+
