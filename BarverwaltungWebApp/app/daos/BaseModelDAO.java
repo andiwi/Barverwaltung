@@ -1,14 +1,8 @@
 package daos;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import models.BaseModel;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-
 import play.db.jpa.JPA;
 
 public class BaseModelDAO

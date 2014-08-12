@@ -1,12 +1,5 @@
 package daos;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.TypedQuery;
-
-import models.SalesProduct;
 
 public class ProductDAO extends BaseModelDAO
 {

@@ -2,21 +2,13 @@ package services.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import play.Logger;
-import play.db.jpa.Transactional;
-import daos.AccountDAO;
-import daos.BankAccountHistoryDAO;
-import daos.ProductDAO;
-import daos.ProductOriginDAO;
-import daos.PurchaseDAO;
 import models.Purchase;
-import models.SalesProduct;
 import services.ProductService;
+import daos.PurchaseDAO;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -45,6 +37,31 @@ public class ProductServiceImpl implements ProductService {
 		return dao.findAll();
 	}
 	
+	@Override
+	public List<Map<String,Object>> getAllDataForPurchaseGrid() {
+		
+		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
+		
+		List<Purchase> purchases = this.getAllPurchases();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for(Purchase p : purchases)
+		{
+			Map<String, Object> entry = new HashMap<String, Object>();
+			entry.put("date", dateFormat.format(p.getPurchaseDate()));
+			entry.put("purchaser", p.getPurchaser().getFirstName() + " " + p.getPurchaser().getLastName());
+			entry.put("productName", p.getRawProduct().getDisplayName());
+			entry.put("amount", p.getAmount());
+			entry.put("pieces", p.getPieces());
+			entry.put("price", p.getPurchasePrice());
+			
+			dataList.add(entry);
+		}
+		
+		return dataList;
+	}
+	
+	
 
 	
 	
@@ -67,31 +84,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	/*
-	@Override
-	public List<Map<String,Object>> getAllDataForPurchaseGrid() {
-		
-		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
-		
-		List<Date> purchaseDates = this.getAllPurchaseDates();
-		List<SalesProduct> pOrigins = this.getAllProductOrigins();
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
-		for(Date date : purchaseDates)
-		{
-			Map<String, Object> entry = new HashMap<String, Object>();
-			entry.put("date", dateFormat.format(date));
-			
-			for(SalesProduct p: pOrigins)
-			{
-				long amountOfProduct = dao.findAmountOfProductAtDate(date, p);
-				entry.put(p.getProductName(), amountOfProduct);
-			}
-			dataList.add(entry);
-		}
-		
-		return dataList;
-	}
+	
 
 	@Override
 	public List<Date> getAllPurchaseDates()
@@ -105,33 +98,7 @@ public class ProductServiceImpl implements ProductService {
 		return ProductOriginDAO.INSTANCE.findAll();
 	}
 
-	@Override
-	public List<Map<String, Object>> getAllColumnsForPurchaseGrid()
-	{
-		List<Map<String,Object>> columnList = new ArrayList<Map<String,Object>>();
-		
-		List<SalesProduct> pOrigins = this.getAllProductOrigins();
-		
-		Map<String, Object> entry = new HashMap<String, Object>();
-		entry.put("id", "date");
-		entry.put("name", "Datum");
-		entry.put("field", "date");
-		
-		columnList.add(entry);
-		
-		for(SalesProduct p : pOrigins)
-		{
-			entry = new HashMap<String, Object>();
-			
-			entry.put("id", p.getProductName());
-			entry.put("name", p.getDisplayName());
-			entry.put("field", p.getProductName());
-			
-			columnList.add(entry);
-		}
-		
-		return columnList;
-	}
+	
 
 	 */
 }

@@ -13,9 +13,7 @@ public interface ProductService {
 	
 	public List<Purchase> getAllPurchases();
 
-	//public List<Map<String,Object>> getAllDataForPurchaseGrid();
-	
-	//public List<Map<String,Object>> getAllColumnsForPurchaseGrid();
+	public List<Map<String,Object>> getAllDataForPurchaseGrid();
 	
 	//public List<Product> updatePurchase(List<Product> products);
 	

@@ -25,10 +25,20 @@ dataView.onRowsChanged.subscribe(function(e, args) {
 
 $(function populateGrid() {
     
+	 var columns = [
+	   {id: "date", name: "Datum", field: "date"},
+	   {id: "purchaser", name: "Käufer", field: "purchaser"},
+	   {id: "productName", name: "Produkt", field: "productName"},
+	   {id: "amount", name: "Liter", field: "amount"},
+	   {id: "pieces", name: "Stückzahl", field: "pieces"},
+	   {id: "price", name: "Preis pro Stück", field: "price"}
+	 ];
+	 
 	$.getJSON('/purchases.json', function(ServerResponse) {
-		grid.setColumns(ServerResponse.columns);
 		dataView.setItems(ServerResponse.data, "date");
     })
+    
+   
 	
 	grid.setSelectionModel(new Slick.RowSelectionModel());
 

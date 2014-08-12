@@ -2,12 +2,9 @@ package models;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 
 
@@ -16,7 +13,7 @@ import javax.persistence.OneToOne;
 public class Sale extends BaseModel{
 
 	
-	@OneToOne
+	@ManyToOne
 	private SalesProduct salesProduct;
 	
 	@ManyToOne

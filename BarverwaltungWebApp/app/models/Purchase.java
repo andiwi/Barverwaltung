@@ -4,32 +4,21 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 public class Purchase extends BaseModel
 {
-	@OneToOne
-	private RawProduct product;
+	@ManyToOne
+	private RawProduct rawProduct;
+	
+	@ManyToOne
+	private Account purchaser;	
 	
 	private long amount; //Menge pro Stück (in Milliliter)
 	private long pieces; //Stückanzahl
 	private BigDecimal purchasePrice; //pro Stück
 	private Date purchaseDate;
 	
-	@ManyToOne
-	private Account purchaser;
 	
-	
-
-	public RawProduct getProduct()
-	{
-		return product;
-	}
-
-	public void setProduct(RawProduct product)
-	{
-		this.product = product;
-	}
 
 	public long getAmount()
 	{
@@ -79,6 +68,16 @@ public class Purchase extends BaseModel
 	public void setPurchaseDate(Date purchaseDate)
 	{
 		this.purchaseDate = purchaseDate;
+	}
+
+	public RawProduct getRawProduct()
+	{
+		return rawProduct;
+	}
+
+	public void setRawProduct(RawProduct rawProduct)
+	{
+		this.rawProduct = rawProduct;
 	}
 	
 }

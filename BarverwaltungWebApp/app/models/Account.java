@@ -3,15 +3,10 @@ package models;
 import java.math.BigDecimal;
 import java.util.List;
 
-
-
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 
 
@@ -36,7 +31,7 @@ public class Account extends BaseModel
 	private List<Sale> selledProducts; //Produkte die an der Bar verkauft wurden
 	
 	@OneToMany(mappedBy = "purchaser")
-	private List<Sale> boughtProducts; //Produkte die an der Bar gekauft wurden
+	private List<Purchase> boughtProducts; //Produkte die an der Bar gekauft wurden
 	
 	@OneToMany(mappedBy = "owner")
 	private List<BankAccountHistory> bankAccountHistory;

@@ -1,8 +1,10 @@
 package models;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -35,6 +37,9 @@ public class SalesProduct extends BaseModel
 	@OneToOne
 	private RawProduct rawProduct5;
 	private long amount5;
+	
+	@OneToMany(mappedBy="salesProduct")
+	private List<Sale> sales;
 	
 	
 	public String getProductName()
@@ -140,6 +145,14 @@ public class SalesProduct extends BaseModel
 	public void setAmount5(long amount5)
 	{
 		this.amount5 = amount5;
+	}
+	public List<Sale> getSales()
+	{
+		return sales;
+	}
+	public void setSales(List<Sale> sales)
+	{
+		this.sales = sales;
 	}
 	
 }

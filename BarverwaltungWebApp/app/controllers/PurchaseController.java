@@ -1,42 +1,17 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.data.*;
-import play.data.validation.Constraints.*;
-
-import java.util.*;
-
-import views.html.*;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import javax.persistence.EntityManager;
-
-import models.Account;
-import models.SalesProduct;
-import play.data.DynamicForm;
-import play.data.Form;
-import play.db.jpa.JPA;
+import play.Routes;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.ProductService;
 import services.impl.ProductServiceImpl;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import daos.BaseModelDAO;
-import daos.ProductDAO;
-import daos.ProductOriginDAO;
+import views.html.purchaseOverview;
+import views.html.salesOverview;
 
 public class PurchaseController extends Controller
 {	
@@ -45,26 +20,8 @@ public class PurchaseController extends Controller
 	@Transactional
 	public static Result getPurchasesJSON()
 	{
-		Map<String, List<Map<String,Object>>> grid = getGridJSON();
-		return ok(Json.toJson(grid));
-	}
-	
-	private static Map<String, List<Map<String,Object>>> getGridJSON()
-	{
-		/*
-		Map<String, List<Map<String,Object>>> grid = new HashMap<String, List<Map<String,Object>>>();
-		
-		List<Map<String,Object>> columnList = service.getAllColumnsForPurchaseGrid();
-		grid.put("columns", columnList);
-		
 		List<Map<String,Object>> dataList = service.getAllDataForPurchaseGrid();
-		grid.put("data", dataList);
-		
-		
-		
-		return grid;
-		*/
-		return null;
+		return ok(Json.toJson(dataList));
 	}
 
 	@Transactional

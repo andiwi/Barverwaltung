@@ -1,5 +1,8 @@
 package models;
 
+import java.util.List;
+
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 public class RawProduct extends BaseModel
@@ -8,6 +11,9 @@ public class RawProduct extends BaseModel
 	private String productName;
 	private String displayName; //Anzeigename in der GUI
 	private long amount; //in Milliliter
+	
+	@OneToMany(mappedBy="rawProduct")
+	private List<Purchase> purchases;
 
 	
 	public String getProductName()
