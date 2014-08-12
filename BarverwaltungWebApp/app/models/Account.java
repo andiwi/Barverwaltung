@@ -32,11 +32,6 @@ public class Account extends BaseModel
 	private String userName;
 	private String password;
 	
-	
-	@OneToOne(fetch = FetchType.LAZY,
-				mappedBy = "boughtFrom")
-	private Product boughtProduct;
-	
 	@OneToMany(mappedBy = "seller")
 	private List<Sale> selledProducts; //Produkte die an der Bar verkauft wurden
 	

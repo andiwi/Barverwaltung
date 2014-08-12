@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 
@@ -15,29 +16,65 @@ import javax.persistence.OneToMany;
 public class Sale extends BaseModel{
 
 	
-	@OneToMany(mappedBy="sale")
-	private List<Product> products;
+	@OneToOne
+	private SalesProduct salesProduct;
 	
 	@ManyToOne
 	private Account seller;
-	
-	@ManyToOne
-	private Account purchaser;
 	
 	private Date sellDate;
 	
 	private BigDecimal price;
 	
-	public Date getSellDate() {
+	private long amount; //Stückanzahl
+
+	public SalesProduct getSalesProduct()
+	{
+		return salesProduct;
+	}
+
+	public void setSalesProduct(SalesProduct salesProduct)
+	{
+		this.salesProduct = salesProduct;
+	}
+
+	public Account getSeller()
+	{
+		return seller;
+	}
+
+	public void setSeller(Account seller)
+	{
+		this.seller = seller;
+	}
+
+	public Date getSellDate()
+	{
 		return sellDate;
 	}
-	public void setSellDate(Date sellDate) {
+
+	public void setSellDate(Date sellDate)
+	{
 		this.sellDate = sellDate;
 	}
-	public BigDecimal getPrice() {
+
+	public BigDecimal getPrice()
+	{
 		return price;
 	}
-	public void setPrice(BigDecimal price) {
+
+	public void setPrice(BigDecimal price)
+	{
 		this.price = price;
+	}
+
+	public long getAmount()
+	{
+		return amount;
+	}
+
+	public void setAmount(long amount)
+	{
+		this.amount = amount;
 	}
 }

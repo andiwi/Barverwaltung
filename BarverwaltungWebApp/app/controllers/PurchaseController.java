@@ -19,8 +19,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import models.Account;
-import models.Product;
-import models.ProductOrigin;
+import models.SalesProduct;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.JPA;
@@ -52,6 +51,7 @@ public class PurchaseController extends Controller
 	
 	private static Map<String, List<Map<String,Object>>> getGridJSON()
 	{
+		/*
 		Map<String, List<Map<String,Object>>> grid = new HashMap<String, List<Map<String,Object>>>();
 		
 		List<Map<String,Object>> columnList = service.getAllColumnsForPurchaseGrid();
@@ -63,11 +63,14 @@ public class PurchaseController extends Controller
 		
 		
 		return grid;
+		*/
+		return null;
 	}
 
 	@Transactional
 	public static Result purchase()
 	{
+		/*
 		DynamicForm form = Form.form().bindFromRequest();
 		
 		String dateString = form.data().get("datefield");
@@ -81,8 +84,8 @@ public class PurchaseController extends Controller
 		}
 		
 		List<Product> productList = new ArrayList<Product>();
-		List<ProductOrigin> origins = service.getAllProductOrigins();
-		for(ProductOrigin ori : origins)
+		List<SalesProduct> origins = service.getAllProductOrigins();
+		for(SalesProduct ori : origins)
 		{
 			String inputStr = form.data().get(ori.getProductName() + "Count");
 			if(!inputStr.isEmpty())
@@ -95,7 +98,7 @@ public class PurchaseController extends Controller
 		}
 		ProductService service = new ProductServiceImpl();
 		service.purchase(productList);
-		
+		*/
 		return ok(purchaseOverview.render());    			
 	}
 	
@@ -103,9 +106,10 @@ public class PurchaseController extends Controller
 	{
 		return ok(salesOverview.render());
 	}
-	
-	private static List<Product> createProduct(ProductOrigin origin, int amount, BigDecimal purchasePrice, Date purchaseDate, Account boughtFrom)
+	/*
+	private static List<Product> createProduct(SalesProduct origin, int amount, BigDecimal purchasePrice, Date purchaseDate, Account boughtFrom)
 	{
+		
 		List<Product> productList = new ArrayList<Product>();
 		
 		for(int i = 0; i < amount; i++)
@@ -121,19 +125,22 @@ public class PurchaseController extends Controller
 		
 		return productList;
 	}
-	
+	*/
 	@Transactional
 	public static Result modal(String datefield)
 	{
+		return null;
+		/*
 		if(datefield.equals("new"))
 		{
-			List<ProductOrigin> origins = service.getAllProductOrigins();
+			List<SalesProduct> origins = service.getAllProductOrigins();
 			return ok(purchaseModal.render(origins));
 		}else
 		{
-			List<ProductOrigin> origins = service.getAllProductOrigins();
+			List<SalesProduct> origins = service.getAllProductOrigins();
 			return ok(purchaseEditModal.render(origins));
 		}	
+		*/
 	}
 	
 	public static Result jsRoutes() {

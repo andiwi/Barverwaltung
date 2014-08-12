@@ -13,36 +13,67 @@ import daos.AccountDAO;
 import daos.BankAccountHistoryDAO;
 import daos.ProductDAO;
 import daos.ProductOriginDAO;
-import models.Product;
-import models.ProductOrigin;
+import daos.PurchaseDAO;
+import models.Purchase;
+import models.SalesProduct;
 import services.ProductService;
 
 public class ProductServiceImpl implements ProductService {
 
-	private ProductDAO dao;
+	private PurchaseDAO dao;
 	
 	public ProductServiceImpl()
 	{
-		dao = ProductDAO.INSTANCE;
+		dao = PurchaseDAO.INSTANCE;
 	}
 	
 	@Override
-	public List<Product> purchase(List<Product> products)
+	public List<Purchase> purchase(List<Purchase> purchases)
 	{
-		for(Product p : products)
+		
+		for(Purchase p : purchases)
 		{
 			dao.persist(p);
 		}
-		return dao.findProductsByDate(products.get(0).getPurchaseDate());
+		
+		return dao.findPurchasesByDate(purchases.get(0).getPurchaseDate());
 	}
 
+	@Override
+	public List<Purchase> getAllPurchases()
+	{
+		return dao.findAll();
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	@Override
 	public List<Map<String,Object>> getAllDataForPurchaseGrid() {
 		
 		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
 		
 		List<Date> purchaseDates = this.getAllPurchaseDates();
-		List<ProductOrigin> pOrigins = this.getAllProductOrigins();
+		List<SalesProduct> pOrigins = this.getAllProductOrigins();
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -51,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
 			Map<String, Object> entry = new HashMap<String, Object>();
 			entry.put("date", dateFormat.format(date));
 			
-			for(ProductOrigin p: pOrigins)
+			for(SalesProduct p: pOrigins)
 			{
 				long amountOfProduct = dao.findAmountOfProductAtDate(date, p);
 				entry.put(p.getProductName(), amountOfProduct);
@@ -69,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductOrigin> getAllProductOrigins()
+	public List<SalesProduct> getAllProductOrigins()
 	{
 		return ProductOriginDAO.INSTANCE.findAll();
 	}
@@ -79,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
 	{
 		List<Map<String,Object>> columnList = new ArrayList<Map<String,Object>>();
 		
-		List<ProductOrigin> pOrigins = this.getAllProductOrigins();
+		List<SalesProduct> pOrigins = this.getAllProductOrigins();
 		
 		Map<String, Object> entry = new HashMap<String, Object>();
 		entry.put("id", "date");
@@ -88,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		columnList.add(entry);
 		
-		for(ProductOrigin p : pOrigins)
+		for(SalesProduct p : pOrigins)
 		{
 			entry = new HashMap<String, Object>();
 			
@@ -102,4 +133,5 @@ public class ProductServiceImpl implements ProductService {
 		return columnList;
 	}
 
+	 */
 }

@@ -14,7 +14,7 @@ import javax.persistence.TypedQuery;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import models.ProductOrigin;
+import models.SalesProduct;
 
 public class ProductOriginDAO extends BaseModelDAO
 {
@@ -22,11 +22,11 @@ public class ProductOriginDAO extends BaseModelDAO
 	
     private ProductOriginDAO() {}
     
-	public List<ProductOrigin> findAll()
+	public List<SalesProduct> findAll()
 	{
 		String queryStr = "FROM ProductOrigin";
-		TypedQuery<ProductOrigin> query = em().createQuery(queryStr, ProductOrigin.class);
-        List<ProductOrigin> list = query.getResultList();
+		TypedQuery<SalesProduct> query = em().createQuery(queryStr, SalesProduct.class);
+        List<SalesProduct> list = query.getResultList();
 		return list;
 	}
 }

@@ -6,16 +6,15 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import models.Product;
-import models.ProductOrigin;
+import models.SalesProduct;
 
 public class ProductDAO extends BaseModelDAO
 {
 	public static final ProductDAO INSTANCE = new ProductDAO();
 	
     private ProductDAO() {}
-    
-    public long findAmountOfProductAtDate(Date date, ProductOrigin productOrigin)
+    /*
+    public long findAmountOfProductAtDate(Date date, SalesProduct productOrigin)
     {
     	String queryStr = "SELECT COUNT(p) FROM Product p WHERE p.purchaseDate = :date AND p.productOrigin = :pOrigin";
     	TypedQuery<Long> query = em().createQuery(queryStr, Long.class).setParameter("date", date);
@@ -50,4 +49,5 @@ public class ProductDAO extends BaseModelDAO
 		
 		return query.getResultList();
 	}	
+	*/
 }
