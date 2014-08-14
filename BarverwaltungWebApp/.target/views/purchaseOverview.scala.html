@@ -108,16 +108,16 @@
 		<div id="myPager"></div>
 	</div>
 	
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-		
-		</div>
-	</div>
 </section>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>
 
 <script src="@routes.Assets.at("javascripts/view.purchaseOverview.js")"></script>
 
@@ -178,8 +178,8 @@ $(function populateGrid() {
 		
 		var item = grid.getDataItem(args.row);
 		
-		$('#editBtn').attr("href", jsRoutes.controllers.PurchaseController.edit(item.id));
-		$('#deleteBtn').attr("href", jsRoutes.controllers.PurchaseController.delete(item.id));
+		$('#editBtn').attr("href", "purchase/edit/" + item.id);
+		$('#deleteBtn').attr("href", "@controllers.PurchaseController.delete(" + item.id + ")");
 	});
 })
 //GRID END

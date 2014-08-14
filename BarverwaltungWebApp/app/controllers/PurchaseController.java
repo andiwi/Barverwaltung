@@ -93,38 +93,16 @@ public class PurchaseController extends Controller
 	{
 		return ok(salesOverview.render());
 	}
-	/*
-	private static List<Product> createProduct(SalesProduct origin, int amount, BigDecimal purchasePrice, Date purchaseDate, Account boughtFrom)
-	{
-		
-		List<Product> productList = new ArrayList<Product>();
-		
-		for(int i = 0; i < amount; i++)
-		{
-			Product product = new Product();
-			product.setProductOrigin(origin);
-			product.setPurchaseDate(purchaseDate);
-			product.setPurchasePrice(purchasePrice);
-			//product.setBoughtFrom("Max Mustermann"); TODO
-			
-			productList.add(product);
-		}
-		
-		return productList;
-	}
-	*/
 	
 	@Transactional
 	public static Result edit(int id)
 	{
-		List<RawProduct> rawProducts = service.getAllRawProducts();
-		return ok(purchaseModal.render());
+		return ok(purchaseEditModal.render());
 	}
 	
 	@Transactional
 	public static Result delete(int id)
 	{
-		String delete = "";
 		return ok(purchaseModal.render());
 	}
 
