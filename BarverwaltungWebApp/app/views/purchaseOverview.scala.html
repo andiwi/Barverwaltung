@@ -177,9 +177,10 @@ $(function populateGrid() {
 		$('#deleteBtn').removeAttr("disabled");
 		
 		var item = grid.getDataItem(args.row);
+		var id = item.id
 		
-		$('#editBtn').attr("href", "purchase/edit/" + item.id);
-		$('#deleteBtn').attr("href", "@controllers.PurchaseController.delete(" + item.id + ")");
+		$('#editBtn').attr("href", "/purchase/edit/" + item.id);
+		$('#deleteBtn').attr("href", "/purchase/delete/" + item.id);
 	});
 })
 //GRID END

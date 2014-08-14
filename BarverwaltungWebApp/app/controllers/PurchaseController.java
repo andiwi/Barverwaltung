@@ -95,13 +95,13 @@ public class PurchaseController extends Controller
 	}
 	
 	@Transactional
-	public static Result edit(int id)
+	public static Result edit(String id)
 	{
 		return ok(purchaseEditModal.render());
 	}
 	
 	@Transactional
-	public static Result delete(int id)
+	public static Result delete(String id)
 	{
 		return ok(purchaseModal.render());
 	}
