@@ -5,58 +5,51 @@
 <title>Remote file for Bootstrap Modal</title>
 </head>
 <body>
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">
-			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-		</button>
-		<h4 class="modal-title" id="myModalLabel">Neuer Einkauf</h4>
-	</div>
-	<div class="modal-body">
-		<form action="/purchase" method="POST" id="purchaseForm"
-			class="form-horizontal" role="form">
-			<div class="form-group">
-				<label for="datefield" class="col-sm-2 control-label">Datum</label>
-				<div class="col-sm-10">
-					<input class="form-control" id="datefield" name="datefield"
-						size="16" type="text" value=""> <span
-						class="input-group-addon" id="datepicker" data-date=""
-						data-date-format="dd-mm-yyyy">Cal<i class="icon-calendar"></i></span>
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+				</div>
+
+				<div class="modal-body">
+					<p>You are about to delete one track url, this procedure is
+						irreversible.</p>
+					<p>Do you want to proceed?</p>
+					<p class="debug-url"></p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<a href="#" class="btn btn-danger danger">Delete</a>
 				</div>
 			</div>
-			
-			<div class="form-group">
-				<label for="@@ori.getProductName()Count" class="col-sm-2 control-label">@@ori.getDisplayName()</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="@@ori.getProductName()Count"
-						name="@@ori.getProductName()Count" placeholder="0">
-				</div>
-				<div class="col-sm-1">
-					<p style="padding-top: 7px;">Stück</p>
-				</div>
-				<div class="col-sm-4">
-					<input id="@@ori.getProductName()Price" name="@@ori.getProductName()Price" class="form-control"
-						placeholder="0.00">
-				</div>
-				<div class="col-sm-1">
-					<p style="padding-top: 7px;">€</p>
-				</div>
-			</div>
-			
-		</form>
+		</div>
 	</div>
 
-	</div>
-	<div class="modal-footer">
-		<button id="dismissBtn" type="button" class="btn btn-default"
-			data-dismiss="modal">Verwerfen</button>
-		<button id="saveBtn" type="button" class="btn btn-primary">Eintrag
-			erstellen</button>
-	</div>
-	
+	<a data-href="delete.php?id=23" data-toggle="modal"
+		data-target="#confirm-delete" href="#">Delete record #23</a>
+	<br>
+	<a data-href="delete.php?id=54" data-toggle="modal"
+		data-target="#confirm-delete" href="#">Delete record #54</a>
+
+
 	<script>
-		$('#saveBtn').click(function() {
-			$('#purchaseForm').submit();
-		})
+		$('#confirm-delete').on(
+				'show.bs.modal',
+				function(e) {
+					$(this).find('.danger').attr('href',
+							$(e.relatedTarget).data('href'));
+
+					$('.debug-url').html(
+							'Delete URL: <strong>'
+									+ $(this).find('.danger').attr('href')
+									+ '</strong>');
+				})
 	</script>
 </body>
 </html>

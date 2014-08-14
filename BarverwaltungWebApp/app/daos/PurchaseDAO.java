@@ -24,7 +24,7 @@ public class PurchaseDAO extends BaseModelDAO
 
 	public List<Purchase> findAll()
 	{
-		String queryStr = "SELECT p FROM Purchase p";
+		String queryStr = "SELECT p FROM Purchase p ORDER BY PURCHASEDATE desc, ID desc";
 		TypedQuery<Purchase> query = em().createQuery(queryStr, Purchase.class);
 		
 		return query.getResultList();

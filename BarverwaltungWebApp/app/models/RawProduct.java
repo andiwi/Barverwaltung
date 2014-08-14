@@ -2,9 +2,11 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class RawProduct extends BaseModel
 {
 	@NotNull

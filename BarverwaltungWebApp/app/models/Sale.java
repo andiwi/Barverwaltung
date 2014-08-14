@@ -6,9 +6,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-
-
-
 @Entity
 public class Sale extends BaseModel{
 

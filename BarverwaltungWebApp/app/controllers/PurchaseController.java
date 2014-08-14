@@ -1,15 +1,27 @@
 package controllers;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import models.Purchase;
+import models.RawProduct;
 import play.Routes;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.ProductService;
+import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
+import views.html.purchaseEditModal;
+import views.html.purchaseModal;
 import views.html.purchaseOverview;
 import views.html.salesOverview;
 
@@ -27,10 +39,9 @@ public class PurchaseController extends Controller
 	@Transactional
 	public static Result purchase()
 	{
-		/*
-		DynamicForm form = Form.form().bindFromRequest();
+		Map<String, String[]> parameters = request().body().asFormUrlEncoded();
 		
-		String dateString = form.data().get("datefield");
+		String dateString = parameters.get("datefield")[0];
 		
 		Date date = null;
 		try {
@@ -40,23 +51,42 @@ public class PurchaseController extends Controller
 			e.printStackTrace();
 		}
 		
-		List<Product> productList = new ArrayList<Product>();
-		List<SalesProduct> origins = service.getAllProductOrigins();
-		for(SalesProduct ori : origins)
+		String rawProductStr = parameters.get("productDropdown")[0];
+		RawProduct toFind = new RawProduct();
+		toFind.setDisplayName(rawProductStr);
+		
+		List<RawProduct> rawProductList = service.getRawProduct(toFind);
+		RawProduct rawProduct = rawProductList.get(0);
+		
+		String amountLitreStr = parameters.get("amount")[0];
+		BigDecimal amountDec = new BigDecimal(amountLitreStr);
+		amountDec = amountDec.multiply(new BigDecimal(1000));
+		Long amount = amountDec.longValue();
+		
+		String piecesStr = parameters.get("pieces")[0];
+		Long pieces = Long.parseLong(piecesStr);
+		
+		String priceStr = parameters.get("price")[0];
+		BigDecimal price = new BigDecimal(priceStr);
+		
+		
+		Purchase purchase = new Purchase();
+		purchase.setPurchaseDate(date);
+		purchase.setPurchasePrice(price);
+		purchase.setPurchaser(new AccountServiceImpl().findAccountById(1));
+		purchase.setRawProduct(rawProduct);
+		purchase.setPieces(pieces);
+		purchase.setAmount(amount);
+		
+		List<Purchase> purchases = new ArrayList<Purchase>();
+		purchases.add(purchase);
+		List<Purchase> saved = service.purchase(purchases);
+		
+		if(saved == null)
 		{
-			String inputStr = form.data().get(ori.getProductName() + "Count");
-			if(!inputStr.isEmpty())
-			{
-				int input = Integer.parseInt(inputStr);
-				BigDecimal price = BigDecimal.valueOf(Double.valueOf(form.data().get(ori.getProductName() + "Price")));
-			
-				productList.addAll(createProduct(ori, input, price, date, null));
-			}
+			return badRequest("Eintrag konnte nicht gespeichert werden");
 		}
-		ProductService service = new ProductServiceImpl();
-		service.purchase(productList);
-		*/
-		return ok(purchaseOverview.render());    			
+		return getPurchasesJSON();   			
 	}
 	
 	public static Result sale()
@@ -83,31 +113,19 @@ public class PurchaseController extends Controller
 		return productList;
 	}
 	*/
+	
 	@Transactional
-	public static Result modal(String datefield)
+	public static Result edit(int id)
 	{
-		return null;
-		/*
-		if(datefield.equals("new"))
-		{
-			List<SalesProduct> origins = service.getAllProductOrigins();
-			return ok(purchaseModal.render(origins));
-		}else
-		{
-			List<SalesProduct> origins = service.getAllProductOrigins();
-			return ok(purchaseEditModal.render(origins));
-		}	
-		*/
+		List<RawProduct> rawProducts = service.getAllRawProducts();
+		return ok(purchaseModal.render());
 	}
 	
-	public static Result jsRoutes() {
-
-        response().setContentType("text/javascript");
-
-        return ok(Routes.javascriptRouter("jsRoutes",
-        		controllers.routes.javascript.PurchaseController.modal())
-        );
-
-    }
+	@Transactional
+	public static Result delete(int id)
+	{
+		String delete = "";
+		return ok(purchaseModal.render());
+	}
 
 }

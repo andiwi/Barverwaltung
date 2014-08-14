@@ -7,16 +7,20 @@ import java.util.List;
 import java.util.Map;
 
 import models.Purchase;
+import models.RawProduct;
 import services.ProductService;
 import daos.PurchaseDAO;
+import daos.RawProductDAO;
 
 public class ProductServiceImpl implements ProductService {
 
-	private PurchaseDAO dao;
+	private PurchaseDAO purchaseDAO;
+	private RawProductDAO rawProductDAO;
 	
 	public ProductServiceImpl()
 	{
-		dao = PurchaseDAO.INSTANCE;
+		purchaseDAO = PurchaseDAO.INSTANCE;
+		rawProductDAO = RawProductDAO.INSTANCE;
 	}
 	
 	@Override
@@ -25,16 +29,23 @@ public class ProductServiceImpl implements ProductService {
 		
 		for(Purchase p : purchases)
 		{
-			dao.persist(p);
+			purchaseDAO.persist(p);
+			
+			RawProduct rawproduct = rawProductDAO.find(p.getRawProduct()).get(0);
+			Long amount = rawproduct.getAmount();
+			amount += p.getAmount() * p.getPieces();
+			rawproduct.setAmount(amount);
+			
+			rawProductDAO.merge(rawproduct);
 		}
 		
-		return dao.findPurchasesByDate(purchases.get(0).getPurchaseDate());
+		return purchaseDAO.findPurchasesByDate(purchases.get(0).getPurchaseDate());
 	}
 
 	@Override
 	public List<Purchase> getAllPurchases()
 	{
-		return dao.findAll();
+		return purchaseDAO.findAll();
 	}
 	
 	@Override
@@ -48,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
 		for(Purchase p : purchases)
 		{
 			Map<String, Object> entry = new HashMap<String, Object>();
+			entry.put("id", p.getId());
 			entry.put("date", dateFormat.format(p.getPurchaseDate()));
 			entry.put("purchaser", p.getPurchaser().getFirstName() + " " + p.getPurchaser().getLastName());
 			entry.put("productName", p.getRawProduct().getDisplayName());
@@ -59,6 +71,18 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		return dataList;
+	}
+
+	@Override
+	public List<RawProduct> getAllRawProducts()
+	{
+		return rawProductDAO.findAll();
+	}
+
+	@Override
+	public List<RawProduct> getRawProduct(RawProduct rawproduct)
+	{
+		return rawProductDAO.find(rawproduct);
 	}
 	
 	

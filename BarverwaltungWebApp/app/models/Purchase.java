@@ -3,8 +3,10 @@ package models;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Purchase extends BaseModel
 {
 	@ManyToOne

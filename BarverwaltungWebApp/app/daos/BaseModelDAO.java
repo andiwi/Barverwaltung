@@ -17,7 +17,7 @@ public class BaseModelDAO
      * @return
      */
     public void persist(BaseModel model) {
-        em().persist(model);
+       em().persist(model);
     }
 
 
