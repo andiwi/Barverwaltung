@@ -21,7 +21,7 @@ import services.ProductService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import views.html.purchaseEditModal;
-import views.html.purchaseModal;
+import views.html.deleteModal;
 import views.html.purchaseOverview;
 import views.html.salesOverview;
 
@@ -95,15 +95,29 @@ public class PurchaseController extends Controller
 	}
 	
 	@Transactional
-	public static Result edit(String id)
+	public static Result edit(int id)
 	{
 		return ok(purchaseEditModal.render());
 	}
 	
 	@Transactional
-	public static Result delete(String id)
+	public static Result deleteModal(int id)
 	{
-		return ok(purchaseModal.render());
+		return ok(deleteModal.render(id));
+	}
+	
+	@Transactional
+	public static Result delete(int id)
+	{
+		ProductService service = new ProductServiceImpl();
+		boolean success = service.deletePurchase(id);
+		
+		if(success)
+		{
+			return getPurchasesJSON();
+		}else{
+			return badRequest("Could not delete entry");
+		}
 	}
 
 }

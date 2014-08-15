@@ -84,6 +84,31 @@ public class ProductServiceImpl implements ProductService {
 	{
 		return rawProductDAO.find(rawproduct);
 	}
+
+	@Override
+	public boolean deletePurchase(int id)
+	{
+		//Purchase löschen
+		Purchase p = purchaseDAO.findEntity(id, Purchase.class);
+		
+		if(p != null)
+		{
+			
+			purchaseDAO.delete(id);
+						
+			//RawProduct Menge anpassen
+			RawProduct r = p.getRawProduct();
+			if(r.getAmount() < p.getAmount())
+				return false; //Löschen nicht möglich da sonst negativer Lagerbestand
+			
+			r.setAmount(r.getAmount()-p.getAmount());
+			
+			rawProductDAO.merge(r);
+			return true;
+			
+		}else return false;
+		
+	}
 	
 	
 

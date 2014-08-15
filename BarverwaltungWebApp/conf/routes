@@ -23,8 +23,9 @@ GET		/purchases.json					controllers.PurchaseController.getPurchasesJSON()
 POST 	/purchase						controllers.PurchaseController.purchase()
 POST	/sale							controllers.PurchaseController.sale()
 
-GET		/purchase/edit/:id				controllers.PurchaseController.edit(id: String)
-GET		/purchase/delete/:id			controllers.PurchaseController.delete(id: String)
+GET		/purchase/edit/:id				controllers.PurchaseController.edit(id: Int)
+GET		/purchase/deleteModal/:id		controllers.PurchaseController.deleteModal(id: Int)
+POST	/purchase/delete/:id			controllers.PurchaseController.delete(id: Int)
 
 # Javascript routing
 GET    /assets/javascripts/routes       controllers.ApplicationController.javascriptRoutes()

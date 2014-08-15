@@ -1,0 +1,54 @@
+@(id: Int)
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
+
+<title>Remote file for Bootstrap Modal</title>
+</head>
+<body>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="myModalLabel">Löschen bestätigen</h4>
+	</div>
+
+	<div class="modal-body">
+		<p>Eintrag wirklich löschen?</p>
+	</div>
+
+	<div class="modal-footer">
+		<button id="cancelBtnModal" type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+		<button id="deleteBtnModal" type="button" class="btn btn-danger danger" data-dismiss="modal">Löschen</button>
+	</div>
+
+
+	<script>
+		//RESET BODY AFTER HIDING MODAL
+		$('body').on('hidden.bs.modal', '.modal', function () {
+			  $(this).removeData('bs.modal');
+		});
+		
+		//AJAX CALL DELETE
+		$('#deleteBtnModal').click(function(e){
+			e.preventDefault();
+			
+			jsRoutes.controllers.PurchaseController.delete(@id).ajax({
+			    type : "POST",
+			    success:function(data){
+			    	dataView.setItems(data, "id");
+			    },
+		  		error:function(data){
+		  			alert(data.toString());
+		  		}
+			});
+			
+			$('#deleteModal').modal('hide');
+		});
+	</script>
+</body>
+</html>

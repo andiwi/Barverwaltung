@@ -3,8 +3,12 @@ package daos;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Session;
+
+import play.db.jpa.JPA;
 import models.Purchase;
 
 public class PurchaseDAO extends BaseModelDAO
@@ -28,5 +32,13 @@ public class PurchaseDAO extends BaseModelDAO
 		TypedQuery<Purchase> query = em().createQuery(queryStr, Purchase.class);
 		
 		return query.getResultList();
+	}
+
+	public void delete(int id)
+	{
+		Session session = (Session)JPA.em().getDelegate();
+		Purchase p = (Purchase)session.load(Purchase.class, id);
+		
+		session.delete(p);		
 	}
 }
