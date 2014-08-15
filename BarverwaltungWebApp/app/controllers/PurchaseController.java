@@ -20,7 +20,6 @@ import play.mvc.Result;
 import services.ProductService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
-import views.html.purchaseEditModal;
 import views.html.deleteModal;
 import views.html.purchaseOverview;
 import views.html.salesOverview;
@@ -92,12 +91,6 @@ public class PurchaseController extends Controller
 	public static Result sale()
 	{
 		return ok(salesOverview.render());
-	}
-	
-	@Transactional
-	public static Result edit(int id)
-	{
-		return ok(purchaseEditModal.render());
 	}
 	
 	@Transactional

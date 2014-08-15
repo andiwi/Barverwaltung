@@ -84,9 +84,7 @@
     </div>
 </div>
 <!-- Button (Double) -->
-<div class="form-group pull-right" style="
-    margin-right: 42px;
-">
+<div class="form-group">
   <label class="control-label sr-only" for="button1id">Double Button</label>
       <button id="submit" name="submit" class="btn btn-success">Speichern</button>
     <button id="discard" name="discard" class="btn btn-default">Verwerfen</button>
@@ -100,8 +98,8 @@
 	<legend>Übersicht</legend>
 
 
-	<button id="editBtn" type="button" class="btn btn-default" disabled data-toggle ="modal" data-target="#myModal">bearbeiten</button>
-	<button id="deleteBtn" type="button" class="btn btn-default" disabled data-toggle ="modal" data-target="#deleteModal">löschen</button>
+	<!--<button id="editBtn" type="button" class="btn btn-default" disabled data-toggle ="modal" data-target="#myModal">bearbeiten</button>-->
+	<button id="deleteBtn" type="button" class="btn btn-default pull-right" disabled data-toggle ="modal" data-target="#deleteModal">Eintrag löschen</button>
 	
 	<div id="myGridContainer" style="width: 95%;">
 		<div id="myGrid" style="width: 100%; height: 600px;"></div>
@@ -109,15 +107,6 @@
 	</div>
 	
 </section>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-		</div>
-	</div>
-</div>
 
 <!-- DeleteModal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
@@ -138,7 +127,8 @@ var columns = [];
 var options = {
 	editable : true,
 	enableCellNavigation : true,
-	enableColumnReorder : false
+	enableColumnReorder : false,
+	forceFitColumns: true
 };
 
 var dataView = new Slick.Data.DataView();

@@ -55,7 +55,7 @@ public class ApplicationController extends Controller {
           Routes.javascriptRouter("jsRoutes",
             // Routes
             controllers.routes.javascript.PurchaseController.purchase(),
-            controllers.routes.javascript.PurchaseController.edit(),
+            //controllers.routes.javascript.PurchaseController.edit(),
             controllers.routes.javascript.PurchaseController.delete()
           )
         );
