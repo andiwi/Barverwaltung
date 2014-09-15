@@ -8,10 +8,11 @@ GET /                           		controllers.ApplicationController.index()
 #Navigation
 GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview()
 GET 	/salesOverview					controllers.ApplicationController.getSalesOverview()
-GET 	/accountOverview				controllers.ApplicationController.getAccountOverview()
 GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
 
-GET 	/accountOverview/:id			controllers.AccountController.getAccount(id: Int)
+
+
+GET 	/account/:id					controllers.AccountController.getAccount(id: Int)
 
 GET		/createAccount					controllers.AccountController.gotoCreateAccount()
 POST	/createAccount 					controllers.AccountController.createAccount()
@@ -21,11 +22,22 @@ POST	/payIn							controllers.AccountController.payIn()
 
 GET		/purchases.json					controllers.PurchaseController.getPurchasesJSON()
 POST 	/purchase						controllers.PurchaseController.purchase()
-POST	/sale							controllers.PurchaseController.sale()
+
+#Barverkäufe
+POST	/sale							controllers.SaleController.sale()
 
 #GET		/purchase/edit/:id				controllers.PurchaseController.edit(id: Int)
 GET		/purchase/deleteModal/:id		controllers.PurchaseController.deleteModal(id: Int)
 POST	/purchase/delete/:id			controllers.PurchaseController.delete(id: Int)
+
+GET		/administration					controllers.AdminController.getAdminOverview()
+GET		/adminSalesProduct				controllers.AdminController.gotoAdminSalesProduct()
+POST	/createSalesProduct				controllers.AdminController.createSalesProduct()
+
+
+GET		/grid/columns/account/:id.json	controllers.AccountController.getGridColumnsJSON(id: Int)
+GET		/grid/data/account/:id.json		controllers.AccountController.getGridDataJSON(id: Int)
+
 
 # Javascript routing
 GET    /assets/javascripts/routes       controllers.ApplicationController.javascriptRoutes()

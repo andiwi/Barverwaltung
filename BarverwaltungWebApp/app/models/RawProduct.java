@@ -15,8 +15,7 @@ public class RawProduct extends BaseModel
 	private long amount; //in Milliliter
 	
 	@OneToMany(mappedBy="rawProduct")
-	private List<Purchase> purchases;
-
+	private List<MapRawProductValue> mapRawProductValue;
 	
 	public String getProductName()
 	{

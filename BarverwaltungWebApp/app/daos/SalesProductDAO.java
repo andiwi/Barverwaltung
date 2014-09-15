@@ -1,11 +1,28 @@
 package daos;
 
+import java.util.List;
 
-public class ProductDAO extends BaseModelDAO
+import javax.persistence.TypedQuery;
+
+import models.RawProduct;
+import models.SalesProduct;
+
+
+public class SalesProductDAO extends BaseModelDAO
 {
-	public static final ProductDAO INSTANCE = new ProductDAO();
+	public static final SalesProductDAO INSTANCE = new SalesProductDAO();
 	
-    private ProductDAO() {}
+    private SalesProductDAO() {}
+    
+    public List<SalesProduct> findAll()
+	{
+		String queryStr = "SELECT p FROM SalesProduct p";
+		TypedQuery<SalesProduct> query = em().createQuery(queryStr, SalesProduct.class);
+		
+		return query.getResultList();
+	}
+    
+    
     /*
     public long findAmountOfProductAtDate(Date date, SalesProduct productOrigin)
     {

@@ -1,0 +1,60 @@
+@(form: Form[SalesProduct], rawProducts: List[RawProduct])
+
+@content = {
+
+<h1>Neues SalesProduct erstellen</h1>
+
+<form id="salesProductForm" action="/createSalesProduct" method="POST" class="form-horizontal" role="form">
+	<div class="form-group">
+		<label for="productName" class="col-sm-1 control-label">productName:</label>
+		<div class="col-sm-2">
+			<input id="productName"  class="form-control" name="productName" type="text"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="displayName" class="col-sm-1 control-label">displayName:</label>
+		<div class="col-sm-2">
+			<input id="displayName"  class="form-control" name="displayName" type="text"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="defaultSalePrice" class="col-sm-1 control-label">defaultSalePrice:</label>
+		<div class="col-sm-2">
+			<div class="input-group">
+				<input id="defaultSalePrice" name="defaultSalePrice" class="form-control" placeholder="0.0" type="number" step="any">
+	      		<span class="input-group-addon">€</span>
+	      	</div>
+		</div>
+	</div>
+	
+	<h2>Wird aus folgenden RawProducts gemischt: </h2>
+	@for(i <- 1 to 10) {
+		<div class="form-group">
+			<label for="rawProduct@i" class="col-sm-1 control-label">rawProduct@i:</label>
+			<div class="col-sm-2">
+				<select id="rawProduct@i"	name="rawProduct@i" class="form-control">
+					<option value="0">nicht ausgewählt</option>
+				@for(rawp <- rawProducts){
+					<option value="@rawp.getId()">@rawp.getDisplayName()</option>
+				}
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<div class="input-group">
+			      <input id="amountRawProduct@i" name="amountRawProduct@i" class="form-control" placeholder="0" type="number" step="any">
+			      <span class="input-group-addon">Milliliter</span>
+			    </div>
+			</div>
+		</div>
+	}
+	<div class="form-group">
+		<div class="col-sm-offset-1 col-sm-2">
+			<button id="registersubmit" class="btn btn-default" type="submit">SalesProduct anlegen</button>
+		</div>
+	</div>
+</form>
+
+<script src="@routes.Assets.at("javascripts/barverwaltung/adminSalesProduct.js")"></script>
+} @adminTemplate("AdminSalesProduct")(content)

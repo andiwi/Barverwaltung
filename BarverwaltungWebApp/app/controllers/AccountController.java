@@ -1,21 +1,28 @@
 package controllers;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import models.Account;
+import models.Purchase;
+import models.Account.Gender;
+import models.SalesProduct;
 import daos.AccountDAO;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.AccountService;
+import services.ProductService;
 import services.impl.AccountServiceImpl;
-import views.html.accountOverview;
-import views.html.accountDetail;
-import views.html.accountCreate;
-import views.html.accountUpdate;
+import services.impl.ProductServiceImpl;
+import views.html.account.*;
 
 public class AccountController extends ApplicationController
 {
@@ -23,11 +30,14 @@ public class AccountController extends ApplicationController
 	public static Result getAccount(int id)
 	{
 		AccountService accountService = new AccountServiceImpl();
+		ProductService productService = new ProductServiceImpl();
+		
 		Account selectedAccount = accountService.findAccountById(id);
 		
 		List<Account> accounts = accountService.getAllAccounts();
+		List<SalesProduct> salesProductList = productService.getAllSalesProducts();
 		
-		return ok(accountDetail.render(accounts, selectedAccount));
+		return ok(accountTemplate.render(accounts, selectedAccount, null, salesProductList));
 	}
 	
 	@Transactional
@@ -39,16 +49,17 @@ public class AccountController extends ApplicationController
 		if (form.hasErrors())
 		{
 			int sentAccountId = Integer.valueOf(form.data().get("accountId"));
-			Account account = accountService.findAccountById(sentAccountId);
+			Account selectedAccount = accountService.findAccountById(sentAccountId);
 			
-			return badRequest(accountUpdate.render(form, account));
+			List<Account> accounts = accountService.getAllAccounts();
+			return badRequest(accountTemplate.render(accounts, selectedAccount, form, null));
 		} else
 		{
 			Account account = form.get();
 			
 			accountService.updateAccount(account);
 			flash("update.successful", "account.updated-successfully");
-			return redirect(routes.ApplicationController.getAccountOverview());
+			return redirect(routes.AccountController.getAccount(-1));
 		}
 	}
 	
@@ -59,11 +70,13 @@ public class AccountController extends ApplicationController
 		
 		int sentAccountId = Integer.valueOf(form.data().get("accountId"));
 		AccountService accountService = new AccountServiceImpl();
-		Account account = accountService.findAccountById(sentAccountId);
 		
-		Form<Account> accountForm = Form.form(Account.class).fill(account);
+		Account selectedAccount = accountService.findAccountById(sentAccountId);
+		Form<Account> accountForm = Form.form(Account.class).fill(selectedAccount);
 		
-		return ok(accountUpdate.render(accountForm, account));
+		List<Account> accounts = accountService.getAllAccounts();
+		
+		return ok(accountTemplate.render(accounts, selectedAccount, accountForm, null));
 	}
 	
 	@Transactional
@@ -71,19 +84,31 @@ public class AccountController extends ApplicationController
 	{
 		Form<Account> form = Form.form(Account.class).bindFromRequest();
 		if (form.hasErrors()) {
-			return badRequest(accountCreate.render(form));
+			AccountService accountService = new AccountServiceImpl();
+	    	List<Account> accounts = accountService.getAllAccounts();
+	    	
+			return badRequest(accountTemplate.render(accounts, null, form, null));
 		} else {
 			Account account = form.get();
 			AccountService accountService = new AccountServiceImpl();
 			accountService.createAccount(account);
 			flash("create.successful", "account.created-successfully");
-			return redirect(routes.ApplicationController.getAccountOverview());
+			
+			List<Account> accounts = accountService.findAccount(account);
+			if(accounts.size() == 1)
+				return redirect(routes.AccountController.getAccount(accounts.get(0).getId()));
+			
+			return redirect(routes.AccountController.getAccount(-1));
 		}
 	}
 	
+	@Transactional
 	public static Result gotoCreateAccount()
 	{
-		return ok(accountCreate.render(Form.form(Account.class)));
+		AccountService accountService = new AccountServiceImpl();
+    	List<Account> accounts = accountService.getAllAccounts();
+    	
+		return ok(accountTemplate.render(accounts, null, Form.form(Account.class), null));
 	}
 	
 	@Transactional
@@ -91,24 +116,48 @@ public class AccountController extends ApplicationController
 	{
 		AccountService accountService = new AccountServiceImpl();
 		
-		DynamicForm form = Form.form().bindFromRequest();
+		Map<String, String[]> parameters = request().body().asFormUrlEncoded();
 		
-		int sentAccountId = Integer.parseInt((form.data().get("accountId")));
+		String accountIdStr = parameters.get("accountId")[0];
+		int sentAccountId = Integer.parseInt(accountIdStr);
 		Account selectedAccount = accountService.findAccountById(sentAccountId);
 		
-		double amountD = Double.parseDouble(form.data().get("amount"));
-		BigDecimal amount = BigDecimal.valueOf(amountD);
 		
+		
+		String amountStr = parameters.get("amount")[0];
+		double amountD = Double.parseDouble(amountStr);
+		BigDecimal amount = BigDecimal.valueOf(amountD);
+	
 		if(amount.compareTo(BigDecimal.ZERO) < 0) //Wenn versucht wurde ein Negativer Betrag einzuzahlen
 		{
-			List<Account> accounts = accountService.getAllAccounts();
-			return badRequest(accountDetail.render(accounts, selectedAccount));
+			return badRequest("Beim einzahlen ist ein Fehler aufgetreten");
 		}else
 		{
 			accountService.payIn(selectedAccount, amount);
-			return getAccount(sentAccountId);
+			return ok(accountService.findAccountById(selectedAccount.getId()).getAccountBalance().toString());
 		}
 	}
+	
+	@Transactional
+	public static Result getGridColumnsJSON(int id)
+	{
+		AccountService accountService = new AccountServiceImpl();
+		List<Map<String,Object>> columnList = accountService.getGridColumns();
+		return ok(Json.toJson(columnList));
+	}
+	
+	
+	@Transactional
+	public static Result getGridDataJSON(int id)
+	{
+		AccountService accountService = new AccountServiceImpl();
+		List<Map<String,Object>> dataList = accountService.getGridData(id);
+		return ok(Json.toJson(dataList));
+	}
+	
+	
+	
+	
 	
 	
 }

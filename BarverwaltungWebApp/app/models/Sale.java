@@ -16,11 +16,14 @@ public class Sale extends BaseModel{
 	@ManyToOne
 	private Account seller;
 	
+	@ManyToOne
+	private Account consumer;
+	
 	private Date sellDate;
 	
 	private BigDecimal price;
 	
-	private long amount; //Stückanzahl
+	private int amount; //Stückanzahl
 
 	public SalesProduct getSalesProduct()
 	{
@@ -40,6 +43,16 @@ public class Sale extends BaseModel{
 	public void setSeller(Account seller)
 	{
 		this.seller = seller;
+	}
+
+	public Account getConsumer()
+	{
+		return consumer;
+	}
+
+	public void setConsumer(Account consumer)
+	{
+		this.consumer = consumer;
 	}
 
 	public Date getSellDate()
@@ -62,12 +75,12 @@ public class Sale extends BaseModel{
 		this.price = price;
 	}
 
-	public long getAmount()
+	public int getAmount()
 	{
 		return amount;
 	}
 
-	public void setAmount(long amount)
+	public void setAmount(int amount)
 	{
 		this.amount = amount;
 	}

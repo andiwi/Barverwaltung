@@ -400,6 +400,7 @@
 
       return null;
     }
+    
 
     function expandCollapseAllGroups(level, collapse) {
       if (level == null) {

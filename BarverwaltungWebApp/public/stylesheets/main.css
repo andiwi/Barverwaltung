@@ -1,9 +1,14 @@
 body {
-
-	padding-top: 70px;
-
-	margin-left: 3%;
-	margin-right: 3%;
+	padding-top:51px;
+}
 
 
- }
+
+/** Kontostand Panel **/
+.panel-kontostand > .panel-body.positive {
+	background-color: #65b045;
+}
+
+.panel-kontostand > .panel-body.negative {
+	background-color: #dd4b39;
+}

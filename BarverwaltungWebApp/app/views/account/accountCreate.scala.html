@@ -1,0 +1,42 @@
+@(form: Form[Account])
+
+<h1>Neues Konto erstellen</h1>
+
+<form action="/createAccount" method="POST" class="form-horizontal" role="form">
+	<div class="form-group">
+		<label for="firstName" class="col-sm-1 control-label">Vorname:</label>
+		<div class="col-sm-2">
+			<input id="firstName" name="firstName" type="text" value="@form(" firstName").value" class="form-control"/>
+		</div>
+		
+		@for(error <- form("firstName").errors) {
+		<div id="error_msg_firstName" class="error" role="alert">
+			@Messages(error.message)</div>
+		} 
+	</div>
+	<div class="form-group">
+		<label for="lastName" class="col-sm-1 control-label">Nachname:</label>
+		<div class="col-sm-2">
+			<input id="lastName" name="lastName" type="text" value="@form(" lastName").value" class="form-control"/>
+		</div>
+		@for(error <- form("lastName").errors) {
+		<div id="error_msg_lastName" class="error" role="alert">
+			@Messages(error.message)</div>
+		} 
+	</div>
+	
+	<div class="form-group">
+		<label for="gender" class="col-sm-1 control-label">Geschlecht:</label>
+		<div class="col-sm-2">
+			<select id="gender"	name="gender" class="form-control">
+				<option value="male">männlich</option>
+				<option value="female">weiblich</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-1 col-sm-2">
+			<button id="registersubmit" class="btn btn-default" type="submit">Konto anlegen</button>
+		</div>
+	</div>
+</form>

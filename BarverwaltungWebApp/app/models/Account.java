@@ -30,8 +30,13 @@ public class Account extends BaseModel
 	@OneToMany(mappedBy = "seller")
 	private List<Sale> selledProducts; //Produkte die an der Bar verkauft wurden
 	
+	@OneToMany(mappedBy = "consumer")
+	private List<Sale> consumedProducts; //Produkte die an der Bar gekauft wurden
+	
 	@OneToMany(mappedBy = "purchaser")
-	private List<Purchase> boughtProducts; //Produkte die an der Bar gekauft wurden
+	private List<Purchase> boughtProducts; //Produkte die für die Bar gekauft wurden
+	
+	
 	
 	@OneToMany(mappedBy = "owner")
 	private List<BankAccountHistory> bankAccountHistory;
@@ -71,5 +76,13 @@ public class Account extends BaseModel
 	}
 	public void setAccountBalance(BigDecimal accountBalance) {
 		this.accountBalance = accountBalance;
+	}
+	public List<Sale> getConsumedProducts()
+	{
+		return consumedProducts;
+	}
+	public void setConsumedProducts(List<Sale> consumedProducts)
+	{
+		this.consumedProducts = consumedProducts;
 	}
 }

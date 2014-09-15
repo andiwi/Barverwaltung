@@ -1,0 +1,33 @@
+@(selectedAccount: Account, salesProductList: List[SalesProduct])
+
+<form action="/sale" method="POST" id="saleForm" class="form-inline" role="form">
+	<div class="form-group">
+	  <label class="control-label sr-only" for="datefield">Datum</label>
+	    <div class="input-group">
+	     	<input class="form-control" id="datefield" name="datefield" size="16" type="text" value="">
+	     	<span class="input-group-addon" id="datepicker" data-date="" data-date-format="dd-mm-yyyy">Cal
+	     		<i class="icon-calendar"></i>
+	     	</span>
+	    </div>
+	</div>
+	
+	@for(product <- salesProductList){
+		<div class="form-group">
+			<div id="salesProductBtn_@product.getId()" class="btn btn-default salesProductBtn">
+				<span id="salesProductSpan_@product.getId()">@product.getDisplayName</span>
+				<input id="amount_@product.getId()" name="amount_@product.getId()" class="form-control" value="0" type="number">
+			</div>			
+		</div>
+	}
+	
+	<input id="selectedAccount_id" type="hidden" name="selectedAccount_id" value="@selectedAccount.getId()">
+	
+	<!-- Button (Double) -->
+	<div class="form-group">
+	  <label class="control-label sr-only" for="button1id">Double Button</label>
+	      <button id="submit" name="submit" class="btn btn-success">Kaufen</button>
+	    <button id="discard" name="discard" class="btn btn-default">Verwerfen</button>
+	</div>
+</form>
+
+<script src="@routes.Assets.at("javascripts/barverwaltung/salesProductBUttonsForm.js")"></script>

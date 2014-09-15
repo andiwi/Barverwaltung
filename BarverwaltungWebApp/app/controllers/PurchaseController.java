@@ -21,8 +21,8 @@ import services.ProductService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import views.html.deleteModal;
-import views.html.purchaseOverview;
-import views.html.salesOverview;
+import views.html.purchase.purchaseOverview;
+import views.html.sale.salesOverview;
 
 public class PurchaseController extends Controller
 {	
@@ -86,11 +86,6 @@ public class PurchaseController extends Controller
 			return badRequest("Eintrag konnte nicht gespeichert werden");
 		}
 		return getPurchasesJSON();   			
-	}
-	
-	public static Result sale()
-	{
-		return ok(salesOverview.render());
 	}
 	
 	@Transactional

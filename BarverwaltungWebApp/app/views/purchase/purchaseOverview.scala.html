@@ -1,27 +1,5 @@
 @(rawProducts: List[RawProduct])
-@extra_styles = {
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/slick.grid.css")" type="text/css" />
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/smoothness/jquery-ui-1.8.16.custom.css")" type="text/css" />
-
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/datepicker.css")" type="text/css" />
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrapValidator.min.css")"/>
-} @extra_scripts = {
-<script src="@routes.Assets.at("javascripts/slickgrid/lib/firebugx.js")"></script>
-<script src="@routes.Assets.at("javascripts/slickgrid/lib/jquery-ui-1.8.16.custom.min.js")"></script>
-<script src="@routes.Assets.at("javascripts/slickgrid/lib/jquery.event.drag-2.2.js")"></script>
-
-<script src="@routes.Assets.at("javascripts/slickgrid/slick.core.js")"></script>
-<script src="@routes.Assets.at("javascripts/slickgrid/slick.grid.js")"></script>
-<script src="@routes.Assets.at("javascripts/slickgrid/slick.editors.js")"></script>
-<script src="@routes.Assets.at("javascripts/slickgrid/slick.dataview.js")"></script>
-<script src="@routes.Assets.at("javascripts/slickgrid/plugins/slick.rowselectionmodel.js")"></script>
-
-<script src="@routes.Assets.at("javascripts/bootstrap-datepicker.js")"></script>
-<script src="@routes.Assets.at("javascripts/jquery-dateFormat.min.js")"></script>
-<script src="@routes.Assets.at("javascripts/bootstrapValidator.min.js")"></script>
-
-<script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes()"></script>
-} @content = {
+@content = {
 
 <section id="purchase" style="margin-top: 15px; margin-bottom: 100px;">		
 		
@@ -294,4 +272,4 @@ $(".input-group").change(function() {
 });
 
 </script>
-} @main("PurchaseOverview", extra_styles, extra_scripts)(content)
+} @main("PurchaseOverview")(content)

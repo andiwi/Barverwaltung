@@ -11,11 +11,11 @@ import services.AccountService;
 import services.ProductService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
-import views.html.accountOverview;
 import views.html.index;
-import views.html.purchaseOverview;
-import views.html.salesOverview;
-import views.html.stockOverview;
+import views.html.purchase.purchaseOverview;
+import views.html.sale.salesOverview;
+import views.html.stock.stockOverview;
+import views.html.account.accountTemplate;
 
 public class ApplicationController extends Controller {
 	
@@ -34,16 +34,6 @@ public class ApplicationController extends Controller {
 		return ok(purchaseOverview.render(service.getAllRawProducts()));
     }
     
-    @Transactional
-    public static Result getAccountOverview()
-    {
-    	AccountService accountService = new AccountServiceImpl();
-    	List<Account> accounts = accountService.getAllAccounts();
-    	
-    	
-    	return ok(accountOverview.render(accounts));
-    }
-    
     public static Result getStockOverview()
     {
     	return ok(stockOverview.render());
@@ -56,7 +46,8 @@ public class ApplicationController extends Controller {
             // Routes
             controllers.routes.javascript.PurchaseController.purchase(),
             //controllers.routes.javascript.PurchaseController.edit(),
-            controllers.routes.javascript.PurchaseController.delete()
+            controllers.routes.javascript.PurchaseController.delete(),
+            controllers.routes.javascript.AccountController.payIn()
           )
         );
       }

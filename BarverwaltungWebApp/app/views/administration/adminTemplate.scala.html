@@ -1,0 +1,29 @@
+@(title: String)(pageContent: Html)
+
+@extra_styles = {
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/simple-sidebar.css")" type="text/css" />
+}
+
+@content = {
+<div id="wrapper">
+
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper">@views.html.administration.items.adminSidebar()</div>
+	<!-- /#sidebar-wrapper -->
+
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		@pageContent
+		<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+	</div>
+	<!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<script>
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+</script>
+} @main(title, extra_styles)(content)

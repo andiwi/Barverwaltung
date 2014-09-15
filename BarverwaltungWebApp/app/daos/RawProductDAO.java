@@ -38,6 +38,5 @@ public class RawProductDAO extends BaseModelDAO
     	List<RawProduct> results = c.list();
     	
     	return results;
-
 	}
 }

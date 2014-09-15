@@ -5,11 +5,16 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+
 import models.Account;
+import models.RawProduct;
 import play.db.jpa.JPA;
 
 
-public class AccountDAO
+public class AccountDAO extends BaseModelDAO
 {
 	public static final AccountDAO INSTANCE = new AccountDAO();
 	
@@ -25,16 +30,6 @@ public class AccountDAO
     	return list;
     }
     
-    /**
-     * Get a given account based on the id
-     * @param id
-     * @return
-     */
-    public Account findAccountById(int id)
-    {
-    	return em().find(Account.class, id);
-	}
-
     /**
      * If no entity with the given id exists in the DB, a new entity is stored. If there is already
      * an entity with the given id, the entity is updated
@@ -59,14 +54,19 @@ public class AccountDAO
     
     
     
-    
-    /**
-     * Get the entity manager
-     * @return
-     */
-    private EntityManager em() {
-        return JPA.em();
-    }
+  	public List<Account> find(Account account)
+	{
+		Session session = (Session)JPA.em().getDelegate();
+    	
+    	Criteria c = session.createCriteria(Account.class);
+    	Example example = Example.create(account);
+    	//example.excludeZeroes();
+    	c.add(example);
+
+    	List<Account> results = c.list();
+    	
+    	return results;
+	}
 
 	
 }

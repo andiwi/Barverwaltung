@@ -6,21 +6,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.MapRawProductValue;
 import models.Purchase;
 import models.RawProduct;
+import models.SalesProduct;
 import services.ProductService;
+import daos.MapRawProductValueDAO;
 import daos.PurchaseDAO;
 import daos.RawProductDAO;
+import daos.SalesProductDAO;
 
 public class ProductServiceImpl implements ProductService {
 
 	private PurchaseDAO purchaseDAO;
 	private RawProductDAO rawProductDAO;
+	private SalesProductDAO salesProductDAO;
+	private MapRawProductValueDAO mapRawProductValueDAO;
 	
 	public ProductServiceImpl()
 	{
 		purchaseDAO = PurchaseDAO.INSTANCE;
 		rawProductDAO = RawProductDAO.INSTANCE;
+		salesProductDAO = SalesProductDAO.INSTANCE;
+		mapRawProductValueDAO = MapRawProductValueDAO.INSTANCE;
 	}
 	
 	@Override
@@ -109,6 +117,49 @@ public class ProductServiceImpl implements ProductService {
 		}else return false;
 		
 	}
+
+	@Override
+	public List<SalesProduct> getAllSalesProducts()
+	{
+		return salesProductDAO.findAll();
+	}
+
+	@Override
+	public void createSalesProduct(SalesProduct salesProduct)
+	{
+		salesProductDAO.persist(salesProduct);
+	}
+	
+	@Override
+	public long controlIfRawProductsAvailable(SalesProduct salesProduct)
+	{
+		Long minAvailableAmount = Long.MAX_VALUE;
+		
+		List<MapRawProductValue> ingredients = salesProduct.getMapRawProductValue();
+		
+		
+		for(MapRawProductValue m : ingredients)
+		{
+			RawProduct rawProduct = rawProductDAO.findEntity(m.getRawProduct().getId(), RawProduct.class);
+						
+			Long availableAmount = rawProduct.getAmount()/m.getAmountRawProduct();
+			
+			if(availableAmount < minAvailableAmount)
+			{
+				minAvailableAmount = availableAmount;
+			}
+		}
+		
+		return minAvailableAmount;
+	}
+
+	@Override
+	public RawProduct findRawProductById(Integer id)
+	{
+		return rawProductDAO.findEntity(id, RawProduct.class);	
+	}
+
+	
 	
 	
 
