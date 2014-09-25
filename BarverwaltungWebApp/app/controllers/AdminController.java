@@ -13,6 +13,7 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.ProductService;
 import services.UserService;
 import services.impl.ProductServiceImpl;
@@ -24,11 +25,13 @@ import views.html.*;
 
 public class AdminController extends Controller
 {
+	@Security.Authenticated(SecureController.class)
 	public static Result getAdminOverview()
 	{
 		return ok(adminOverview.render());
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result gotoAdminSalesProduct()
 	{
@@ -38,12 +41,14 @@ public class AdminController extends Controller
 		return ok(adminSalesProduct.render(Form.form(SalesProduct.class), rawProducts));
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result gotoAdminUser()
 	{
 		return ok(adminUser.render());
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result createSalesProduct()
 	{
@@ -91,6 +96,7 @@ public class AdminController extends Controller
 		return ok("Erstellen erfolgreich!");
 	}
 	
+	//TODO speziell überprüfen, falls kein user vorhanden @Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result createUser()
 	{

@@ -15,6 +15,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.AccountService;
 import services.ProductService;
 import services.SaleService;
@@ -24,6 +25,7 @@ import services.impl.SaleServiceImpl;
 
 public class SaleController extends Controller {
 
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result sale()
 	{	

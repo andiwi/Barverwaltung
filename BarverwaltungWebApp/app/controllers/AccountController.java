@@ -18,6 +18,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.AccountService;
 import services.ProductService;
 import services.impl.AccountServiceImpl;
@@ -26,6 +27,7 @@ import views.html.account.*;
 
 public class AccountController extends ApplicationController
 {
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result getAccount(int id)
 	{
@@ -40,6 +42,7 @@ public class AccountController extends ApplicationController
 		return ok(accountTemplate.render(accounts, selectedAccount, null, salesProductList));
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result updateAccount()
 	{
@@ -63,6 +66,7 @@ public class AccountController extends ApplicationController
 		}
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional(readOnly = true)
 	public static Result gotoUpdateAccount()
 	{
@@ -79,6 +83,7 @@ public class AccountController extends ApplicationController
 		return ok(accountTemplate.render(accounts, selectedAccount, accountForm, null));
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result createAccount()
 	{
@@ -102,6 +107,7 @@ public class AccountController extends ApplicationController
 		}
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result gotoCreateAccount()
 	{
@@ -111,6 +117,7 @@ public class AccountController extends ApplicationController
 		return ok(accountTemplate.render(accounts, null, Form.form(Account.class), null));
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result payIn()
 	{
@@ -138,6 +145,7 @@ public class AccountController extends ApplicationController
 		}
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result getGridColumnsJSON(int id)
 	{
@@ -146,7 +154,7 @@ public class AccountController extends ApplicationController
 		return ok(Json.toJson(columnList));
 	}
 	
-	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result getGridDataJSON(int id)
 	{

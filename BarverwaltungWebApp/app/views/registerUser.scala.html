@@ -13,11 +13,14 @@
     </head>
 <body>
 	<div class="banner text-center">
-		<h2>Login</h2>
+		<h2>Registrierung</h2>
+		<div class="alert alert-info" role="alert">
+			<span>Es gibt noch keine User. Bitte registriere den ersten!</span>
+		</div>
 	</div>
 	<div class="panel panel-default col-md-4 col-md-offset-4">
 		<div class="panel-body text-center">
-			<form id="loginForm" action="#AJAX" method="POST" >
+			<form id="registerForm" action="#AJAX" method="POST" >
 				<div class="form-group">
 					<label for=username></label>
 					<input id="username" name="username" type="text" class="form-control" placeholder="Benutzername">
@@ -26,11 +29,11 @@
 					<label for="password"></label>
 					<input id="password" name="password" type="password" class="form-control" placeholder="Passwort">
 				</div>
-				<button type="submit" class="btn btn-primary">Anmelden</button>
+				<button type="submit" class="btn btn-primary">Registrieren</button>
 			</form>
 		</div>
 	</div>
 	
-	<script src="@routes.Assets.at("javascripts/barverwaltung/login.js")"></script>
+	<script src="@routes.Assets.at("javascripts/barverwaltung/registerUser.js")"></script>
 </body>
 </html>

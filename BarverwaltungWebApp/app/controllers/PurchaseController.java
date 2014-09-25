@@ -17,6 +17,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.ProductService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
@@ -27,6 +28,7 @@ public class PurchaseController extends Controller
 {	
 	private static ProductService service = new ProductServiceImpl();
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result getPurchasesJSON()
 	{
@@ -34,6 +36,7 @@ public class PurchaseController extends Controller
 		return ok(Json.toJson(dataList));
 	}
 
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result purchase()
 	{
@@ -87,12 +90,14 @@ public class PurchaseController extends Controller
 		return getPurchasesJSON();   			
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result deleteModal(int id)
 	{
 		return ok(deleteModal.render(id));
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	@Transactional
 	public static Result delete(int id)
 	{

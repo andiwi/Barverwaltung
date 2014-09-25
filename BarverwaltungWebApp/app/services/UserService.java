@@ -19,4 +19,9 @@ public interface UserService {
 	public boolean checkUser(User candidate);
 	
 	public boolean createUser(User user);
+	
+	/*
+	 * Zaehlt die in der Datenbank vorhandenen User
+	 */
+	public Integer countUsers();
 }

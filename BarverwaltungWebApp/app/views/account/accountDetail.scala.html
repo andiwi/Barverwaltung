@@ -31,4 +31,8 @@
 <div>
 	@views.html.grid("/account/" + selectedAccount.getId())
 </div>
+
+<div>
+	@views.html.account.items.saleTable("/account/" + selectedAccount.getId(), salesProductList)
+</div>
 }

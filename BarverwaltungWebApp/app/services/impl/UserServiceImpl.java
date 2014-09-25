@@ -60,4 +60,10 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
+
+	@Override
+	public Integer countUsers()
+	{
+		return userDao.countUsers();
+	}
 }

@@ -2,6 +2,7 @@ package daos;
 
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import models.User;
@@ -24,5 +25,14 @@ public class UserDAO extends BaseModelDAO
     	{
     		return null;
     	}else return list.get(0);
+	}
+
+	public Integer countUsers()
+	{
+		String queryStr = "SELECT COUNT(u) FROM User u";
+		Query query = em().createQuery(queryStr);
+		Number num = (Number)query.getSingleResult();
+		
+		return num.intValue();
 	}
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import play.Routes;
@@ -14,15 +15,24 @@ import services.impl.ProductServiceImpl;
 import services.impl.UserServiceImpl;
 import views.html.index;
 import views.html.login;
+import views.html.registerUser;
 import views.html.purchase.purchaseOverview;
 import views.html.stock.stockOverview;
+import models.Account;
 import models.User;
 import play.mvc.Security;
 
 public class ApplicationController extends Controller {
 	
+	@Transactional
 	public static Result login() {
-	    return ok(login.render()); 
+		
+		UserService userService = new UserServiceImpl();
+		
+		if(userService.countUsers() == 0) //Wenn keine User in db dann Registrier Formular
+		{
+			return ok(registerUser.render());
+		}else return ok(login.render()); 
 	}
 	
 	@Transactional
@@ -67,6 +77,7 @@ public class ApplicationController extends Controller {
 		return ok(index.render());
     }
 
+	@Security.Authenticated(SecureController.class)
     @Transactional
     public static Result getPurchaseOverview()
     {
@@ -74,11 +85,13 @@ public class ApplicationController extends Controller {
 		return ok(purchaseOverview.render(service.getAllRawProducts()));
     }
     
+	@Security.Authenticated(SecureController.class)
     public static Result getStockOverview()
     {
     	return ok(stockOverview.render());
     }
     
+	@Security.Authenticated(SecureController.class)
     public static Result javascriptRoutes() {
         response().setContentType("text/javascript");
         return ok(
