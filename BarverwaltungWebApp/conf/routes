@@ -5,12 +5,14 @@
 # Home page
 GET /                           		controllers.ApplicationController.index()
 
+# Login page
+GET     /login                      	controllers.ApplicationController.login()
+POST	/authenticate					controllers.ApplicationController.authenticate()
+GET		/logout							controllers.ApplicationController.logout()				
+
 #Navigation
 GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview()
-GET 	/salesOverview					controllers.ApplicationController.getSalesOverview()
 GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
-
-
 
 GET 	/account/:id					controllers.AccountController.getAccount(id: Int)
 
@@ -30,14 +32,16 @@ POST	/sale							controllers.SaleController.sale()
 GET		/purchase/deleteModal/:id		controllers.PurchaseController.deleteModal(id: Int)
 POST	/purchase/delete/:id			controllers.PurchaseController.delete(id: Int)
 
-GET		/administration					controllers.AdminController.getAdminOverview()
-GET		/adminSalesProduct				controllers.AdminController.gotoAdminSalesProduct()
-POST	/createSalesProduct				controllers.AdminController.createSalesProduct()
-
-
 GET		/grid/columns/account/:id.json	controllers.AccountController.getGridColumnsJSON(id: Int)
 GET		/grid/data/account/:id.json		controllers.AccountController.getGridDataJSON(id: Int)
 
+#Administration
+GET		/administration					controllers.AdminController.getAdminOverview()
+GET		/adminSalesProduct				controllers.AdminController.gotoAdminSalesProduct()
+GET		/adminUser						controllers.AdminController.gotoAdminUser()
+
+POST	/createSalesProduct				controllers.AdminController.createSalesProduct()
+POST	/createUser						controllers.AdminController.createUser()
 
 # Javascript routing
 GET    /assets/javascripts/routes       controllers.ApplicationController.javascriptRoutes()

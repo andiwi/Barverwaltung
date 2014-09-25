@@ -1,7 +1,8 @@
 .salesProductBtn input{
 	display: block !important;
+	width: 100px !important;
 }
 
 .salesProductBtn {
-
+	margin-bottom: 3px;
 }

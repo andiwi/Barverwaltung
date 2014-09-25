@@ -1,6 +1,8 @@
 //Shorthand for $( document ).ready()
 $(function() {
 	$('#datefield').val($.format.date(new Date(), 'dd-MM-yyyy'));
+	$("#infoBox").fadeTo("1", 0);
+	//$("#infoBox").hide();
 });
 
 // initialisiert den Datepicker und aktualisiert das Datumsfeld wenn ein neues
@@ -56,6 +58,23 @@ $("#saleForm").submit(function(e) {
 		data : $("#saleForm").serialize(),
 		success : function(data) {
 			
+			//Display Success Alert and fadeOut
+			$("#infoBox").addClass("alert-success");
+			$("#infoBox").html("Kauf erfolgreich!");
+			
+			//$("#infoBox").css("visibility", "visible")
+			$("#infoBox").fadeTo("1", 100);
+			
+			setTimeout(function() {
+					$("#infoBox").fadeTo("slow", 0);
+					
+					setTimeout(function() {
+						$("#infoBox").removeClass("alert-success");
+					}, 1000);
+			    }, 2000);
+			
+						
+			//Insert new Entry into Grid
 			var grid = $("#myGrid").data("gridInstance");
 			grid.resizeCanvas();
 			var dataView = grid.getData();
@@ -73,7 +92,19 @@ $("#saleForm").submit(function(e) {
 			dataView.updateItem(row.id, row);
 		},
 		error : function(data) {
-			alert(data.responseText);
+			//Display Success Alert and fadeOut
+			$("#infoBox").addClass("alert-danger");
+			$("#infoBox").html(data.responseText);
+			
+			$("#infoBox").fadeTo("1", 100);
+			
+			setTimeout(function() {
+					$("#infoBox").fadeTo("slow", 0);
+					
+					setTimeout(function() {
+						$("#infoBox").removeClass("alert-danger");
+					}, 1000);
+			    }, 3500);
 		}
 	});
 

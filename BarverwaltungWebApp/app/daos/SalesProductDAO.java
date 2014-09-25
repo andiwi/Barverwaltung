@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import models.RawProduct;
 import models.SalesProduct;
 
 

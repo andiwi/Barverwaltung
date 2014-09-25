@@ -13,7 +13,6 @@ import daos.BankAccountHistoryDAO;
 import daos.SaleDAO;
 import models.Account;
 import models.BankAccountHistory;
-import models.Purchase;
 import models.Sale;
 import models.SalesProduct;
 import services.AccountService;

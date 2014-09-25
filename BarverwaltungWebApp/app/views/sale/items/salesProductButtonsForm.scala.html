@@ -1,7 +1,8 @@
 @(selectedAccount: Account, salesProductList: List[SalesProduct])
 
 <form action="/sale" method="POST" id="saleForm" class="form-inline" role="form">
-	<div class="form-group">
+
+	<div class="form-group" style="padding-bottom: 4px">
 	  <label class="control-label sr-only" for="datefield">Datum</label>
 	    <div class="input-group">
 	     	<input class="form-control" id="datefield" name="datefield" size="16" type="text" value="">
@@ -10,6 +11,7 @@
 	     	</span>
 	    </div>
 	</div>
+	<div class="clearfix" />
 	
 	@for(product <- salesProductList){
 		<div class="form-group">
@@ -30,4 +32,6 @@
 	</div>
 </form>
 
-<script src="@routes.Assets.at("javascripts/barverwaltung/salesProductBUttonsForm.js")"></script>
+<div id="infoBox" class="alert" role="alert"></div>
+
+<script src="@routes.Assets.at("javascripts/barverwaltung/salesProductButtonsForm.js")"></script>

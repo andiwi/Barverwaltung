@@ -1,13 +1,13 @@
-$( "#salesProductForm" ).submit(function( e ) {
+$( "#userForm" ).submit(function( e ) {
 	  // Stop form from submitting normally
 	  e.preventDefault();
 	 
 	 $.ajax({
-		 	url :  "/createSalesProduct",
+		 	url :  "/createUser",
 		    type : "POST",
-		    data: $( "#salesProductForm" ).serialize(),
+		    data: $( "#userForm" ).serialize(),
 		    success:function(data){
-		    	alert(data.responseText);
+		    	alert(data);
 		    },
 	  		error:function(data){
 	  			alert(data.responseText);
@@ -15,5 +15,5 @@ $( "#salesProductForm" ).submit(function( e ) {
 		});
 	  
 	  // Reset form
-	  $('#salesProductForm').trigger("reset");
+	  $('#userForm').trigger("reset");
 });

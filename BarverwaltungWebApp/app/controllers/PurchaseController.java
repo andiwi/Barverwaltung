@@ -22,7 +22,6 @@ import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import views.html.deleteModal;
 import views.html.purchase.purchaseOverview;
-import views.html.sale.salesOverview;
 
 public class PurchaseController extends Controller
 {	

@@ -8,14 +8,19 @@ import java.util.Map;
 import models.MapRawProductValue;
 import models.RawProduct;
 import models.SalesProduct;
+import models.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.ProductService;
+import services.UserService;
 import services.impl.ProductServiceImpl;
+import services.impl.UserServiceImpl;
 import views.html.administration.adminOverview;
 import views.html.administration.adminSalesProduct;
+import views.html.administration.adminUser;
+import views.html.*;
 
 public class AdminController extends Controller
 {
@@ -31,6 +36,12 @@ public class AdminController extends Controller
     	List<RawProduct> rawProducts = productService.getAllRawProducts();
 
 		return ok(adminSalesProduct.render(Form.form(SalesProduct.class), rawProducts));
+	}
+	
+	@Transactional
+	public static Result gotoAdminUser()
+	{
+		return ok(adminUser.render());
 	}
 	
 	@Transactional
@@ -78,5 +89,28 @@ public class AdminController extends Controller
 		productService.createSalesProduct(salesProduct);
 		
 		return ok("Erstellen erfolgreich!");
+	}
+	
+	@Transactional
+	public static Result createUser()
+	{
+		UserService userService = new UserServiceImpl();
+		
+		Map<String, String[]> parameters = request().body().asFormUrlEncoded();
+		
+		String username = parameters.get("username")[0];
+		String password = parameters.get("password")[0];
+		
+		if(!(username.isEmpty() && password.isEmpty()))
+		{
+			User user = new User();
+			user.setUsername(username);
+			user.setPasswordEncrypted(password);
+			if(userService.createUser(user))
+			{
+				return ok("Anlegen erfolgreich!");
+			}else return badRequest("Username schon vorhanden");
+		}
+		return badRequest("Username oder Passwort nicht eingegeben");
 	}
 }

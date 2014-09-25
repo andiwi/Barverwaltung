@@ -2,7 +2,13 @@ body {
 	padding-top:51px;
 }
 
+.navbar .userInfo{
+	background-color: #4285f4;
+}
 
+.navbar .userInfo > p{
+	color: white;
+}
 
 /** Kontostand Panel **/
 .panel-kontostand > .panel-body.positive {

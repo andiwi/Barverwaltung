@@ -11,7 +11,6 @@ import java.util.Map;
 import models.Account;
 import models.Sale;
 import models.SalesProduct;
-import play.data.DynamicForm;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -22,7 +21,6 @@ import services.SaleService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import services.impl.SaleServiceImpl;
-import views.html.sale.salesOverview;
 
 public class SaleController extends Controller {
 

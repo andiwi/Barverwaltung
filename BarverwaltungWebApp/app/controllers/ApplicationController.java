@@ -1,32 +1,72 @@
 package controllers;
 
-import java.util.List;
+import java.util.Map;
 
-import models.Account;
 import play.Routes;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import services.AccountService;
 import services.ProductService;
-import services.impl.AccountServiceImpl;
+import services.UserService;
 import services.impl.ProductServiceImpl;
+import services.impl.UserServiceImpl;
 import views.html.index;
+import views.html.login;
 import views.html.purchase.purchaseOverview;
-import views.html.sale.salesOverview;
 import views.html.stock.stockOverview;
-import views.html.account.accountTemplate;
+import models.User;
+import play.mvc.Security;
 
 public class ApplicationController extends Controller {
 	
+	public static Result login() {
+	    return ok(login.render()); 
+	}
+	
+	@Transactional
+	public static Result authenticate()
+	{
+		Map<String, String[]> parameters = request().body().asFormUrlEncoded();
+		
+		String username = parameters.get("username")[0];
+		String password = parameters.get("password")[0];
+	    
+		if(username == null || password == null)
+		{
+			return badRequest("username == null || password == null");
+		}else
+		{
+			User candidate = new User();
+			candidate.setUsername(username);
+			candidate.setPasswordClear(password);
+			
+			//ueberpruefe ob passwort mit db passwort übereinstimmt.
+			UserService userService = new UserServiceImpl();
+			
+			if(userService.checkUser(candidate))
+			{
+				session().clear();
+				session("username", username);
+				return ok("/"); //redirects to "/" via ajax
+			}else return badRequest("Passwort falsch");			
+		}
+	}
+	
+	public static Result logout() {
+	    session().clear();
+	    flash("success", "You've been logged out");
+	    return redirect(
+	        routes.ApplicationController.login()
+	    );
+	}
+	
+	@Security.Authenticated(SecureController.class)
 	public static Result index() {
-        return ok(index.render());
+		return ok(index.render());
     }
-    
-    public static Result getSalesOverview()
-    {
-    	return ok(salesOverview.render());
-    }
+
     @Transactional
     public static Result getPurchaseOverview()
     {
@@ -46,8 +86,7 @@ public class ApplicationController extends Controller {
             // Routes
             controllers.routes.javascript.PurchaseController.purchase(),
             //controllers.routes.javascript.PurchaseController.edit(),
-            controllers.routes.javascript.PurchaseController.delete(),
-            controllers.routes.javascript.AccountController.payIn()
+            controllers.routes.javascript.PurchaseController.delete()
           )
         );
       }
