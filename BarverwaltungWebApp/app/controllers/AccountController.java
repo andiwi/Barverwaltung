@@ -163,6 +163,15 @@ public class AccountController extends ApplicationController
 		return ok(Json.toJson(dataList));
 	}
 	
+	@Security.Authenticated(SecureController.class)
+	@Transactional
+	public static Result getTableDataJSON(int id)
+	{
+		AccountService accountService = new AccountServiceImpl();
+		List<Map<String,Object>> dataList = accountService.getTableData(id);
+		return ok(Json.toJson(dataList));
+	}
+	
 	
 	
 	

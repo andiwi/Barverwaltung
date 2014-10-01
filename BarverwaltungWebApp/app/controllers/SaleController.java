@@ -93,7 +93,5 @@ public class SaleController extends Controller {
 	    
 		Map<String,Object> data = accountService.getGridDataItem(consumerId, date);
 		return ok(Json.toJson(data));
-		
-		//return AccountController.getAccount(consumerId);
 	}
 }

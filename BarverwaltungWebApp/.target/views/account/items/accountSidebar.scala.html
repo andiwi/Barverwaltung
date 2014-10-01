@@ -1,0 +1,29 @@
+@(accounts: List[Account], selectedAccount: Account)
+
+<ul class="sidebar-nav accounts">
+
+		<!-- wenn ein Account ausgewählt wurde -->
+		@if(selectedAccount != null) {
+			@for(a <- accounts){
+			<li @if(a.getId() == selectedAccount.getId()) {
+					class="sidebar-brand selected"
+				} else {
+					class="sidebar-brand"}><a id="accountId_@a.getId()" href="@routes.AccountController.getAccount(a.getId())">@a.getLastName()
+					@a.getFirstName()</a></li> }
+					
+			<li class="sidebar-brand"><a href="@routes.AccountController.gotoCreateAccount()">Neues
+					Konto anlegen</a></li>
+					
+					
+		<!-- wenn ein neuer Account erstellt wird -->
+		} else { 
+			@for(a <- accounts){
+				<li class="sidebar-brand">
+					<a id="accountId_@a.getId()" href="@routes.AccountController.getAccount(a.getId())">@a.getLastName() @a.getFirstName()</a>
+				</li>
+			}
+			<li class="sidebar-brand selected">
+				<a href="@routes.AccountController.gotoCreateAccount()">Neues Konto anlegen</a>
+			</li>
+		}
+</ul>  

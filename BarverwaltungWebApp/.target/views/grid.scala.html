@@ -1,0 +1,101 @@
+@(pageUrl: String)
+<section id="grid">
+	<legend>Übersicht</legend>
+
+
+	<!--<button id="editBtn" type="button" class="btn btn-default" disabled data-toggle ="modal" data-target="#myModal">bearbeiten</button>-->
+	<!-- <button id="deleteBtn" type="button" class="btn btn-default pull-right" disabled data-toggle ="modal" data-target="#deleteModal">Eintrag löschen</button>-->
+	
+	<div id="myGridContainer" style="width: 95%;">
+		<div id="myGrid" style="width: 100%; height: 600px;"></div>
+		<div id="myPager"></div>
+	</div>
+	
+</section>
+
+<script>
+
+$(function() {
+	
+	//GRID
+	var grid;
+	var columns = [];
+	var options = {
+		editable : true,
+		enableCellNavigation : true,
+		enableColumnReorder : false,
+		forceFitColumns: true,
+		cellHighlightCssClass: "insertedRow"
+	};
+	
+	var dataView = new Slick.Data.DataView();
+	
+	grid = new Slick.Grid("#myGrid", dataView, columns, options);
+	$("#myGrid").data("gridInstance", grid);
+	
+	// Make the grid respond to DataView change events.
+	dataView.onRowCountChanged.subscribe(function(e, args) {
+		grid.updateRowCount();
+		grid.render();
+	});
+	
+	dataView.onRowsChanged.subscribe(function(e, args) {
+		grid.invalidateRows(args.rows);
+		grid.render();
+	});
+	
+	$(function populateGrid() {
+	    
+		var url = '/grid/columns' + '@pageUrl' + '.json';
+		$.getJSON(url, function(ServerResponse) {
+			grid.setColumns(ServerResponse);
+	    })
+		
+	   	var url = '/grid/data' + '@pageUrl' + '.json'; 
+		$.getJSON(url, function(ServerResponse) {
+			dataView.setItems(ServerResponse, "date");
+	    })
+	        
+		grid.setSelectionModel(new Slick.RowSelectionModel());
+	
+		grid.onDblClick.subscribe(function(){
+			$('#myModal').modal('show');
+		});
+		
+		/*
+		grid.onClick.subscribe(function(e, args){
+			$('#editBtn').removeAttr("disabled");
+			$('#deleteBtn').removeAttr("disabled");
+			
+			var item = grid.getDataItem(args.row);
+			var id = item.id
+			
+			$('#editBtn').attr("href", "/purchase/edit/" + item.id);
+			$('#deleteBtn').attr("href", "/purchase/deleteModal/" + item.id);
+		});
+		*/
+	})
+	
+	dataView.getItemMetadata = metadata(dataView.getItemMetadata);
+	//add css class to row
+    function metadata(old_metadata) {
+      return function(row) {
+        var item = this.getItem(row);
+        var meta = old_metadata(row) || {};
+
+        if (item) {
+          // Make sure the "cssClasses" property exists
+          meta.cssClasses = meta.cssClasses || '';
+
+          if (item.highlightRow) {                    // If the row object has a truthy "canBuy" property
+            meta.cssClasses += ' highlightRow';      // add a class of "buy-row" to the row element.
+          } // Note the leading ^ space.
+        }
+        return meta;
+      }
+    }
+	//GRID END
+});
+
+
+</script>

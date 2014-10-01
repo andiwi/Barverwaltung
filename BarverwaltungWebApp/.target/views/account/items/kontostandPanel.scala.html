@@ -1,0 +1,23 @@
+@(selectedAccount: Account)
+
+<div class="panel panel-kontostand">
+	<div id="panel-body" class="panel-body">
+		<span id="accountBalance">Kontostand: @selectedAccount.getAccountBalance()€</span>
+	</div>
+	<div class="panel-footer">
+		<form id="payInForm" action="/payIn" method="POST" class="form-inline" role="form">
+			<div class="input-group">
+				<input id="amount" name="amount" class="form-control"
+					placeholder="0.00" type="number" step="any">
+					<span class="input-group-addon">€</span>
+			</div>
+			<div class="input-group">
+				<input name="accountId" type="hidden"
+					value="@selectedAccount.getId()" />
+				<button name="payIn" type="submit" class="btn btn-success">Einzahlen</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="@routes.Assets.at("javascripts/barverwaltung/kontostandPanel.js")"></script>

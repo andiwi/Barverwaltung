@@ -35,6 +35,8 @@ POST	/purchase/delete/:id			controllers.PurchaseController.delete(id: Int)
 GET		/grid/columns/account/:id.json	controllers.AccountController.getGridColumnsJSON(id: Int)
 GET		/grid/data/account/:id.json		controllers.AccountController.getGridDataJSON(id: Int)
 
+GET		/table/data/account/:id.json	controllers.AccountController.getTableDataJSON(id: Int)
+
 #Administration
 GET		/administration					controllers.AdminController.getAdminOverview()
 GET		/adminSalesProduct				controllers.AdminController.gotoAdminSalesProduct()

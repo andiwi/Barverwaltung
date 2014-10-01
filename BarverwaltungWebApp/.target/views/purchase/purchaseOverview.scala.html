@@ -1,0 +1,275 @@
+@(rawProducts: List[RawProduct])
+@content = {
+
+<section id="purchase" style="margin-top: 15px; margin-bottom: 100px;">		
+		
+<form action="/purchase" method="POST" id="purchaseForm" class="form-inline purchaseForm">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Neuer Eintrag</legend>
+
+<!-- Appended Input-->
+<div class="form-group">
+  <label class="control-label sr-only" for="datefield">Datum</label>
+    <div class="input-group">
+     	<input class="form-control" id="datefield" name="datefield" size="16" type="text" value="">
+     	<span class="input-group-addon" id="datepicker" data-date="" data-date-format="dd-mm-yyyy">Cal
+     		<i class="icon-calendar"></i>
+     	</span>
+    </div>
+</div>
+<!-- Button Drop Down -->
+<div class="form-group">
+  <label class="control-label sr-only" for="productDropdown">Produkt</label>
+    <div class="input-group">
+      <input id="productDropdown" name="productDropdown" class="form-control" placeholder="Produkt" type="text" readonly>
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+	        @for(rawProduct <- rawProducts) {
+	  		<li><a id="@rawProduct.getProductName()">@rawProduct.getDisplayName()</a></li>
+			}
+        </ul>
+      </div>
+    </div>
+</div>
+
+<!-- Appended Input-->
+<div class="form-group">
+  <label class="control-label sr-only" for="amount">Liter</label>
+    <div class="input-group">
+      <input id="amount" name="amount" class="form-control" placeholder="0" type="number" step="any">
+      <span class="input-group-addon">Liter</span>
+    </div>
+</div>
+<!-- Appended Input-->
+<div class="form-group">
+  <label class="control-label sr-only" for="pieces">Stück</label>
+    <div class="input-group">
+      <input id="pieces" name="pieces" class="form-control" placeholder="0" type="number">
+      <span class="input-group-addon">Stück</span>
+    </div>
+</div>
+<!-- Appended Input-->
+<div class="form-group">
+  <label class="control-label sr-only" for="price">Preis</label>
+    <div class="input-group">
+      <input id="price" name="price" class="form-control" placeholder="0.0" type="number" step="any">
+      <span class="input-group-addon">€</span>
+    </div>
+</div>
+<!-- Button (Double) -->
+<div class="form-group">
+  <label class="control-label sr-only" for="button1id">Double Button</label>
+      <button id="submit" name="submit" class="btn btn-success">Speichern</button>
+    <button id="discard" name="discard" class="btn btn-default">Verwerfen</button>
+</div>
+
+</fieldset>
+</form>
+</section>
+
+<section id="grid">
+	<legend>Übersicht</legend>
+
+
+	<!--<button id="editBtn" type="button" class="btn btn-default" disabled data-toggle ="modal" data-target="#myModal">bearbeiten</button>-->
+	<button id="deleteBtn" type="button" class="btn btn-default pull-right" disabled data-toggle ="modal" data-target="#deleteModal">Eintrag löschen</button>
+	
+	<div id="myGridContainer" style="width: 95%;">
+		<div id="myGrid" style="width: 100%; height: 600px;"></div>
+		<div id="myPager"></div>
+	</div>
+	
+</section>
+
+<!-- DeleteModal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>
+
+<script src="@routes.Assets.at("javascripts/view.purchaseOverview.js")"></script>
+
+<script>
+
+//GRID
+var grid;
+var columns = [];
+var options = {
+	editable : true,
+	enableCellNavigation : true,
+	enableColumnReorder : false,
+	forceFitColumns: true
+};
+
+var dataView = new Slick.Data.DataView();
+
+grid = new Slick.Grid("#myGrid", dataView, columns, options);
+
+// Make the grid respond to DataView change events.
+dataView.onRowCountChanged.subscribe(function(e, args) {
+	grid.updateRowCount();
+	grid.render();
+});
+
+dataView.onRowsChanged.subscribe(function(e, args) {
+	grid.invalidateRows(args.rows);
+	grid.render();
+});
+
+$(function populateGrid() {
+    
+	 var columns = [
+	   {id: "date", name: "Datum", field: "date"},
+	   {id: "purchaser", name: "Käufer", field: "purchaser"},
+	   {id: "productName", name: "Produkt", field: "productName"},
+	   {id: "amount", name: "Liter", field: "amount"},
+	   {id: "pieces", name: "Stückzahl", field: "pieces"},
+	   {id: "price", name: "Preis pro Stück", field: "price"}
+	 ];
+	 
+	grid.setColumns(columns);
+	 
+	$.getJSON('/purchases.json', function(ServerResponse) {
+		dataView.setItems(ServerResponse, "id");
+    })
+    
+   
+	
+	grid.setSelectionModel(new Slick.RowSelectionModel());
+
+	grid.onDblClick.subscribe(function(){
+		$('#myModal').modal('show');
+	});
+	
+	grid.onClick.subscribe(function(e, args){
+		$('#editBtn').removeAttr("disabled");
+		$('#deleteBtn').removeAttr("disabled");
+		
+		var item = grid.getDataItem(args.row);
+		var id = item.id
+		
+		$('#editBtn').attr("href", "/purchase/edit/" + item.id);
+		$('#deleteBtn').attr("href", "/purchase/deleteModal/" + item.id);
+	});
+})
+//GRID END
+
+
+// Shorthand for $( document ).ready()
+$(function() {
+	$('#datefield').val($.format.date(new Date(), 'dd-MM-yyyy'));
+});
+
+// initialisiert den Datepicker und aktualisiert das Datumsfeld wenn ein neues
+// Datum in Datepicker ausgewählt wurde.
+$(function() {
+	var datepicker = $('#datepicker').datepicker({
+		weekStart : 1
+	}).on('changeDate', function(ev) {
+		$('#datefield').val($.format.date(ev.date, 'dd-MM-yyyy'));
+	});
+})
+
+// aktualisiert den DatePicker wenn in Feld ein neues Datum eingegeben wurde.
+$('#datefield')
+		.change(
+				function() {
+					var dateddMMYYYYRegex = /(^(((0[1-9]|[12][0-8])[-](0[1-9]|1[012]))|((29|30|31)[-](0[13578]|1[02]))|((29|30)[-](0[4,6,9]|11)))[-](19|[2-9][0-9])\d\d$)|(^29[-]02[-](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
+
+					if (dateddMMYYYYRegex.test($('#datefield').val())) {
+						var dateStr = $("#datefield").val().split("-");
+						date = new Date(dateStr[2], dateStr[1] - 1, dateStr[0]);
+						$('#datepicker').datepicker('setValue', date);
+					}
+				});
+
+@for(rawProduct <- rawProducts) {
+	$("#@rawProduct.getProductName()").click(function(){
+    	$('#productDropdown').val("@rawProduct.getDisplayName()");
+	});
+}
+
+$( "#purchaseForm" ).submit(function( e ) {
+	 
+	  // Stop form from submitting normally
+	  e.preventDefault();
+	 
+	  jsRoutes.controllers.PurchaseController.purchase().ajax({
+		    type : "POST",
+		    data: $( "#purchaseForm" ).serialize(),
+		    success:function(data){
+		    	dataView.setItems(data, "id");
+		    },
+	  		error:function(data){
+	  			alert(data.toString());
+	  		}
+		});
+	  
+	  // Reset form
+	  $('.purchaseForm').trigger("reset");
+	  $('#datefield').val($.format.date(new Date(), 'dd-MM-yyyy'));
+});
+
+$( "#discard").click(function(e){
+	e.preventDefault();
+	
+	// Reset form
+	$('.purchaseForm').trigger("reset");
+	$('#datefield').val($.format.date(new Date(), 'dd-MM-yyyy'));
+})
+
+
+//DELETE MODAL
+
+
+
+
+// Form Validator
+$('.form').bootstrapValidator({
+	message : 'This value is not valid',
+	feedbackIcons : {
+		valid : 'glyphicon glyphicon-ok',
+		invalid : 'glyphicon glyphicon-remove',
+		validating : 'glyphicon glyphicon-refresh'
+	},
+	fields : {
+		stieglInput : {
+			message : 'The stieglInput is not valid',
+			validators : {
+				notEmpty : {
+					message : 'The stieglInput is required and cannot be empty'
+				},
+				regexp : {
+					regexp : /^[0-9]\d*$/,
+					message : 'Nur ganze Zahlen erlaubt'
+				}
+			}
+		},
+		stieglPrice : {
+			validators : {
+				notEmpty : {
+					message : 'The stieglPrice is required and cannot be empty'
+				},
+				regexp : {
+					regexp : /[0-9]+(\.[0-9][0-9]?)?/,
+					message : 'Nur Zahlen erlaubt'
+				}
+			}
+		}
+	}
+});
+
+$(".input-group").change(function() {
+	$('.form').data('bootstrapValidator').validate();
+});
+
+</script>
+} @main("PurchaseOverview")(content)

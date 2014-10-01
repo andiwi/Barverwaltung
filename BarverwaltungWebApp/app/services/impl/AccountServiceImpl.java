@@ -227,6 +227,12 @@ public class AccountServiceImpl implements AccountService
 		return data;
 	}
 	
+	@Override
+	public List<Map<String, Object>> getTableData(int id)
+	{
+		return this.getGridData(id);
+	}
+	
 	private List<Sale> getAllSalesByDate(Account consumer, Date date)
 	{
 		return saleDAO.findAllWhereConsumerAndDate(consumer, date);
@@ -236,4 +242,6 @@ public class AccountServiceImpl implements AccountService
 	{
 		return saleDAO.findAllWhereConsumer(consumer);
 	}
+
+	
 }

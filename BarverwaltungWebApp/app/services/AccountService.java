@@ -47,6 +47,8 @@ public interface AccountService
 	
 	public Map<String, Object> getGridDataItem(int consumerId, Date date);
 	
+	public List<Map<String, Object>> getTableData(int id);
+	
 	/**
 	 * Liefert alle Artikel die der Account konsumiert hat.
 	 * @param id

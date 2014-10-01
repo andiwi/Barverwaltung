@@ -1,0 +1,89 @@
+@extra_styles = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/slick.grid.css")" type="text/css"/>
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/smoothness/jquery-ui-1.8.16.custom.css")" type="text/css"/>
+}
+
+@extra_scripts = {
+	<script src="@routes.Assets.at("javascripts/slickgrid/lib/firebugx.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/lib/jquery-ui-1.8.16.custom.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/lib/jquery.event.drag-2.2.js")"></script>
+	
+	<script src="@routes.Assets.at("javascripts/slickgrid/slick.core.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/plugins/slick.cellrangedecorator.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/plugins/slick.cellrangeselector.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/plugins/slick.cellselectionmodel.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/slick.formatters.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/slick.editors.js")"></script>
+	<script src="@routes.Assets.at("javascripts/slickgrid/slick.grid.js")"></script>
+}
+
+@content = {
+	<div style="position:relative">
+  <div style="width:100%;">
+    <div id="myGrid" style="width:100%;height:500px;"></div>
+  </div>
+
+<script>
+  function requiredFieldValidator(value) {
+    if (value == null || value == undefined || !value.length) {
+      return {valid: false, msg: "This is a required field"};
+    } else {
+      return {valid: true, msg: null};
+    }
+  }
+
+  var grid;
+  var data = [];
+  var columns = [
+	{id: "date", name: "Datum", field: "date",resizable: false, editor: Slick.Editors.Date},
+    {id: "stiegl", name: "Stiegl Bier", field: "stiegl", resizable: false, height: 30, cssClass: "cell-title", editor: Slick.Editors.Integer, validator: requiredFieldValidator},
+    {id: "bergkoenig", name: "Bergkönig Bier", field: "bergkoenig", resizable: false, editor: Slick.Editors.Integer},
+    {id: "radler", name: "Gösser Radler", field: "radler", resizable: false, editor: Slick.Editors.Integer},
+    {id: "cola", name: "Coca Cola", field: "cola", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "iceTeaPeach", name: "Eistee Pfirsich", field: "iceTeaPeach", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "iceTeaCitron", name: "Eistee Zitrone", field: "iceTeaCitron", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "water", name: "Mineral 0,5l", field: "water", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "spritzer", name: "Weißer Spritzer", field: "spritzer", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "toast", name: "Toast", field: "toast", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "pizzaSalami", name: "Pizza Salami", field: "pizzaSalami", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "pizzaMargarita", name: "Pizza Margarita", field: "pizzaMargarita", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "manner", name: "Manner Schnitten", field: "manner", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "pischinger", name: "Pischinger Ecken", field: "pischinger", resizable: false, width: 100, editor: Slick.Editors.Integer},
+    {id: "chocolate", name: "Fairtrade Schoki", field: "radlchocolateer", resizable: false, width: 100, editor: Slick.Editors.Integer}
+    
+  ];
+  var options = {
+    editable: true,
+    enableAddRow: true,
+    enableCellNavigation: true,
+    asyncEditorLoading: false,
+    autoEdit: false
+  };
+
+  $(function () {
+    for (var i = 0; i < 500; i++) {
+      var d = (data[i] = {});
+
+      d["date"] = "01/01/2009";
+      d["stiegl"] = i;
+      d["bergkoenig"] = 2;
+      d["radler"] = 5;
+      
+    }
+
+    grid = new Slick.Grid("#myGrid", data, columns, options);
+
+    grid.setSelectionModel(new Slick.CellSelectionModel());
+
+    grid.onAddNewRow.subscribe(function (e, args) {
+      var item = args.item;
+      grid.invalidateRow(data.length);
+      data.push(item);
+      grid.updateRowCount();
+      grid.render();
+    });
+  })
+</script>
+}
+
+@main("StockOverview", extra_styles, extra_scripts)(content)
