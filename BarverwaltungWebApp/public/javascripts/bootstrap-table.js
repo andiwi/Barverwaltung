@@ -216,6 +216,7 @@
                     '<div class="fixed-table-pagination"></div>',
                 '</div>',
             '</div>'].join(''));
+            
 
         this.$container.insertAfter(this.$el);
         this.$container.find('.fixed-table-body').append(this.$el);

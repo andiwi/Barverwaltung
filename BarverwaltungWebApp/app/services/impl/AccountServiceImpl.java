@@ -145,7 +145,7 @@ public class AccountServiceImpl implements AccountService
 		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
 		
 		List<Sale> sales = this.getAllSales(dao.findEntity(id, Account.class));
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for(Sale s : sales)
@@ -201,7 +201,7 @@ public class AccountServiceImpl implements AccountService
 		Map<String,Object> data = new HashMap<String,Object>();
 		
 		List<Sale> sales = this.getAllSalesByDate(dao.findEntity(consumerId, Account.class), date);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for(Sale s : sales)

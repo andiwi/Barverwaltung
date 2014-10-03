@@ -143,7 +143,7 @@ $("#saleForm").submit(function(e) {
 			
 						
 			//Insert new Entry into Table
-			$('#saleTable').bootstrapTable('append', data);	
+			$('#saleTable').bootstrapTable('refresh');
 		},
 		error : function(data) {
 			//Display Success Alert and fadeOut

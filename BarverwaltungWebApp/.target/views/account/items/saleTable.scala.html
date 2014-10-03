@@ -4,7 +4,7 @@
 
 	<table id="saleTable" data-toggle="table"
 		data-url="@routes.AccountController.getTableDataJSON(selectedAccountId)"
-		data-cache="false" data-height="299" data-sort-name="date" data-sort-order="desc">
+		data-cache="false" data-height="299">
 	    <thead>
 	        <tr>
 	            <th data-field="date">Datum</th>
@@ -16,3 +16,5 @@
 	</table>
 	
 </section>
+
+<script src="@routes.Assets.at("javascripts/barverwaltung/saleTable.js")"></script>
