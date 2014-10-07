@@ -11,6 +11,7 @@ import java.util.Map;
 import models.Account;
 import models.Sale;
 import models.SalesProduct;
+import models.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -19,9 +20,11 @@ import play.mvc.Security;
 import services.AccountService;
 import services.ProductService;
 import services.SaleService;
+import services.UserService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import services.impl.SaleServiceImpl;
+import services.impl.UserServiceImpl;
 
 public class SaleController extends Controller {
 
@@ -35,7 +38,7 @@ public class SaleController extends Controller {
 		
 		Date date = null;
 		try {
-			date = new SimpleDateFormat("dd-MM-yyyy").parse(dateStr);
+			date = new SimpleDateFormat("dd.MM.yyyy").parse(dateStr);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +50,18 @@ public class SaleController extends Controller {
 		AccountService accountService = new AccountServiceImpl();
 		Account consumer = accountService.findAccountById(consumerId);
 		
+		String username = session("username");
+		User userToFind = new User();
+		userToFind.setUsername(username);
+		UserService userService = new UserServiceImpl();
+		List<User> currentUserList = userService.findUser(userToFind);
+		if(currentUserList.size() != 1)
+		{
+			return badRequest("User nicht gefunden.");
+		}
+		User currentUser = currentUserList.get(0);
+		Account userAccount = currentUser.getAccount();
+				
 		ProductService productService = new ProductServiceImpl();
 		List<SalesProduct> salesProductList = productService.getAllSalesProducts();
 		
@@ -72,7 +87,7 @@ public class SaleController extends Controller {
 				sale.setPrice(salesProduct.getDefaultSalePrice());
 				sale.setSalesProduct(salesProduct);
 				sale.setSellDate(date);
-				sale.setSeller(null);	
+				sale.setSeller(userAccount);	
 				sale.setConsumer(consumer);
 				
 				salesList.add(sale);

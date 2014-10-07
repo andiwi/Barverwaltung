@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import models.Account;
 import models.Purchase;
 import models.RawProduct;
+import models.User;
 import play.Routes;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -18,9 +20,12 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import services.AccountService;
 import services.ProductService;
+import services.UserService;
 import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
+import services.impl.UserServiceImpl;
 import views.html.deleteModal;
 import views.html.purchase.purchaseOverview;
 
@@ -32,7 +37,7 @@ public class PurchaseController extends Controller
 	@Transactional
 	public static Result getPurchasesJSON()
 	{
-		List<Map<String,Object>> dataList = service.getAllDataForPurchaseGrid();
+		List<Map<String,Object>> dataList = service.getPurchaseTableData();
 		return ok(Json.toJson(dataList));
 	}
 
@@ -46,17 +51,21 @@ public class PurchaseController extends Controller
 		
 		Date date = null;
 		try {
-			date = new SimpleDateFormat("dd-MM-yyyy").parse(dateString);
+			date = new SimpleDateFormat("dd.MM.yyyy").parse(dateString);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		String rawProductStr = parameters.get("productDropdown")[0];
+		String rawProductStr = parameters.get("productInput")[0];
 		RawProduct toFind = new RawProduct();
 		toFind.setDisplayName(rawProductStr);
 		
 		List<RawProduct> rawProductList = service.getRawProduct(toFind);
+		if(rawProductList.isEmpty())
+		{
+			return badRequest("Produkt nicht gefunden.");
+		}
 		RawProduct rawProduct = rawProductList.get(0);
 		
 		String amountLitreStr = parameters.get("amount")[0];
@@ -70,11 +79,23 @@ public class PurchaseController extends Controller
 		String priceStr = parameters.get("price")[0];
 		BigDecimal price = new BigDecimal(priceStr);
 		
+		String username = session("username");
+		User userToFind = new User();
+		userToFind.setUsername(username);
+		
+		UserService userService = new UserServiceImpl();
+		List<User> currentUserList = userService.findUser(userToFind);
+		if(currentUserList.size() != 1)
+		{
+			return badRequest("User nicht gefunden.");
+		}
+		User currentUser = currentUserList.get(0);
+		Account userAccount = currentUser.getAccount();
 		
 		Purchase purchase = new Purchase();
 		purchase.setPurchaseDate(date);
 		purchase.setPurchasePrice(price);
-		purchase.setPurchaser(new AccountServiceImpl().findAccountById(1));
+		purchase.setPurchaser(userAccount);
 		purchase.setRawProduct(rawProduct);
 		purchase.setPieces(pieces);
 		purchase.setAmount(amount);

@@ -1,8 +1,11 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import services.impl.HashHelper;
 
@@ -12,6 +15,9 @@ public class User extends BaseModel
 	@Column(unique=true)
 	private String username;
 	private String password;
+	
+	@OneToOne
+	private Account account;
 	
 	public String getUsername()
 	{
@@ -33,5 +39,11 @@ public class User extends BaseModel
 	public void setPasswordClear(String password)
 	{
 		this.password = password;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 }

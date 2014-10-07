@@ -5,6 +5,11 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+
+import play.db.jpa.JPA;
 import models.User;
 
 public class UserDAO extends BaseModelDAO
@@ -34,5 +39,17 @@ public class UserDAO extends BaseModelDAO
 		Number num = (Number)query.getSingleResult();
 		
 		return num.intValue();
+	}
+	
+	public List<User> find(User user)
+	{
+		Session session = (Session)JPA.em().getDelegate();
+    	
+    	Criteria c = session.createCriteria(User.class);
+    	Example example = Example.create(user);
+    	c.add(example);
+    	List<User> results = c.list();
+    	
+    	return results;
 	}
 }

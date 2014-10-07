@@ -57,12 +57,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<Map<String,Object>> getAllDataForPurchaseGrid() {
+	public List<Map<String,Object>> getPurchaseTableData() {
 		
 		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
 		
 		List<Purchase> purchases = this.getAllPurchases();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		
 		for(Purchase p : purchases)
 		{
@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
 			entry.put("date", dateFormat.format(p.getPurchaseDate()));
 			entry.put("purchaser", p.getPurchaser().getFirstName() + " " + p.getPurchaser().getLastName());
 			entry.put("productName", p.getRawProduct().getDisplayName());
-			entry.put("amount", p.getAmount());
+			entry.put("amount", p.getAmount()/1000);
 			entry.put("pieces", p.getPieces());
 			entry.put("price", p.getPurchasePrice());
 			

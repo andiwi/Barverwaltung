@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.util.List;
+
 import daos.UserDAO;
 import models.User;
 import services.UserService;
@@ -65,5 +67,10 @@ public class UserServiceImpl implements UserService {
 	public Integer countUsers()
 	{
 		return userDao.countUsers();
+	}
+
+	@Override
+	public List<User> findUser(User user) {
+		return userDao.find(user);
 	}
 }

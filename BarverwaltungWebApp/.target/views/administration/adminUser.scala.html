@@ -1,3 +1,4 @@
+@(accounts: List[Account])
 @content = {
 
 <h1>Neuen User erstellen</h1>
@@ -5,23 +6,39 @@
 <form id="userForm" action="#ajax" method="POST" class="form-horizontal" role="form">
 	<div class="form-group">
 		<label for="username" class="col-sm-2 control-label">Username:</label>
-		<div class="col-sm-2">
+		<div class="col-sm-3">
 			<input id="username"  class="form-control" name="username" type="text"/>
 		</div>
 	</div>
 	
 	<div class="form-group">
 		<label for="password" class="col-sm-2 control-label">Passwort:</label>
-		<div class="col-sm-2">
+		<div class="col-sm-3">
 			<input id="password"  class="form-control" name="password" type="password"/>
 		</div>
 	</div>
 	
 	<div class="form-group">
-		<div class="col-sm-offset-1 col-sm-2">
-			<button id="registersubmit" class="btn btn-default" type="submit">User anlegen</button>
+		<label for="account" class="col-sm-2 control-label">Zugehöriges Konto:</label>
+		<div class="col-sm-3">
+			<div id="account" class="list-group">
+				@for(account <- accounts) {
+					<a href="#" id="account_@account.getId()" class="list-group-item">@account.getLastName() @account.getFirstName()</a>
+				}
+				<a href="@routes.AccountController.gotoCreateAccount()" id="account_-1" class="list-group-item">Neues Konto anlegen</a>
+			</div>
 		</div>
 	</div>
+	
+	<input id="selectedAccount_id" type="hidden" name="selectedAccount_id" value="account_-1">
+	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-3">
+			<button id="registersubmit" class="btn btn-success" type="submit">User erstellen</button>
+		</div>
+	</div>
+	
+	
 </form>
 
 <script src="@routes.Assets.at("javascripts/barverwaltung/adminUser.js")"></script>

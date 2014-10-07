@@ -1,0 +1,20 @@
+<section id="table">
+	<legend>Übersicht</legend>
+	
+	<table id="purchaseTable" data-toggle="table"
+		data-url="@routes.PurchaseController.getPurchasesJSON()"
+		data-cache="false" data-height="299">
+	    <thead>
+	        <tr>
+	            <th data-field="date">Datum</th>
+	            <th data-field="purchaser">Käufer</th>
+	            <th data-field="productName">Produkt</th>
+	            <th data-field="pieces">Stückzahl</th>
+	            <th data-field="amount">Liter pro Stück</th>
+	            <th data-field="price">Preis pro Stück</th>
+	        </tr>
+	    </thead>
+	</table>
+
+<script src="@routes.Assets.at("javascripts/barverwaltung/purchaseTable.js")"></script>
+</section>

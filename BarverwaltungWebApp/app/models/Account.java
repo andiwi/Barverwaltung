@@ -36,8 +36,6 @@ public class Account extends BaseModel
 	@OneToMany(mappedBy = "purchaser")
 	private List<Purchase> boughtProducts; //Produkte die für die Bar gekauft wurden
 	
-	
-	
 	@OneToMany(mappedBy = "owner")
 	private List<BankAccountHistory> bankAccountHistory;
 	

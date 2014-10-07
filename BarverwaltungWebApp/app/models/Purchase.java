@@ -20,7 +20,6 @@ public class Purchase extends BaseModel
 	private BigDecimal purchasePrice; //pro Stück
 	private Date purchaseDate;
 	
-	
 
 	public long getAmount()
 	{

@@ -1,0 +1,82 @@
+@(rawProducts: List[RawProduct])
+<section id="purchase" style="margin-top: 15px; margin-bottom: 100px;">		
+	<form action="/purchase" method="POST" id="purchaseForm" class="form-inline">
+		<fieldset>
+			<!-- Form Name -->
+			<legend>Neuer Einkauf</legend>
+	
+			<!-- Appended Input-->
+			<div class="form-group">
+				<label class="control-label sr-only" for="datefield">Datum</label>
+				<div class="input-group">
+					<input class="form-control" id="datefield" name="datefield"
+						size="16" type="text" value=""> <span
+						class="input-group-addon" id="datepicker" data-date=""
+						data-date-format="dd.mm.yyyy">Cal <i class="icon-calendar"></i>
+					</span>
+				</div>
+			</div>
+			<!-- Button Drop Down -->
+			<div class="form-group">
+				<label class="control-label sr-only" for="productInput">Produkt</label>
+				<div class="input-group">
+					<input id="productInput" name="productInput"
+						class="form-control" placeholder="Produkt" type="text" readonly>
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle"
+							data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul id="productDropdownBtnUl" class="dropdown-menu pull-right">
+							@for(rawProduct <- rawProducts) {
+							<li><a id="@rawProduct.getProductName()">@rawProduct.getDisplayName()</a></li>
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+	
+			<!-- Appended Input-->
+			<div class="form-group">
+				<label class="control-label sr-only" for="pieces">Stück</label>
+				<div class="input-group">
+					<input id="pieces" name="pieces" class="form-control"
+						placeholder="0" type="number"> <span
+						class="input-group-addon">Stück</span>
+				</div>
+			</div>
+			<!-- Appended Input-->
+			<div class="form-group">
+				<label class="control-label sr-only" for="amount">Liter/Stück</label>
+				<div class="input-group">
+					<input id="amount" name="amount" class="form-control"
+						placeholder="0" type="number" step="any"> <span
+						class="input-group-addon">Liter/Stück</span>
+				</div>
+			</div>
+			<!-- Appended Input-->
+			<div class="form-group">
+				<label class="control-label sr-only" for="price">Preis/Stück</label>
+				<div class="input-group">
+					<input id="price" name="price" class="form-control"
+						placeholder="0.0" type="number" step="any"> <span
+						class="input-group-addon">€/Stück</span>
+				</div>
+			</div>
+			<!-- Button (Double) -->
+			<div class="form-group">
+				<label class="control-label sr-only" for="button1id">Double
+					Button</label>
+				<button id="submit" name="submit" class="btn btn-success">Speichern</button>
+				<button id="discard" name="discard" class="btn btn-default">Verwerfen</button>
+			</div>
+	
+		</fieldset>
+	</form>
+	
+	
+	<div id="infoBox" class="alert" role="alert"></div>
+	
+	<script src="@routes.Assets.at("javascripts/barverwaltung/purchaseForm.js")"></script>
+
+</section>

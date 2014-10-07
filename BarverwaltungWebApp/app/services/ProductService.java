@@ -15,7 +15,7 @@ public interface ProductService {
 	
 	public List<Purchase> getAllPurchases();
 
-	public List<Map<String,Object>> getAllDataForPurchaseGrid();
+	public List<Map<String,Object>> getPurchaseTableData();
 
 	public List<RawProduct> getAllRawProducts();
 	

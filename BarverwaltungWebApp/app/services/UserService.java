@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import models.User;
 
 public interface UserService {
@@ -24,4 +26,6 @@ public interface UserService {
 	 * Zaehlt die in der Datenbank vorhandenen User
 	 */
 	public Integer countUsers();
+
+	public List<User> findUser(User user);
 }

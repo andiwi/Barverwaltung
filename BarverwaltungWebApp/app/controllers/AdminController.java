@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import models.Account;
 import models.MapRawProductValue;
 import models.RawProduct;
 import models.SalesProduct;
@@ -14,8 +15,10 @@ import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import services.AccountService;
 import services.ProductService;
 import services.UserService;
+import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import services.impl.UserServiceImpl;
 import views.html.administration.adminOverview;
@@ -45,7 +48,8 @@ public class AdminController extends Controller
 	@Transactional
 	public static Result gotoAdminUser()
 	{
-		return ok(adminUser.render());
+		AccountService accountService = new AccountServiceImpl();
+		return ok(adminUser.render(accountService.getAllAccounts()));
 	}
 	
 	@Security.Authenticated(SecureController.class)
@@ -107,11 +111,19 @@ public class AdminController extends Controller
 		String username = parameters.get("username")[0];
 		String password = parameters.get("password")[0];
 		
+		String selectedAccountIdStr = parameters.get("selectedAccount_id")[0];
+		int selectedAccountId = Integer.parseInt(selectedAccountIdStr.substring(8));
+		AccountService accountService = new AccountServiceImpl();
+		Account account = accountService.findAccountById(selectedAccountId);
+		
+		
+		
 		if(!(username.isEmpty() && password.isEmpty()))
 		{
 			User user = new User();
 			user.setUsername(username);
 			user.setPasswordEncrypted(password);
+			user.setAccount(account);
 			if(userService.createUser(user))
 			{
 				return ok("Anlegen erfolgreich!");
