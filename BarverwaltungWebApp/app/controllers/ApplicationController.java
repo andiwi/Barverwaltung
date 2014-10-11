@@ -1,14 +1,13 @@
 package controllers;
 
-import java.util.List;
 import java.util.Map;
 
+import models.User;
 import play.Routes;
-import play.data.DynamicForm;
-import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.ProductService;
 import services.UserService;
 import services.impl.ProductServiceImpl;
@@ -18,9 +17,6 @@ import views.html.login;
 import views.html.registerUser;
 import views.html.purchase.purchaseOverview;
 import views.html.stock.stockOverview;
-import models.Account;
-import models.User;
-import play.mvc.Security;
 
 public class ApplicationController extends Controller {
 	
@@ -64,6 +60,7 @@ public class ApplicationController extends Controller {
 		}
 	}
 	
+	@Security.Authenticated(SecureController.class)
 	public static Result logout() {
 	    session().clear();
 	    flash("success", "You've been logged out");

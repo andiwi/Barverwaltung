@@ -44,6 +44,16 @@ public class AccountController extends ApplicationController
 	
 	@Security.Authenticated(SecureController.class)
 	@Transactional
+	public static Result getAccountJSON(int id)
+	{
+		AccountService accountService = new AccountServiceImpl();
+		Account account = accountService.findAccountById(id);
+		
+		return ok(Json.toJson(account));
+	}
+	
+	@Security.Authenticated(SecureController.class)
+	@Transactional
 	public static Result updateAccount()
 	{
 		Form<Account> form = Form.form(Account.class).bindFromRequest();

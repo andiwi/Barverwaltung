@@ -98,5 +98,7 @@ $("#saleForm").submit(function(e) {
 	$('#saleForm').trigger("reset");
 	$('#datefield').val($.format.date(new Date(), 'dd.MM.yyyy'));
 	
+	// Refresh Kontostand Panel
+	refreshKontostandPanel();
 	refreshDatePicker();
 });

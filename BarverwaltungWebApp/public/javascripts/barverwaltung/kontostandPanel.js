@@ -27,3 +27,19 @@ $( "#payInForm" ).submit(function( e ) {
 	  // Reset form
 	  $('#payInForm').trigger("reset");
 });
+
+function refreshKontostandPanel() {
+	var selectedAccountId = $("#selectedAccountId").val();
+	var url = "/account/"+selectedAccountId+".json";
+	$.ajax({
+	 	url :  "/account/"+selectedAccountId+".json",
+	    type : "GET",
+	    
+	    success:function(data){
+	    	$("#accountBalance").text('Kontostand:' + data.accountBalance + '€');
+	    },
+  		error:function(data){
+  			alert(data.responseText);
+  		}
+	});
+}
