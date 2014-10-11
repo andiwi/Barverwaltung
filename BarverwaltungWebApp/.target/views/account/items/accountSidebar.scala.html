@@ -11,8 +11,7 @@
 					class="sidebar-brand"}><a id="accountId_@a.getId()" href="@routes.AccountController.getAccount(a.getId())">@a.getLastName()
 					@a.getFirstName()</a></li> }
 					
-			<li class="sidebar-brand"><a href="@routes.AccountController.gotoCreateAccount()">Neues
-					Konto anlegen</a></li>
+			<li class="sidebar-brand"><a href="@routes.AccountController.gotoCreateAccount()"><i class="fa fa-plus-circle sidebarPlusIcon"></i></a></li>
 					
 					
 		<!-- wenn ein neuer Account erstellt wird -->
@@ -23,7 +22,7 @@
 				</li>
 			}
 			<li class="sidebar-brand selected">
-				<a href="@routes.AccountController.gotoCreateAccount()">Neues Konto anlegen</a>
+				<a href="@routes.AccountController.gotoCreateAccount()"><i class="fa fa-plus-circle sidebarPlusIcon"></i></a>
 			</li>
 		}
 </ul>  

@@ -19,3 +19,9 @@ body {
 .panel-kontostand > .panel-body.negative {
 	background-color: #dd4b39;
 }
+
+.sidebarPlusIcon {
+	font-size: 38px;
+	vertical-align: middle;
+	margin-left: 29%;
+}
