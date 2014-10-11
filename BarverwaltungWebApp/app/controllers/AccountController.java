@@ -44,12 +44,12 @@ public class AccountController extends ApplicationController
 	
 	@Security.Authenticated(SecureController.class)
 	@Transactional
-	public static Result getAccountJSON(int id)
+	public static Result getAccountBalanceJSON(int id)
 	{
 		AccountService accountService = new AccountServiceImpl();
 		Account account = accountService.findAccountById(id);
 		
-		return ok(Json.toJson(account));
+		return ok(Json.toJson(account.getAccountBalance().toString()));
 	}
 	
 	@Security.Authenticated(SecureController.class)

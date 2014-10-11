@@ -15,7 +15,7 @@ GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview(
 GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
 
 GET 	/account/:id					controllers.AccountController.getAccount(id: Int)
-GET		/account/:id.json				controllers.AccountController.getAccountJSON(id: Int)
+GET		/accountBalance/:id.json				controllers.AccountController.getAccountBalanceJSON(id: Int)
 
 GET		/createAccount					controllers.AccountController.gotoCreateAccount()
 POST	/createAccount 					controllers.AccountController.createAccount()

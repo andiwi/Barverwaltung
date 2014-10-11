@@ -30,13 +30,13 @@ $( "#payInForm" ).submit(function( e ) {
 
 function refreshKontostandPanel() {
 	var selectedAccountId = $("#selectedAccountId").val();
-	var url = "/account/"+selectedAccountId+".json";
+	var url = "/accountBalance/"+selectedAccountId+".json";
 	$.ajax({
-	 	url :  "/account/"+selectedAccountId+".json",
+	 	url :  url,
 	    type : "GET",
 	    
 	    success:function(data){
-	    	$("#accountBalance").text('Kontostand:' + data.accountBalance + '€');
+	    	$("#accountBalance").text('Kontostand: ' + data + '€');
 	    },
   		error:function(data){
   			alert(data.responseText);

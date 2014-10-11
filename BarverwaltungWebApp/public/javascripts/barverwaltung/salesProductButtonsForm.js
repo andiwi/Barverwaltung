@@ -76,6 +76,8 @@ $("#saleForm").submit(function(e) {
 						
 			//Insert new Entry into Table
 			$('#saleTable').bootstrapTable('refresh');
+			// Refresh Kontostand Panel
+			refreshKontostandPanel();
 		},
 		error : function(data) {
 			//Display Success Alert and fadeOut
@@ -91,6 +93,9 @@ $("#saleForm").submit(function(e) {
 						$("#infoBox").removeClass("alert-danger");
 					}, 1000);
 			    }, 3500);
+			
+			// Refresh Kontostand Panel
+			refreshKontostandPanel();
 		}
 	});
 
@@ -98,7 +103,6 @@ $("#saleForm").submit(function(e) {
 	$('#saleForm').trigger("reset");
 	$('#datefield').val($.format.date(new Date(), 'dd.MM.yyyy'));
 	
-	// Refresh Kontostand Panel
-	refreshKontostandPanel();
+	
 	refreshDatePicker();
 });
