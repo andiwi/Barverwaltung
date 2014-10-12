@@ -159,6 +159,11 @@ public class ProductServiceImpl implements ProductService {
 		return rawProductDAO.findEntity(id, RawProduct.class);	
 	}
 
+	@Override
+	public void createRawProduct(RawProduct rawProduct) {
+		rawProductDAO.persist(rawProduct);
+	}
+
 	
 	
 	

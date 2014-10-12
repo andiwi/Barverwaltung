@@ -1,0 +1,38 @@
+@(rawProducts: List[RawProduct])
+
+@content = {
+
+<h1>Neues Rohprodukt erstellen</h1>
+	
+<form id="rawProductForm" action="#AJAX" method="POST" class="form-horizontal" role="form">
+	<div class="form-group">
+		<label for="productName" class="col-sm-2 control-label">productName:</label>
+		<div class="col-sm-2">
+			<input id="productName"  class="form-control" name="productName" type="text"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="displayName" class="col-sm-2 control-label">displayName:</label>
+		<div class="col-sm-2">
+			<input id="displayName"  class="form-control" name="displayName" type="text"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-3">
+			<button id="registersubmit" class="btn btn-success" type="submit">Rohprodukt anlegen</button>
+		</div>
+	</div>
+</form>
+<div class="form-group">
+<h1>Bestehende Rohprodukte</h1>
+	<div class="col-sm-3">
+		<div id="rawProductList" class="list-group">
+			@for(rawProduct <- rawProducts) {
+				<span class="list-group-item">@rawProduct.getDisplayName()</span>
+			}
+		</div>
+	</div>
+</div>
+</div>
+<script src="@routes.Assets.at("javascripts/barverwaltung/adminRawProduct.js")"></script>
+} @adminTemplate("AdminRohprodukt")(content)

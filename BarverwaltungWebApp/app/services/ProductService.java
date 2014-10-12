@@ -27,6 +27,8 @@ public interface ProductService {
 
 	public void createSalesProduct(SalesProduct salesProduct);
 	
+	public void createRawProduct(RawProduct rawProduct);
+	
 	/**
 	 * Ueberprueft ob die benötigten Mengen der RawProducts vorhanden sind.
 	 * @param salesProduct
@@ -36,6 +38,8 @@ public interface ProductService {
 	public long controlIfRawProductsAvailable(SalesProduct salesProduct);
 
 	public RawProduct findRawProductById(Integer id);
+
+	
 
 	
 	

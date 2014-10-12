@@ -25,6 +25,7 @@ import services.impl.UserServiceImpl;
 import views.html.administration.adminOverview;
 import views.html.administration.adminSalesProduct;
 import views.html.administration.adminUser;
+import views.html.administration.adminRawProduct;
 import views.html.*;
 
 public class AdminController extends Controller
@@ -51,6 +52,16 @@ public class AdminController extends Controller
 	{
 		AccountService accountService = new AccountServiceImpl();
 		return ok(adminUser.render(accountService.getAllAccounts()));
+	}
+	
+	@Security.Authenticated(SecureController.class)
+	@Transactional
+	public static Result gotoAdminRawProduct()
+	{
+		ProductService productService = new ProductServiceImpl();
+    	List<RawProduct> rawProducts = productService.getAllRawProducts();
+
+		return ok(adminRawProduct.render(rawProducts));
 	}
 	
 	@Security.Authenticated(SecureController.class)
@@ -99,6 +110,26 @@ public class AdminController extends Controller
 		productService.createSalesProduct(salesProduct);
 		
 		return ok("Erstellen erfolgreich!");
+	}
+	
+	@Security.Authenticated(SecureController.class)
+	@Transactional
+	public static Result createRawProduct()
+	{
+		ProductService productService = new ProductServiceImpl();
+		
+		Map<String, String[]> parameters = request().body().asFormUrlEncoded();
+		
+		String productName = parameters.get("productName")[0];
+		String displayName = parameters.get("displayName")[0];
+		
+		RawProduct rawProduct = new RawProduct();
+		rawProduct.setProductName(productName);
+		rawProduct.setDisplayName(displayName);
+		
+		productService.createRawProduct(rawProduct);
+		
+		return ok("Erstellen erfolgreich");
 	}
 	
 	//TODO speziell überprüfen, falls kein user vorhanden @Security.Authenticated(SecureController.class)

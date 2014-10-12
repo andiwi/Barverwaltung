@@ -43,10 +43,12 @@ GET		/table/data/account/:id.json	controllers.AccountController.getTableDataJSON
 GET		/administration					controllers.AdminController.getAdminOverview()
 GET		/adminSalesProduct				controllers.AdminController.gotoAdminSalesProduct()
 GET		/adminUser						controllers.AdminController.gotoAdminUser()
+GET		/adminRawProduct				controllers.AdminController.gotoAdminRawProduct()
 
 POST	/createSalesProduct				controllers.AdminController.createSalesProduct()
 POST	/createUser						controllers.AdminController.createUser()
 POST	/createFirstUser				controllers.AdminController.createFirstUser()
+POST	/createRawProduct				controllers.AdminController.createRawProduct()
 
 # Javascript routing
 GET    /assets/javascripts/routes       controllers.ApplicationController.javascriptRoutes()
