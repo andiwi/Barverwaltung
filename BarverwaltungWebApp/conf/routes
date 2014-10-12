@@ -46,6 +46,7 @@ GET		/adminUser						controllers.AdminController.gotoAdminUser()
 
 POST	/createSalesProduct				controllers.AdminController.createSalesProduct()
 POST	/createUser						controllers.AdminController.createUser()
+POST	/createFirstUser				controllers.AdminController.createFirstUser()
 
 # Javascript routing
 GET    /assets/javascripts/routes       controllers.ApplicationController.javascriptRoutes()

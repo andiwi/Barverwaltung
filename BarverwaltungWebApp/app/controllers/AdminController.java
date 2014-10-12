@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.Account;
+import models.Account.Gender;
 import models.MapRawProductValue;
 import models.RawProduct;
 import models.SalesProduct;
@@ -124,6 +125,51 @@ public class AdminController extends Controller
 			user.setUsername(username);
 			user.setPasswordEncrypted(password);
 			user.setAccount(account);
+			if(userService.createUser(user))
+			{
+				return ok("Anlegen erfolgreich!");
+			}else return badRequest("Username schon vorhanden");
+		}
+		return badRequest("Username oder Passwort nicht eingegeben");
+	}
+	
+	//TODO speziell überprüfen, falls kein user vorhanden @Security.Authenticated(SecureController.class)
+	@Transactional
+	public static Result createFirstUser()
+	{
+		AccountService accountService = new AccountServiceImpl();
+		UserService userService = new UserServiceImpl();
+		
+		//Anonymen Account anlegen
+		Account account = new Account();
+		account.setFirstName("Anonym");
+		account.setLastName("Anonym");
+		accountService.createAccount(account);
+		
+		//Account für ersten User anlegen
+		Map<String, String[]> parameters = request().body().asFormUrlEncoded();
+		
+		String firstName = parameters.get("firstName")[0];
+		String lastName = parameters.get("lastName")[0];
+		String genderStr = parameters.get("gender")[0];
+		Gender gender = Gender.valueOf(genderStr);
+		
+		Account userAccount = new Account();
+		userAccount.setFirstName(firstName);
+		userAccount.setLastName(lastName);
+		userAccount.setGender(gender);
+		
+		accountService.createAccount(userAccount);
+		
+		String username = parameters.get("username")[0];
+		String password = parameters.get("password")[0];
+		
+		if(!(username.isEmpty() && password.isEmpty()))
+		{
+			User user = new User();
+			user.setUsername(username);
+			user.setPasswordEncrypted(password);
+			user.setAccount(userAccount);
 			if(userService.createUser(user))
 			{
 				return ok("Anlegen erfolgreich!");

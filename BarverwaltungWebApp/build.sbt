@@ -10,7 +10,7 @@ libraryDependencies ++= Seq(
   javaJpa,
   cache,
   "org.hibernate" % "hibernate-entitymanager" % "4.2.12.Final",
-  "org.mindrot" % "jbcrypt" % "0.3m"
+  "org.mindrot" % "jbcrypt" % "0.3m",
 )
 
 val appDependencies = Seq(
@@ -19,7 +19,7 @@ javaCore,
 javaJdbc,
 javaJpa,
 "org.hibernate" % "hibernate-entitymanager" % "4.2.1.Final",
-"org.mindrot" % "jbcrypt" % "0.3m"
+"org.mindrot" % "jbcrypt" % "0.3m",
 )
 
 play.Project.playJavaSettings

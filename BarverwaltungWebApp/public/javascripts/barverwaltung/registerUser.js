@@ -3,7 +3,7 @@ $( "#registerForm" ).submit(function( e ) {
 	  e.preventDefault();
 	 
 	 $.ajax({
-		 	url :  "/createUser",
+		 	url :  "/createFirstUser",
 		    type : "POST",
 		    data: $( "#registerForm" ).serialize(),
 		    success:function(data){
