@@ -11,6 +11,12 @@ body {
 	color: white;
 }
 
+/** Navigation Top **/
+.navbar-nav .fa{
+	margin-right: 10px;
+	font-size: 18px;
+}
+
 /** Kontostand Panel **/
 .panel-kontostand > .panel-body.positive {
 	background-color: #65b045;

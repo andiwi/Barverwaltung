@@ -13,6 +13,7 @@ GET		/logout							controllers.ApplicationController.logout()
 #Navigation
 GET 	/purchaseOverview				controllers.ApplicationController.getPurchaseOverview()
 GET 	/stockOverview					controllers.ApplicationController.getStockOverview()
+GET		/saleOverview					controllers.ApplicationController.getSaleOverview()
 
 GET 	/account/:id					controllers.AccountController.getAccount(id: Int)
 GET		/accountBalance/:id.json				controllers.AccountController.getAccountBalanceJSON(id: Int)

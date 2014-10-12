@@ -60,15 +60,16 @@
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav">
-		        <li><a href=@routes.AccountController.getAccount(-1)>Konten</a></li>
-		        <li><a href=@routes.ApplicationController.getPurchaseOverview>Einkauf</a></li>
+		      	<li><a href=@routes.ApplicationController.getSaleOverview><i class="fa fa-euro"></i>Verkauf</a></li>
+		        <li><a href=@routes.AccountController.getAccount(-1)><i class="fa fa-users"></i>Konten</a></li>
+		        <li><a href=@routes.ApplicationController.getPurchaseOverview><i class="fa fa-shopping-cart"></i>Einkauf</a></li>
 		        <!-- <li><a href=@routes.ApplicationController.getStockOverview disabled="true">Bestand</a></li> -->
-		        <li><a href=@routes.AdminController.getAdminOverview>Administration</a></li>
+		        <li><a href=@routes.AdminController.getAdminOverview><i class="fa fa-cog"></i>Administration</a></li>
 		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
 		      	<li class="userInfo"><p class="navbar-text">Angemeldet als: @session.get("username")</p></li>
 		        <li>
-		        	<a href="@routes.ApplicationController.logout">Abmelden</a>
+		        	<a href="@routes.ApplicationController.logout"><i class="fa fa-sign-out"></i>Abmelden</a>
 		        </li>
 		      </ul>
 		    </div><!-- /.navbar-collapse -->

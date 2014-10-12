@@ -1,15 +1,20 @@
 package controllers;
 
+import java.util.List;
 import java.util.Map;
 
+import models.Account;
+import models.SalesProduct;
 import models.User;
 import play.Routes;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import services.AccountService;
 import services.ProductService;
 import services.UserService;
+import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import services.impl.UserServiceImpl;
 import views.html.index;
@@ -17,6 +22,7 @@ import views.html.login;
 import views.html.registerUser;
 import views.html.purchase.purchaseOverview;
 import views.html.stock.stockOverview;
+import views.html.sale.saleOverview;
 
 public class ApplicationController extends Controller {
 	
@@ -87,6 +93,21 @@ public class ApplicationController extends Controller {
     {
     	return ok(stockOverview.render());
     }
+	
+	@Security.Authenticated(SecureController.class)
+	@Transactional
+	public static Result getSaleOverview()
+	{
+		AccountService accountService = new AccountServiceImpl();
+		ProductService productService = new ProductServiceImpl();
+		
+		Account selectedAccount = accountService.findAccountById(1);
+		
+		List<Account> accounts = accountService.getAllAccounts();
+		List<SalesProduct> salesProductList = productService.getAllSalesProducts();
+		
+		return ok(saleOverview.render(selectedAccount, salesProductList));
+	}
     
 	@Security.Authenticated(SecureController.class)
     public static Result javascriptRoutes() {

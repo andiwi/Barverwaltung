@@ -1,0 +1,23 @@
+@(selectedAccount: Account, salesProductList: List[SalesProduct])
+@import views.html.sale.items._
+
+@extra_styles = {
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/barverwaltung/salesProductButtons.css")" type="text/css" />
+}
+
+@content = {
+<div class="col-md-12">
+		<h1>Barverkauf</h1>
+</div>
+
+<!-- Verkaufsbuttons -->
+<div class="col-md-12">
+@salesProductButtonsForm(selectedAccount,salesProductList)
+</div>
+<!-- Tabelle -->
+<div class="col-md-12">
+	@views.html.account.items.saleTable(selectedAccount.getId(), salesProductList)
+</div>
+}
+
+@main("AccountOverview", extra_styles)(content)

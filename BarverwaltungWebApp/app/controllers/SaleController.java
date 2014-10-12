@@ -25,6 +25,7 @@ import services.impl.AccountServiceImpl;
 import services.impl.ProductServiceImpl;
 import services.impl.SaleServiceImpl;
 import services.impl.UserServiceImpl;
+import views.html.account.accountTemplate;
 
 public class SaleController extends Controller {
 
@@ -95,14 +96,17 @@ public class SaleController extends Controller {
 
 		}
 		
-		//Überprüfung ob genügend Geld am Konto
-		BigDecimal balanceAfterPurchase = accountService.checkValidity(salesList, consumerId);
-		
-		if(balanceAfterPurchase.compareTo(BigDecimal.ZERO) < 0)
+		if(consumer.getId() != 1)
 		{
-			return badRequest("Nicht genügend Geld am Konto");
+			//Überprüfung ob genügend Geld am Konto
+			BigDecimal balanceAfterPurchase = accountService.checkValidity(salesList, consumerId);
+			
+			if(balanceAfterPurchase.compareTo(BigDecimal.ZERO) < 0)
+			{
+				return badRequest("Nicht genügend Geld am Konto");
+			}
 		}
-		
+				
 		SaleService saleService = new SaleServiceImpl();
 		saleService.sell(salesList, consumer);
 	    
