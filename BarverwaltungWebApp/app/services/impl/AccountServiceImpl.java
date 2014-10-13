@@ -146,8 +146,7 @@ public class AccountServiceImpl implements AccountService
 		
 		List<Sale> sales = this.getAllSales(dao.findEntity(id, Account.class));
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
+				
 		for(Sale s : sales)
 		{
 			boolean alreadyInserted = false;
@@ -181,17 +180,13 @@ public class AccountServiceImpl implements AccountService
 			{
 				Map<String, Object> newEntry = new HashMap<String, Object>();
 				newEntry.put("date", dateFormat.format(s.getSellDate()));
+				newEntry.put("note", s.getNote());
 				newEntry.put(s.getSalesProduct().getProductName(), s.getAmount());
 				
 				dataList.add(newEntry);
 			}
 		}
-		/*
-		[{"date": "2014-09-14", "bergkoenig":2,"stiegl":1},
-		 {"date": "2014-08-14", "bergkoenig":3,"stiegl":1},
-		 {"date": "2014-07-14", "bergkoenig":0,"stiegl":1}]
-		*/
-		
+			
 		return dataList;
 	}
 

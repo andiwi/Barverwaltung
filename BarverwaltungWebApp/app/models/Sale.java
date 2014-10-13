@@ -24,6 +24,8 @@ public class Sale extends BaseModel{
 	private BigDecimal price;
 	
 	private int amount; //Stückanzahl
+	
+	private String note;
 
 	public SalesProduct getSalesProduct()
 	{
@@ -83,5 +85,13 @@ public class Sale extends BaseModel{
 	public void setAmount(int amount)
 	{
 		this.amount = amount;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 }

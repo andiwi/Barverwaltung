@@ -19,6 +19,7 @@ $("#discard").click(function(e) {
 	e.preventDefault();
 
 	// Reset form
+	$('.form-inline').trigger("reset");
 	$('input[type=number]').val('0');
 	resetDatePicker();
 })

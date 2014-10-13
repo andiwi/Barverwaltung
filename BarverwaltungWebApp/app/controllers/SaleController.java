@@ -44,6 +44,8 @@ public class SaleController extends Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		String note = parameters.get("note")[0];
+		
 		
 		String consumerStr = parameters.get("selectedAccount_id")[0];
 		
@@ -90,6 +92,7 @@ public class SaleController extends Controller {
 				sale.setSellDate(date);
 				sale.setSeller(userAccount);	
 				sale.setConsumer(consumer);
+				sale.setNote(note);
 				
 				salesList.add(sale);
 			}
