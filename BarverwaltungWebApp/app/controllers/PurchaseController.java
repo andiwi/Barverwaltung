@@ -79,6 +79,8 @@ public class PurchaseController extends Controller
 		String priceStr = parameters.get("price")[0];
 		BigDecimal price = new BigDecimal(priceStr);
 		
+		String note = parameters.get("note")[0];
+				
 		String username = session("username");
 		User userToFind = new User();
 		userToFind.setUsername(username);
@@ -99,6 +101,7 @@ public class PurchaseController extends Controller
 		purchase.setRawProduct(rawProduct);
 		purchase.setPieces(pieces);
 		purchase.setAmount(amount);
+		purchase.setNote(note);
 		
 		List<Purchase> purchases = new ArrayList<Purchase>();
 		purchases.add(purchase);

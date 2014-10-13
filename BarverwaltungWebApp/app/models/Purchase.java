@@ -19,6 +19,7 @@ public class Purchase extends BaseModel
 	private long pieces; //Stückanzahl
 	private BigDecimal purchasePrice; //pro Stück
 	private Date purchaseDate;
+	private String note;
 	
 
 	public long getAmount()
@@ -79,6 +80,14 @@ public class Purchase extends BaseModel
 	public void setRawProduct(RawProduct rawProduct)
 	{
 		this.rawProduct = rawProduct;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }

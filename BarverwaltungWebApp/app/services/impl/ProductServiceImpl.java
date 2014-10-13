@@ -1,5 +1,6 @@
 package services.impl;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,9 +72,13 @@ public class ProductServiceImpl implements ProductService {
 			entry.put("date", dateFormat.format(p.getPurchaseDate()));
 			entry.put("purchaser", p.getPurchaser().getFirstName() + " " + p.getPurchaser().getLastName());
 			entry.put("productName", p.getRawProduct().getDisplayName());
-			entry.put("amount", p.getAmount()/1000);
+			
+			BigDecimal amountDecimal = new BigDecimal(p.getAmount());
+			amountDecimal = amountDecimal.divide(new BigDecimal(1000));
+			entry.put("amount", amountDecimal);
 			entry.put("pieces", p.getPieces());
 			entry.put("price", p.getPurchasePrice());
+			entry.put("note", p.getNote());
 			
 			dataList.add(entry);
 		}
