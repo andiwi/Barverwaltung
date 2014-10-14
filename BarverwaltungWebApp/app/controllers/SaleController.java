@@ -104,7 +104,7 @@ public class SaleController extends Controller {
 			//Überprüfung ob genügend Geld am Konto
 			BigDecimal balanceAfterPurchase = accountService.checkValidity(salesList, consumerId);
 			
-			if(balanceAfterPurchase.compareTo(BigDecimal.ZERO) < 0)
+			if(balanceAfterPurchase.compareTo(new BigDecimal(-20)) < 0)
 			{
 				return badRequest("Nicht genügend Geld am Konto");
 			}

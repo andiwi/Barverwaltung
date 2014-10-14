@@ -1,10 +1,5 @@
-$(".panel-body").toggleClass(function() {
-	
-	if ( $("#accountBalance").text().indexOf("-") > -1)  {
-		return "negative";
-	} else {
-		return "positive";
-	}
+$(function() {
+	toggleGreenRed();
 });
 
 $( "#payInForm" ).submit(function( e ) {
@@ -17,7 +12,8 @@ $( "#payInForm" ).submit(function( e ) {
 		    type : "POST",
 		    data: $( "#payInForm" ).serialize(),
 		    success:function(data){
-		    	$("#accountBalance").text('Kontostand:' + data + '€');
+		    	$("#accountBalance").text('Kontostand: ' + data + '€');
+		    	toggleGreenRed();
 		    },
 	  		error:function(data){
 	  			alert(data.responseText);
@@ -37,9 +33,22 @@ function refreshKontostandPanel() {
 	    
 	    success:function(data){
 	    	$("#accountBalance").text('Kontostand: ' + data + '€');
+	    	toggleGreenRed();
 	    },
   		error:function(data){
   			alert(data.responseText);
   		}
-	});
+	});	
 }
+
+function toggleGreenRed() {
+	$(".panel-body").removeClass("positive");
+	$(".panel-body").removeClass("negative");
+	
+	if ( $("#accountBalance").text().indexOf("-") > -1)  {
+		$(".panel-body").addClass("negative")
+	} else {
+		$(".panel-body").addClass("positive")
+	}
+};
+
