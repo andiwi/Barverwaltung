@@ -11,8 +11,8 @@ import models.MapRawProductValue;
 import models.Purchase;
 import models.RawProduct;
 import models.SalesProduct;
+import models.SalesProduct.EatOrDrink;
 import services.ProductService;
-import daos.MapRawProductValueDAO;
 import daos.PurchaseDAO;
 import daos.RawProductDAO;
 import daos.SalesProductDAO;
@@ -22,14 +22,12 @@ public class ProductServiceImpl implements ProductService {
 	private PurchaseDAO purchaseDAO;
 	private RawProductDAO rawProductDAO;
 	private SalesProductDAO salesProductDAO;
-	private MapRawProductValueDAO mapRawProductValueDAO;
-	
+		
 	public ProductServiceImpl()
 	{
 		purchaseDAO = PurchaseDAO.INSTANCE;
 		rawProductDAO = RawProductDAO.INSTANCE;
 		salesProductDAO = SalesProductDAO.INSTANCE;
-		mapRawProductValueDAO = MapRawProductValueDAO.INSTANCE;
 	}
 	
 	@Override
@@ -168,6 +166,27 @@ public class ProductServiceImpl implements ProductService {
 	public void createRawProduct(RawProduct rawProduct) {
 		rawProductDAO.persist(rawProduct);
 	}
+
+	@Override
+	public List<SalesProduct> getAllDrinkSalesProducts() {
+		SalesProduct drink = new SalesProduct();
+		drink.setEatOrDrink(EatOrDrink.drink);
+		return this.find(drink);
+	}
+
+	@Override
+	public List<SalesProduct> getAllEatSalesProducts() {
+		SalesProduct eat = new SalesProduct();
+		eat.setEatOrDrink(EatOrDrink.eat);
+		return this.find(eat);
+	}
+
+	@Override
+	public List<SalesProduct> find(SalesProduct salesproduct) {
+		return salesProductDAO.find(salesproduct);
+	}
+	
+	
 
 	
 	

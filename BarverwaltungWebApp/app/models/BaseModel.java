@@ -5,9 +5,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-
-
-
 @MappedSuperclass
 public class BaseModel {
 
@@ -22,6 +19,5 @@ public class BaseModel {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
 }

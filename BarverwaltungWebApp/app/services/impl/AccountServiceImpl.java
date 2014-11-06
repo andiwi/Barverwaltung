@@ -52,6 +52,8 @@ public class AccountServiceImpl implements AccountService
 	@Override
 	public Account updateAccount(Account account)
 	{
+		Account oldAccount = this.findAccountById(account.getId());
+		account.setAccountBalance(oldAccount.getAccountBalance());
 		return dao.updateAccount(account);
 	}
 

@@ -1,4 +1,4 @@
-@(selectedAccount: Account, salesProductList: List[SalesProduct])
+@(selectedAccount: Account, drinks: List[SalesProduct], eats: List[SalesProduct])
 @import views.html.sale.items._
 @import views.html.account.items._
 
@@ -24,11 +24,11 @@
 
 <!-- Verkaufsbuttons -->
 <div class="row">
-	@salesProductButtonsForm(selectedAccount,salesProductList)
+	@salesProductButtonsForm(selectedAccount,drinks, eats)
 </div>
 
 <!-- Tabelle -->
 <div>
-	@views.html.account.items.saleTable(selectedAccount.getId(), salesProductList)
+	@views.html.account.items.saleTable(selectedAccount.getId(), drinks, eats)
 </div>
 }

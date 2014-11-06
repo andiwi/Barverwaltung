@@ -2,15 +2,14 @@ package daos;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+
+import models.Account;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 
-import models.Account;
-import models.RawProduct;
 import play.db.jpa.JPA;
 
 

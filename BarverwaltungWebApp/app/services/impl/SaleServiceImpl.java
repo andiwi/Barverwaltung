@@ -2,16 +2,15 @@ package services.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
-import daos.RawProductDAO;
-import daos.SalesProductDAO;
 import models.Account;
 import models.MapRawProductValue;
 import models.RawProduct;
 import models.Sale;
 import services.AccountService;
 import services.SaleService;
+import daos.RawProductDAO;
+import daos.SalesProductDAO;
 
 public class SaleServiceImpl implements SaleService
 {
@@ -29,8 +28,20 @@ public class SaleServiceImpl implements SaleService
 	{
 		for(Sale sale: salesList)
 		{
-			salesProductDAO.persist(sale);
-			
+			for(int i = 0; i < sale.getAmount(); i++) //In der Datenank nur Einträge mit Amount == 1 damit man bessere Statistik Queries machen kann.
+			{
+				Sale copy = new Sale();
+				copy.setAmount(1);
+				copy.setConsumer(sale.getConsumer());
+				copy.setNote(sale.getNote());
+				copy.setPrice(sale.getPrice());
+				copy.setSalesProduct(sale.getSalesProduct());
+				copy.setSellDate(sale.getSellDate());
+				copy.setSeller(sale.getSeller());
+				
+				salesProductDAO.persist(copy);
+			}
+						
 			//RawProduct availableAmount verringern
 			List<MapRawProductValue> ingredients = sale.getSalesProduct().getMapRawProductValue();
 			

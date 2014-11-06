@@ -1,10 +1,7 @@
 package models;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import services.impl.HashHelper;
@@ -18,6 +15,15 @@ public class User extends BaseModel
 	
 	@OneToOne
 	private Account account;
+	
+	public User(){
+	}
+	
+	public User(User user){
+		username = new String(user.getUsername());
+		password = new String(user.getPassword());
+		account = new Account(user.getAccount());
+	}
 	
 	public String getUsername()
 	{

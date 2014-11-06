@@ -2,12 +2,12 @@ package models;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -15,6 +15,14 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class SalesProduct extends BaseModel
 {
+	public enum EatOrDrink {
+		eat, drink;
+		
+		public static EatOrDrink newInstance(EatOrDrink eatOrDrink) {
+			  return EatOrDrink.values()[eatOrDrink.ordinal()];
+			}
+	}
+	
 	@NotNull
 	private String productName;
 	
@@ -28,7 +36,19 @@ public class SalesProduct extends BaseModel
 	@OneToMany(mappedBy="salesProduct")
 	private List<Sale> sales;
 	
+	@Enumerated(value = EnumType.STRING)
+	private EatOrDrink eatOrDrink;
 	
+	public SalesProduct() {}
+	
+	public SalesProduct(SalesProduct salesProduct) {
+		this.productName = new String(salesProduct.getProductName());
+		this.displayName = new String(salesProduct.getDisplayName());
+		this.defaultSalePrice = new BigDecimal(salesProduct.getDefaultSalePrice().toString());
+		this.mapRawProductValue = new ArrayList<MapRawProductValue>(salesProduct.getMapRawProductValue());
+		this.sales = new ArrayList<Sale>(salesProduct.getSales());
+		this.eatOrDrink = EatOrDrink.newInstance(salesProduct.getEatOrDrink());
+	}
 	public String getProductName()
 	{
 		return productName;
@@ -100,4 +120,10 @@ public class SalesProduct extends BaseModel
 		this.mapRawProductValue = list;
 	}
 	*/
+	public EatOrDrink getEatOrDrink() {
+		return eatOrDrink;
+	}
+	public void setEatOrDrink(EatOrDrink eatOrDrink) {
+		this.eatOrDrink = eatOrDrink;
+	}
 }

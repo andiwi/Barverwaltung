@@ -142,6 +142,10 @@ public class AdminController extends Controller
 		
 		String username = parameters.get("username")[0];
 		String password = parameters.get("password")[0];
+		String passwordAgain = parameters.get("passwordAgain")[0];
+		
+		if(!password.equals(passwordAgain))
+			return badRequest("Passwort falsch eingegeben");
 		
 		String selectedAccountIdStr = parameters.get("selectedAccount_id")[0];
 		int selectedAccountId = Integer.parseInt(selectedAccountIdStr.substring(8));

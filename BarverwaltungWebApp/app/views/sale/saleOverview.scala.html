@@ -1,4 +1,4 @@
-@(selectedAccount: Account, salesProductList: List[SalesProduct])
+@(selectedAccount: Account, drinks: List[SalesProduct], eats: List[SalesProduct])
 @import views.html.sale.items._
 
 @extra_styles = {
@@ -11,13 +11,11 @@
 </div>
 
 <!-- Verkaufsbuttons -->
-<div class="col-md-12">
-@salesProductButtonsForm(selectedAccount,salesProductList)
-</div>
+@salesProductButtonsForm(selectedAccount,drinks, eats)
+
 <!-- Tabelle -->
-<div class="col-md-12">
-	@views.html.account.items.saleTable(selectedAccount.getId(), salesProductList)
-</div>
+@views.html.account.items.saleTable(selectedAccount.getId(), drinks, eats)
+
 }
 
 @main("AccountOverview", extra_styles)(content)

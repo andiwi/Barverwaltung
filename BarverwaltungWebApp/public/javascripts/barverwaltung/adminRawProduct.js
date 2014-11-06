@@ -7,10 +7,10 @@ $( "#rawProductForm" ).submit(function( e ) {
 		    type : "POST",
 		    data: $( "#rawProductForm" ).serialize(),
 		    success:function(data){
-		    	alert(data.responseText);
+		    	alert(data);
 		    },
 	  		error:function(data){
-	  			alert(data.responseText);
+	  			alert(data);
 	  		}
 		});
 	  

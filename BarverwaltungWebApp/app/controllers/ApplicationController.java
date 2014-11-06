@@ -104,9 +104,10 @@ public class ApplicationController extends Controller {
 		Account selectedAccount = accountService.findAccountById(1);
 		
 		List<Account> accounts = accountService.getAllAccounts();
-		List<SalesProduct> salesProductList = productService.getAllSalesProducts();
+		List<SalesProduct> drinks = productService.getAllDrinkSalesProducts();
+		List<SalesProduct> eats = productService.getAllEatSalesProducts();
 		
-		return ok(saleOverview.render(selectedAccount, salesProductList));
+		return ok(saleOverview.render(selectedAccount, drinks, eats));
 	}
     
 	@Security.Authenticated(SecureController.class)

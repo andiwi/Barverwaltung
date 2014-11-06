@@ -1,21 +1,22 @@
-@(selectedAccountId: Integer, salesProductList: List[SalesProduct])
+@(selectedAccountId: Integer, drinks: List[SalesProduct], eats: List[SalesProduct])
 <section id="table">
 	<legend>Übersicht</legend>
-
 	<table id="saleTable" data-toggle="table"
 		data-url="@routes.AccountController.getTableDataJSON(selectedAccountId)"
 		data-cache="false" data-height="299">
 	    <thead>
 	        <tr>
 	            <th data-field="date">Datum</th>
-	            @for(p <- salesProductList) {
-	            	<th data-field="@p.getProductName()">@p.getDisplayName()</th>
+	            @for(d <- drinks) {
+	            	<th data-field="@d.getProductName()">@d.getDisplayName()</th>
+	            }
+	            @for(e <- eats) {
+	            	<th data-field="@e.getProductName()">@e.getDisplayName()</th>
 	            }
 	            <th data-field="note">Notizen</th>
 	        </tr>
 	    </thead>
 	</table>
-	
 </section>
 
 <script src="@routes.Assets.at("javascripts/barverwaltung/saleTable.js")"></script>

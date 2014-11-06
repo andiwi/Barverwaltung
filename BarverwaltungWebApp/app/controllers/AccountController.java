@@ -37,9 +37,10 @@ public class AccountController extends ApplicationController
 		Account selectedAccount = accountService.findAccountById(id);
 		
 		List<Account> accounts = accountService.getAllAccounts();
-		List<SalesProduct> salesProductList = productService.getAllSalesProducts();
+		List<SalesProduct> drinks = productService.getAllDrinkSalesProducts();
+		List<SalesProduct> eats = productService.getAllEatSalesProducts();
 		
-		return ok(accountTemplate.render(accounts, selectedAccount, null, salesProductList));
+		return ok(accountTemplate.render(accounts, selectedAccount, null, drinks, eats));
 	}
 	
 	@Security.Authenticated(SecureController.class)
@@ -65,7 +66,7 @@ public class AccountController extends ApplicationController
 			Account selectedAccount = accountService.findAccountById(sentAccountId);
 			
 			List<Account> accounts = accountService.getAllAccounts();
-			return badRequest(accountTemplate.render(accounts, selectedAccount, form, null));
+			return badRequest(accountTemplate.render(accounts, selectedAccount, form, null, null));
 		} else
 		{
 			Account account = form.get();
@@ -90,7 +91,7 @@ public class AccountController extends ApplicationController
 		
 		List<Account> accounts = accountService.getAllAccounts();
 		
-		return ok(accountTemplate.render(accounts, selectedAccount, accountForm, null));
+		return ok(accountTemplate.render(accounts, selectedAccount, accountForm, null, null));
 	}
 	
 	@Security.Authenticated(SecureController.class)
@@ -102,7 +103,7 @@ public class AccountController extends ApplicationController
 			AccountService accountService = new AccountServiceImpl();
 	    	List<Account> accounts = accountService.getAllAccounts();
 	    	
-			return badRequest(accountTemplate.render(accounts, null, form, null));
+			return badRequest(accountTemplate.render(accounts, null, form, null, null));
 		} else {
 			Account account = form.get();
 			AccountService accountService = new AccountServiceImpl();
@@ -124,7 +125,7 @@ public class AccountController extends ApplicationController
 		AccountService accountService = new AccountServiceImpl();
     	List<Account> accounts = accountService.getAllAccounts();
     	
-		return ok(accountTemplate.render(accounts, null, Form.form(Account.class), null));
+		return ok(accountTemplate.render(accounts, null, Form.form(Account.class), null, null));
 	}
 	
 	@Security.Authenticated(SecureController.class)

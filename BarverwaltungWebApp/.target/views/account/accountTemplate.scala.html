@@ -1,4 +1,4 @@
-@(accounts: List[Account], selectedAccount: Account, form: Form[Account], salesProductList: List[SalesProduct])
+@(accounts: List[Account], selectedAccount: Account, form: Form[Account], drinks: List[SalesProduct], eats: List[SalesProduct])
 
 @extra_styles = {
 <link rel="stylesheet" href="@routes.Assets.at("stylesheets/simple-sidebar.css")" type="text/css" />
@@ -16,7 +16,7 @@
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
 		@if(form == null) {
-			@views.html.account.accountDetail(selectedAccount, salesProductList)
+			@views.html.account.accountDetail(selectedAccount, drinks, eats)
 		}else { @if(selectedAccount == null) {
 					@views.html.account.accountCreate(form)
 				}else {

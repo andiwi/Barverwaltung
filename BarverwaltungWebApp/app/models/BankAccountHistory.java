@@ -16,6 +16,14 @@ public class BankAccountHistory extends BaseModel {
 	@ManyToOne
 	private Account owner;
 
+	public BankAccountHistory(){
+	}
+	
+	public BankAccountHistory(BankAccountHistory bankAccountHistory){
+		this.difference = new BigDecimal(bankAccountHistory.getDifference().toString());
+		this.changeDate = new Date(bankAccountHistory.getChangeDate().getTime());
+		this.owner = new Account(bankAccountHistory.getOwner());
+	}
 	
 	public BigDecimal getDifference() {
 		return difference;

@@ -1,46 +1,62 @@
-@(selectedAccount: Account, salesProductList: List[SalesProduct])
+@(selectedAccount: Account, drinks: List[SalesProduct], eats: List[SalesProduct])
 
 <form action="/sale" method="POST" id="saleForm" class="form-inline" role="form">
 
-	<div class="form-group" style="padding-bottom: 4px">
-	  <label class="control-label sr-only" for="datefield">Datum</label>
-	    <div class="input-group">
-	     	<input class="form-control" id="datefield" name="datefield" size="16" type="text" value="">
-	     	<span class="input-group-addon" id="datepicker" data-date="" data-date-format="dd.mm.yyyy"><i class="fa fa-calendar"></i>
-	     		<i class="icon-calendar"></i>
-	     	</span>
-	    </div>
-	</div>
-	<div class="form-group" style="padding-bottom: 4px">
-	  <label class="control-label sr-only" for="datefield">Notizen</label>
-	    <div class="input-group">
-	     	<input class="form-control" id="note" name="note" type="text" value="">
-	     	<span class="input-group-addon">Notizen
-	     	</span>
-	    </div>
-	</div>
-	<div class="clearfix" />
-	
-	@for(product <- salesProductList){
-		<div class="form-group">
-			<div id="salesProductBtn_@product.getId()" class="btn btn-default salesProductBtn">
-				<span id="salesProductSpan_@product.getId()">@product.getDisplayName</span>
-				<input id="amount_@product.getId()" name="amount_@product.getId()" class="form-control" value="0" type="number">
-			</div>			
+	<div class="col-md-12">
+		<div class="form-group" style="padding-bottom: 4px">
+		  <label class="control-label sr-only" for="datefield">Datum</label>
+		    <div class="input-group">
+		     	<input class="form-control" id="datefield" name="datefield" size="16" type="text" value="">
+		     	<span class="input-group-addon" id="datepicker" data-date="" data-date-format="dd.mm.yyyy"><i class="fa fa-calendar"></i>
+		     		<i class="icon-calendar"></i>
+		     	</span>
+		    </div>
 		</div>
-	}
+		<div class="form-group" style="padding-bottom: 4px">
+		  <label class="control-label sr-only" for="datefield">Notizen</label>
+		    <div class="input-group">
+		     	<input class="form-control" id="note" name="note" type="text" value="">
+		     	<span class="input-group-addon">Notizen
+		     	</span>
+		    </div>
+		</div>
+	</div>		
+	<div class="col-md-6">
+		<ul class="list-group">
+			@for(drink <- drinks){
+				<a href="#" class="list-group-item" id="salesProductSpan_@drink.getId()">
+					@drink.getDisplayName()
+					<input id="amount_@drink.getId()" name="amount_@drink.getId()" class="form-control pull-right" value="0" type="number">
+					<div class="clearfix"></div>
+				</a>
+			}
+		</ul>
+	</div>
+	<div class="col-md-6">
+		<ul class="list-group">
+			@for(eat <- eats){
+				<a href="#" class="list-group-item" id="salesProductSpan_@eat.getId()">
+					@eat.getDisplayName()
+					<input id="amount_@eat.getId()" name="amount_@eat.getId()" class="form-control pull-right" value="0" type="number">
+					<div class="clearfix"></div>
+				</a>
+			}
+		</ul>
+	</div>	
 	
 	<input id="selectedAccount_id" type="hidden" name="selectedAccount_id" value="@selectedAccount.getId()">
 	
-	<!-- Button (Double) -->
-	<div class="form-group">
-	  <label class="control-label sr-only" for="button1id">Double Button</label>
-	      <button id="submit" name="submit" class="btn btn-success">Kaufen</button>
-	    <button id="discard" name="discard" class="btn btn-default">Verwerfen</button>
+	<div class="col-md-12">
+		<!-- Button (Double) -->
+		<div class="form-group">
+		  <label class="control-label sr-only" for="button1id">Double Button</label>
+		      <button id="submit" name="submit" class="btn btn-success">Kaufen</button>
+		    <button id="discard" name="discard" class="btn btn-default">Verwerfen</button>
+		</div>
 	</div>
 </form>
 
-<div id="infoBox" class="alert" role="alert"></div>
+<div id="infoBox" class="alert col-md-12" role="alert"></div>
 
 <script src="@routes.Assets.at("javascripts/barverwaltung/datepicker.js")"></script>
 <script src="@routes.Assets.at("javascripts/barverwaltung/salesProductButtonsForm.js")"></script>
